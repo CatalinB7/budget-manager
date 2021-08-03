@@ -18,8 +18,6 @@ export class BudgetComponent implements OnChanges {
   ngOnChanges(): void {
     let totalSpent = 0;
 
-    console.log(this.spendingList);
-
     this.spendingList.forEach(category => {
       category.expenses.forEach(expense => {
         totalSpent += expense.value;

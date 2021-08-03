@@ -5,5 +5,5 @@
 </mat-card-header>
 <mat-card-content>
     <h2>Target Savings: <strong>{{budget.value*budget.plannedSaving}}</strong></h2>
-    <h2>Left in Budget: <strong>{{leftInBudget}}</strong></h2>
+    <h2 class="remaining-budget">Left in Budget: <strong>{{leftInBudget - budget.value*budget.plannedSaving}}</strong></h2>
 </mat-card-content>
