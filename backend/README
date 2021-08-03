@@ -1,0 +1,5 @@
+url=http://localhost:3000/
+
+there are 3 users and each has the same expenses
+GET request for john user: http://localhost:3000/users?username=John
+GET request for john's expenses categories http://localhost:3000/expenses_categories?username=John
