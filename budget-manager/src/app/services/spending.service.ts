@@ -11,7 +11,7 @@ import { ISpendingCategory } from '../model/spendingCategory';
 
 @Injectable({ providedIn: 'root' })
 export class SpendingService {
-  spendingList$ = new BehaviorSubject<ISpendingCategory[]>([{ name: '', spending: [] }]);
+  spendingList$ = new BehaviorSubject<ISpendingCategory[]>([{ name: '', expenses: [] }]);
 
   constructor(private _http: HttpClient) {}
 
