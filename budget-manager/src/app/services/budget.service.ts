@@ -17,7 +17,8 @@ export class BudgetService {
 
   getBudget(): Observable<IBudget> {
     return this._http.get('http://localhost:3000/budgets?userId=1').pipe(
-      map((data: any) => data[0].budget)
+      map((data: any) => data[0].budget),
+      tap(data => this.budget$.next(data))
     );
   }
 
