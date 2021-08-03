@@ -18,7 +18,7 @@
   ],
   "expenses_categories": [
     {
-      "username": "John",
+      "userId": "1",
       "electronics": {
         "total": 12000,
         "expenses": [
@@ -92,7 +92,7 @@
       }
     },
     {
-      "username": "Bob",
+      "userId": "2",
       "electronics": {
         "total": 12000,
         "expenses": [
@@ -166,7 +166,7 @@
       }
     },
     {
-      "username": "Ben",
+      "userId": "3",
       "electronics": {
         "total": 12000,
         "expenses": [
