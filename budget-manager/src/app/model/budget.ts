@@ -1,4 +1,4 @@
 export interface IBudget {
-    monthlyBudget: number,
-    targetSavings: number
+    value: number,
+    plannedSaving: number
 }

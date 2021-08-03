@@ -1,1 +1,9 @@
-<p>budget works!</p>
+<mat-card-header>
+    <mat-card-title>
+        <h1>This Month's Budget: <strong>{{budget.value}}</strong></h1>
+    </mat-card-title>
+</mat-card-header>
+<mat-card-content>
+    <h2>Target Savings: <strong>{{budget.value*budget.plannedSaving}}</strong></h2>
+    <h2 class="remaining-budget">Left in Budget: <strong>{{leftInBudget - budget.value*budget.plannedSaving}}</strong></h2>
+</mat-card-content>
