@@ -5,13 +5,13 @@ import {
   BehaviorSubject,
   Observable,
 } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { IBudget } from '../model/budget';
 
 @Injectable({ providedIn: 'root' })
 export class BudgetService {
-  budget$ = new BehaviorSubject<IBudget>({ monthlyBudget: 0, targetSavings: 0 });
+  budget$ = new BehaviorSubject<IBudget>({ value: 0, plannedSaving: 0 });
 
   constructor(private _http: HttpClient) { }
 

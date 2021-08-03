@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'budget-manager';
 
   spendingList: ISpendingCategory[] = [];
-  budget: IBudget = {monthlyBudget: 0, targetSavings: 0};
+  budget: IBudget = {value: 0, plannedSaving: 0};
 
   constructor(private _spengingService: SpendingService, private _budgetService: BudgetService) {}
 
