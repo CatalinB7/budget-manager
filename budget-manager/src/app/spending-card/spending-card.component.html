@@ -1,0 +1,36 @@
+
+<div class="header-div">
+    <span>
+        <h1>My spendings</h1>
+        <mat-icon (click)="clickedIcon()">{{iconText}}</mat-icon>
+    </span>
+    
+    <button mat-button>MANAGE</button>
+</div>
+
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let category of categoryList; let i=index">
+        <mat-expansion-panel-header>
+            <mat-panel-title class="header-div">
+                <p>{{categoryList[i].name}}</p>
+                <p class="money">{{categoryList[i].total}}$</p>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        
+        <mat-list role="list">
+            <div *ngFor="let spending of categoryList[i].expenses">
+                <mat-list-item class="header-div" role="listitem">
+                    <div class="header-div">
+                     <p>{{spending.name}}</p>
+                     <span class="money">{{spending.value}}$</span>
+                    </div>
+                    </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+          </mat-list>
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+

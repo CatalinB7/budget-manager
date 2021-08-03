@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AllMaterialModule } from './material.module';
 import { BudgetComponent } from './budget/budget.component';
+import { SpendingsModule } from './spendings/spendings.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { BudgetComponent } from './budget/budget.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     AllMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    SpendingsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
