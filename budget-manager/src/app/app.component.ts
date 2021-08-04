@@ -18,7 +18,9 @@ export class AppComponent implements OnInit {
   constructor(private _spengingService: SpendingService, private _budgetService: BudgetService) {}
 
   ngOnInit(): void {
-    this._spengingService.getSpendingList().subscribe(list => this.spendingList = list);
+    this._spengingService.getSpendingList().subscribe(list => {
+      this.spendingList = list;
+    });
     this._budgetService.getBudget().subscribe(budget => this.budget = budget);
   }
 }

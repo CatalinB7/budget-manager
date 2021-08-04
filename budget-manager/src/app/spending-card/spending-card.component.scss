@@ -1,0 +1,59 @@
+.header-div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+        p {
+            padding: 0px;
+            margin: 0px;
+            font-size: 1.25rem;
+            font-weight: 400;
+            text-align: center;
+        }
+    
+}
+
+h1 {
+    letter-spacing: 0.1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.money {
+    color: #43A547;
+}
+
+.mat-expansion-panel {
+    background-color: #52504c;
+    margin-top: 3px;
+}
+
+.mat-button {
+    background-color: rgb(92, 86, 79);
+}
+
+span {
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+}
+
+.mat-icon {
+    margin-left: 1rem;
+    font-size: 2rem;
+    user-select: none;
+}
+.mat-icon:hover {
+    cursor: pointer;
+}
+
+#spendingName {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+::ng-deep .mat-tooltip {
+    font-size: 1rem !important;
+}
