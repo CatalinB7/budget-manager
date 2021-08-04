@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ManageBudgetDialog } from 'src/modals/manage-budget/manage-budget-dialog';
 import { IBudget } from '../model/budget';
 import { ISpendingCategory } from '../model/spendingCategory';
 
@@ -13,7 +15,24 @@ export class BudgetComponent implements OnChanges {
 
   leftInBudget = 0;
 
-  constructor() {}
+
+  constructor(private _dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogRef = this._dialog.open(ManageBudgetDialog, {
+      disableClose: true,
+      autoFocus: true,
+      width: '300px',
+      data: {value: this.budget.value, plannedSaving: this.budget.plannedSaving}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.budget.value = result.value;
+        this.budget.plannedSaving = result.plannedSaving;
+      }
+    });
+  }
 
   ngOnChanges(): void {
     let totalSpent = 0;

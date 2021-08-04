@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Edit your budget</h1>
+<div mat-dialog-content [formGroup]="form">
+    <mat-form-field>
+        <mat-label>Budget</mat-label>
+        <input type="text" matInput formControlName="value" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Planned Savings Percentage</mat-label>
+        <input type="text" matInput formControlName="plannedSaving" />
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial>Submit</button>
+</div>

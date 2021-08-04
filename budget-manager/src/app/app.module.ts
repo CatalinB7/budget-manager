@@ -8,11 +8,14 @@ import { AppComponent } from './app.component';
 import { AllMaterialModule } from './material.module';
 import { BudgetComponent } from './budget/budget.component';
 import { SpendingsModule } from './spendings/spendings.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ManageBudgetDialog } from 'src/modals/manage-budget/manage-budget-dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     BudgetComponent,
+    ManageBudgetDialog
   ],
   imports: [
     BrowserModule,
@@ -20,7 +23,9 @@ import { SpendingsModule } from './spendings/spendings.module';
     BrowserAnimationsModule,
     AllMaterialModule,
     HttpClientModule,
-    SpendingsModule
+    SpendingsModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
