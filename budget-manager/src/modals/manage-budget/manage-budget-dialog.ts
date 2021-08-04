@@ -1,4 +1,5 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IBudget } from 'src/app/model/budget';
 
@@ -7,6 +8,18 @@ import { IBudget } from 'src/app/model/budget';
     templateUrl: 'manage-budget-dialog.html',
 })
 export class ManageBudgetDialog {
+    form = new FormGroup({
+        value: new FormControl(this.data.value, [
+            Validators.required,
+            Validators.max(9999999),
+            Validators.min(0)
+        ]),
+        plannedSaving: new FormControl(this.data.plannedSaving, [
+            Validators.required,
+            Validators.max(1),
+            Validators.min(0)
+        ])
+    });
 
     constructor(
         public dialogRef: MatDialogRef<ManageBudgetDialog>,
@@ -14,7 +27,7 @@ export class ManageBudgetDialog {
     ) { }
 
     onCancel(): void {
-        this.dialogRef.close();
+
     }
 
     onSubmit() {

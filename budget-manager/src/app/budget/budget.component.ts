@@ -20,16 +20,16 @@ export class BudgetComponent implements OnChanges {
 
   openDialog() {
     const dialogRef = this._dialog.open(ManageBudgetDialog, {
+      disableClose: true,
+      autoFocus: true,
       width: '300px',
       data: {value: this.budget.value, plannedSaving: this.budget.plannedSaving}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.budget.value = result.value;
       this.budget.plannedSaving = result.plannedSaving;
 
-      console.log(this.budget);
     });
   }
 
