@@ -27,9 +27,10 @@ export class BudgetComponent implements OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.budget.value = result.value;
-      this.budget.plannedSaving = result.plannedSaving;
-
+      if(result){
+        this.budget.value = result.value;
+        this.budget.plannedSaving = result.plannedSaving;
+      }
     });
   }
 

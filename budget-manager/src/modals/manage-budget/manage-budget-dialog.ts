@@ -27,10 +27,10 @@ export class ManageBudgetDialog {
     ) { }
 
     onCancel(): void {
-
+        this.dialogRef.close();
     }
 
     onSubmit() {
-
+        this.dialogRef.close(this.form.value);
     }
 }
