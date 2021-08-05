@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Manage categories</h1>
+<div mat-dialog-content>
+  <p>Insert Spending Category</p>
+    <input matInput >
+    <button mat-button>Submit</button>
+</div>
+<div class="grid-div">
+    <mat-card *ngFor="let category of data.categoryList">
+
+        <input matInput placeholder="Category Name" value={{category.name}}>
+        <button mat-button>Delete</button>
+    </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Exit</button>
+  <button mat-button>Save</button>
+</div>

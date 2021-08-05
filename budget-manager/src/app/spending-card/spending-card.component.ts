@@ -8,6 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
 
+import {
+  CategoryModalComponent,
+} from '../category-modal/category-modal.component';
 import { ISpending } from '../model/spending';
 import { ISpendingCategory } from '../model/spendingCategory';
 
@@ -62,4 +65,18 @@ export class SpendingCardComponent implements OnInit {
     });
   }
   
+
+
+  openDialogCategories() {
+    const dialogRef = this._dialog.open(CategoryModalComponent, {
+      width: '75vw',
+      height: '75vh',
+      data: {categoryList: this.categoryList}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }

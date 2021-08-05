@@ -7,6 +7,9 @@ import {
 
 import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
 
+import {
+  CategoryModalComponent,
+} from '../category-modal/category-modal.component';
 import { AllMaterialModule } from '../material.module';
 import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
@@ -17,13 +20,14 @@ import {
   declarations: [
     SpendingCardComponent,
     ShowIfTruncatedDirective,
-    AddSpendingDialog
+    AddSpendingDialog,
+    CategoryModalComponent
   ],
   imports: [
     CommonModule,
     AllMaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   exports: [SpendingCardComponent]
 })
