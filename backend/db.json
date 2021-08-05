@@ -14,6 +14,14 @@
       "id": 3,
       "username": "Ben",
       "password": "12345"
+    },
+    {
+      "id": 4
+    },
+    {
+      "username": "dada",
+      "password": "12345",
+      "id": 5
     }
   ],
   "budgets": [
@@ -41,6 +49,7 @@
   ],
   "expenses_categories": [
     {
+      "id": 1,
       "userId": "1",
       "categories": [
         {
@@ -117,6 +126,7 @@
       ]
     },
     {
+      "id": 2,
       "userId": "2",
       "categories": [
         {
@@ -193,6 +203,7 @@
       ]
     },
     {
+      "id": 3,
       "userId": "3",
       "categories": [
         {
