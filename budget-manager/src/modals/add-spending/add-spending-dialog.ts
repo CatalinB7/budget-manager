@@ -12,29 +12,33 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 
-import { IBudget } from 'src/app/model/budget';
+import { ISpending } from 'src/app/model/spending';
 
 @Component({
-    selector: 'manage-budget-dialog',
-    templateUrl: 'manage-budget-dialog.html',
+    selector: 'add-spending-dialog',
+    templateUrl: 'add-spending-dialog.html',
 })
-export class ManageBudgetDialog {
+export class AddSpendingDialog {
     form = new FormGroup({
-        value: new FormControl(this.data.value, [
+        value: new FormControl('', [
             Validators.required,
             Validators.max(9999999),
             Validators.min(0)
         ]),
-        plannedSaving: new FormControl(this.data.plannedSaving, [
+        date: new FormControl('', [
             Validators.required,
-            Validators.max(1),
-            Validators.min(0)
+        ]),
+        reccuring: new FormControl('', [
+            Validators.required
+        ]),
+        name: new FormControl('', [
+            Validators.required
         ])
     });
 
     constructor(
-        public dialogRef: MatDialogRef<ManageBudgetDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: IBudget
+        public dialogRef: MatDialogRef<AddSpendingDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: ISpending
     ) { }
 
     onCancel(): void {

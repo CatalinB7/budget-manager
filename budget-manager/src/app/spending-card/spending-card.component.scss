@@ -38,13 +38,21 @@ span {
     width: auto;
 }
 
-.mat-icon {
-    margin-left: 1rem;
-    font-size: 2rem;
-    user-select: none;
-}
+// Not a good idea to overwrite mat classes like this
+// .mat-icon {
+//     margin-left: 1rem;
+//     font-size: 2rem;
+//     user-select: none;
+// }
+
 .mat-icon:hover {
     cursor: pointer;
+}
+
+.add-button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
 }
 
 #spendingName {
@@ -52,7 +60,6 @@ span {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
 
 ::ng-deep .mat-tooltip {
     font-size: 1rem !important;

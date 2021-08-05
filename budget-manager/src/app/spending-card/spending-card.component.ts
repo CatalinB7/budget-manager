@@ -1,4 +1,13 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
+
 import { ISpending } from '../model/spending';
 import { ISpendingCategory } from '../model/spendingCategory';
 
@@ -11,7 +20,8 @@ export class SpendingCardComponent implements OnInit {
   @Input() spendingList: ISpendingCategory[] = [];
   categoryList: { name: string, total: number, expenses: ISpending[] }[] = []; //mapped spendingList so it contains total
   iconText = "arrow_upward";
-  constructor() { }
+
+  constructor(private _dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -38,4 +48,18 @@ export class SpendingCardComponent implements OnInit {
     }
   }
 
+  openDialog() {
+    const dialogRef = this._dialog.open(AddSpendingDialog, {
+      disableClose: true,
+      autoFocus: true,
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        
+      }
+    });
+  }
+  
 }
