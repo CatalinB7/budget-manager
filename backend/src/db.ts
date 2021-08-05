@@ -309,7 +309,6 @@ let checkCategoryExists = (userId: string, newCategory: string) => {
 }
 
 let insertCategory = (userId: string, newCategory: string, expenses: any) => {//todo create interface for expensees
-    console.log("new name ", newCategory);
     let userExpenses_categories = db.expenses_categories.filter(el => el.userId == userId)[0];
     userExpenses_categories.categories.push({ name: newCategory, expenses });
 }

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+
 import { IBudget } from './model/budget';
 import { ISpendingCategory } from './model/spendingCategory';
 import { BudgetService } from './services/budget.service';

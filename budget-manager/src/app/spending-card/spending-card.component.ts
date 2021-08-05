@@ -12,7 +12,10 @@ import {
   CategoryModalComponent,
 } from '../category-modal/category-modal.component';
 import { ISpending } from '../model/spending';
-import { ISpendingCategory } from '../model/spendingCategory';
+import {
+  IComputedSpendCateg,
+  ISpendingCategory,
+} from '../model/spendingCategory';
 
 @Component({
   selector: 'app-spending-card',
@@ -21,7 +24,7 @@ import { ISpendingCategory } from '../model/spendingCategory';
 })
 export class SpendingCardComponent implements OnInit {
   @Input() spendingList: ISpendingCategory[] = [];
-  categoryList: { name: string, total: number, expenses: ISpending[] }[] = []; //mapped spendingList so it contains total
+  categoryList: IComputedSpendCateg[] = []; //mapped spendingList so it contains total
   iconText = "arrow_upward";
 
   constructor(private _dialog: MatDialog) { }
@@ -30,6 +33,7 @@ export class SpendingCardComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log("a chnage happend");
     let names = changes.spendingList.currentValue.map((el: ISpendingCategory) => el.name);
     let totals: number[] = changes.spendingList.currentValue
       .map((cat: ISpendingCategory) => cat.expenses
@@ -71,11 +75,13 @@ export class SpendingCardComponent implements OnInit {
     const dialogRef = this._dialog.open(CategoryModalComponent, {
       width: '75vw',
       height: '75vh',
-      data: {categoryList: this.categoryList}
+      data: {categoryList: this.categoryList},
+      disableClose: true 
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.clickedIcon(); //sort new array
     });
   }
 

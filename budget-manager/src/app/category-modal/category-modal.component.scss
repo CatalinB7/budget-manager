@@ -19,7 +19,6 @@ input {
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
-    background-color: red;
 }
 
 mat-card {
@@ -46,4 +45,22 @@ mat-card {
 .mat-dialog-actions {
     display: flex;
     justify-content: flex-end;
+}
+
+#btn-span {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#title-div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#exit {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: red;
 }

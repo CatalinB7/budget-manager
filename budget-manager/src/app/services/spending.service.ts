@@ -1,13 +1,26 @@
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
 
 import {
   BehaviorSubject,
-  Observable
+  Observable,
 } from 'rxjs';
+import {
+  map,
+  tap,
+} from 'rxjs/operators';
 
 import { ISpendingCategory } from '../model/spendingCategory';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Accept': 'application/json'
+  }),
+};
 
 @Injectable({ providedIn: 'root' })
 export class SpendingService {
@@ -21,4 +34,23 @@ export class SpendingService {
       tap(data => this.spendingList$.next(data))
     );
   }
+
+
+  addSpendingCategory(categoryName: string) {
+    let body: ISpendingCategory = {name: categoryName, expenses: []};
+    return this._http.post('http://localhost:3000/expenses_categories/categories?userId=1', body, {responseType: "text"});
+  }
+
+  removeSpendingCategory(categoryName: string) {
+    return this._http.delete(`http://localhost:3000/expenses_categories/categories?userId=1&name=${categoryName}`, {responseType: "text"});
+  }
+
+  editCategory(oldCategory: string, newCategory: string) {
+    console.log("editing name", oldCategory, newCategory);
+    return this._http.put(`http://localhost:3000/expenses_categories/categories?userId=1&oldName=${oldCategory}&newName=${newCategory}`, {},
+    {responseType: "text"});
+
+  }
+
+
 }

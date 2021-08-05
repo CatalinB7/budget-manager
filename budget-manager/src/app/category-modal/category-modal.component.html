@@ -1,17 +1,24 @@
-<h1 mat-dialog-title>Manage categories</h1>
+<div id="title-div">
+  <h1 mat-dialog-title>Manage categories</h1>
+  <button mat-button (click)="onNoClick()" id="exit">X</button>
+</div>
+
 <div mat-dialog-content>
   <p>Insert Spending Category</p>
-    <input matInput >
-    <button mat-button>Submit</button>
+    <input matInput [(ngModel)]="newCategory">
+    <button mat-button (click)="addCategory()">Submit</button>
 </div>
 <div class="grid-div">
     <mat-card *ngFor="let category of data.categoryList">
 
-        <input matInput placeholder="Category Name" value={{category.name}}>
-        <button mat-button>Delete</button>
+        <input matInput placeholder="Category Name" value={{category.name}} #inptVal>
+        <span id="btn-span">
+          <button mat-button (click)="removeCategory(category.name)">Delete</button>
+          <button mat-button (click)="editCategory(category.name, inptVal.value)">Edit</button>
+        </span>
     </mat-card>
 </div>
-<div mat-dialog-actions>
+<!-- <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Exit</button>
   <button mat-button>Save</button>
-</div>
+</div> -->
