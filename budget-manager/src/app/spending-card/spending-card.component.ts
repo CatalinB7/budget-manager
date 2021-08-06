@@ -33,7 +33,6 @@ export class SpendingCardComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("a chnage happend");
     let names = changes.spendingList.currentValue.map((el: ISpendingCategory) => el.name);
     let totals: number[] = changes.spendingList.currentValue
       .map((cat: ISpendingCategory) => cat.expenses

@@ -36,7 +36,6 @@ export class CategoryModalComponent implements OnInit {
     this._spendingService.addSpendingCategory(this.newCategory).
       subscribe((result: any) => {
         this.data.categoryList.push({ total: 0, name: this.newCategory, expenses: [] });
-        // console.log("new data =", this.data.categoryList);
         this.newCategory = "";
       },
         err => console.log(err));
@@ -50,7 +49,7 @@ export class CategoryModalComponent implements OnInit {
         //i need to edit the same array i got from parent
         this.data.categoryList.forEach((el, idx) => {
           if(el.name == categoryName) {
-            this.data.categoryList.splice(idx);
+            this.data.categoryList.splice(idx, 1);
             return;
           }
         });
@@ -58,7 +57,6 @@ export class CategoryModalComponent implements OnInit {
   }
 
   editCategory(oldCategory: string, newCategory: string): void {
-    console.log("got this to edit", oldCategory, newCategory);
     this._spendingService.editCategory(oldCategory, newCategory).
       subscribe((res: any) => {
         this.data.categoryList.forEach((el, idx) => {

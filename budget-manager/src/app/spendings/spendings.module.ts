@@ -5,12 +5,18 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 
+import {
+  IgxItemLegendModule,
+  IgxLegendModule,
+  IgxPieChartModule,
+} from 'igniteui-angular-charts';
 import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
 
 import {
   CategoryModalComponent,
 } from '../category-modal/category-modal.component';
 import { AllMaterialModule } from '../material.module';
+import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
   SpendingCardComponent,
@@ -28,7 +34,12 @@ import {
     AllMaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    CategoryModalComponent,
+    PieChartComponent,
+    IgxPieChartModule,
+    IgxLegendModule,
+    IgxItemLegendModule
   ],
-  exports: [SpendingCardComponent]
+  exports: [SpendingCardComponent, PieChartComponent]
 })
 export class SpendingsModule { }
