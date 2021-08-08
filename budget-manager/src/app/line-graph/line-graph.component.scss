@@ -1,0 +1,27 @@
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+.graph {
+    position: absolute;
+    width: 100%;
+    height: 130%;
+}
+
+.down-div {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    bottom: 0;
+}
+
+
+.btn {
+    height: 5vh;
+    width: 6vw;
+}

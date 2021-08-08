@@ -5,12 +5,9 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 
-import {
-  IgxItemLegendModule,
-  IgxLegendModule,
-  IgxPieChartModule,
-} from 'igniteui-angular-charts';
 import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import {
   CategoryModalComponent,
@@ -21,24 +18,23 @@ import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
   SpendingCardComponent,
 } from '../spending-card/spending-card.component';
+import { LineGraphComponent } from '../line-graph/line-graph.component';
 
 @NgModule({
   declarations: [
     SpendingCardComponent,
     ShowIfTruncatedDirective,
     AddSpendingDialog,
-    CategoryModalComponent
+    CategoryModalComponent,
+    PieChartComponent,
+    LineGraphComponent
   ],
   imports: [
     CommonModule,
     AllMaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    CategoryModalComponent,
-    PieChartComponent,
-    IgxPieChartModule,
-    IgxLegendModule,
-    IgxItemLegendModule
+    NgxChartsModule
   ],
   exports: [SpendingCardComponent, PieChartComponent]
 })

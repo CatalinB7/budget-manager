@@ -5,11 +5,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
+import { LegendPosition } from '@swimlane/ngx-charts';
+
 import { ISpending } from '../model/spending';
-import {
-  IComputedSpendCateg,
-  ISpendingCategory,
-} from '../model/spendingCategory';
+import { IComputedSpendCateg } from '../model/spendingCategory';
 
 @Component({
   selector: 'app-pie-chart',
@@ -18,33 +17,58 @@ import {
 })
 export class PieChartComponent implements OnInit {
 
-  data = [
-    { Value: 25, Label: "Residential" },
-    { Value: 12, Label: "Heating" },
-    { Value: 11, Label: "Lighting" },
-    { Value: 18, Label: "Other" },
-    { Value: 37, Label: "Cooling" }
-];
+  data: {name: string, value: number}[] = [];
+  pieDisplay = true;
+  clickedCategory = "";
+  //@Input() spendingList: ISpendingCategory [] = [];
+  @Input() categoryList: IComputedSpendCateg[] = []; //mapped spendingList so it contains total
 
-  @Input() spendingList: ISpendingCategory [] = [];
-  categoryList: IComputedSpendCateg[] = []; //mapped spendingList so it contains total
+  // view: [number, number] = [500, 250];
 
-  constructor() { }
+  // options
+  gradient: boolean = false;
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+  isDoughnut: boolean = false;
+  legendPosition = LegendPosition.Right;
+  // colorScheme = {
+  //   domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  // };
+
+  expenses: ISpending[] = [];
+
+  constructor() {}
+
+  onSelect(data: any): void {
+    this.clickedCategory = data.name? data.name : data;
+    this.toggleCharts(this.clickedCategory);
+  }
+
+  onActivate(data: any): void {
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    let names = changes.spendingList.currentValue.map((el: ISpendingCategory) => el.name);
-    let totals: number[] = changes.spendingList.currentValue
-      .map((cat: ISpendingCategory) => cat.expenses
-        .reduce((a: number, b: ISpending) => a + b.value, 0));
-    this.categoryList = totals.map((el, idx) => ({
-      total: el,
-      name: names[idx],
-      expenses: changes.spendingList.currentValue[idx].expenses
-    })).sort((a, b) => a.total < b.total ? -1 : 1);
-    this.data = this.categoryList.map(el => ({Value: el.total, Label: el.name}));
+    this.categoryList = changes.categoryList.currentValue;
+    this.data = this.categoryList.map(el => ({value: el.total, name: el.name}))
+      .filter(el => el.value !=0);
+  }
+
+
+  toggleCharts(category: string) {
+    this.togglePieDisplay();
+    this.expenses = this.categoryList.filter(el => el.name == category)[0].expenses;
+  }
+
+  togglePieDisplay() {
+    this.pieDisplay = !this.pieDisplay;
   }
   
 }

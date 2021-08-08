@@ -1,18 +1,23 @@
-<!-- <div class="container sample">
-    <div class="options vertical">
-        <span id="legendTitle">Global Electricity Demand by Energy Use</span>
-        <igx-item-legend #legend></igx-item-legend>
-    </div>
+<div id="chart" *ngIf="pieDisplay">
+  <h1>Pie representation of categories' values</h1>
+  <!-- [view]="view" -->
+  <ngx-charts-pie-chart
+    [scheme]="'horizon'"
+    [results]="data"
+    [gradient]="gradient"
+    [legend]="showLegend"
+    [legendPosition]="legendPosition"
+    [labels]="showLabels"
+    [doughnut]="isDoughnut"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)"
+    >
+  </ngx-charts-pie-chart>
+</div>
 
-    <div class="container">
-        <igx-pie-chart height="100%"
-            width="100%"
-            [dataSource]="data"
-            [legend]="legend"
-            valueMemberPath="Value"
-            labelMemberPath="Label"
-            labelsPosition="BestFit"
-            radiusFactor="0.7">
-        </igx-pie-chart>
-    </div>
-</div> -->
+<div id="chart" *ngIf="!pieDisplay">
+  <app-line-graph [data]="expenses" [category]="clickedCategory"
+    (toggle)="togglePieDisplay()">
+  </app-line-graph>
+</div>
