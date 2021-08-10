@@ -12,7 +12,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 
-import { ISpending } from 'src/app/model/spending';
+import { ISpendingCategory } from 'src/app/model/spendingCategory';
 
 @Component({
     selector: 'add-spending-dialog',
@@ -23,22 +23,22 @@ export class AddSpendingDialog {
         value: new FormControl('', [
             Validators.required,
             Validators.max(9999999),
-            Validators.min(0)
+            Validators.min(0),
         ]),
         date: new FormControl('', [
             Validators.required,
         ]),
-        reccuring: new FormControl('', [
-            Validators.required
+        category: new FormControl('', [
+            Validators.required,
         ]),
         name: new FormControl('', [
-            Validators.required
+            Validators.required,
         ])
     });
 
     constructor(
         public dialogRef: MatDialogRef<AddSpendingDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: ISpending
+        @Inject(MAT_DIALOG_DATA) public data: ISpendingCategory[]
     ) { }
 
     onCancel(): void {
