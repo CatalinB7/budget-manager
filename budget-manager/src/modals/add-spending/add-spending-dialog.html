@@ -8,6 +8,12 @@
         <mat-label>Name</mat-label>
         <input type="text" matInput formControlName="name" />
     </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of data" value="category.name">{{category.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
     <mat-form-field>
         <mat-label>Choose a date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date">
@@ -17,5 +23,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-button (click)="onSubmit()" cdkFocusInitial>Submit</button>
+    <button mat-button (click)="onSubmit()" cdkFocusInitial [disabled]="!form.valid">Submit</button>
 </div>

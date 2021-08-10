@@ -48,6 +48,7 @@ export class SpendingCardComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this._dialog.open(AddSpendingDialog, {
+      data: this.spendingList,
       disableClose: true,
       autoFocus: true,
       width: '300px',
