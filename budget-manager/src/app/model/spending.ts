@@ -4,5 +4,6 @@ export interface ISpending {
     value: number,
     date: Date,
     recurring: Recurrence,
-    name: string
+    name: string,
+    id: string
 }

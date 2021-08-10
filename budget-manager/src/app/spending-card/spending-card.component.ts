@@ -29,7 +29,7 @@ export class SpendingCardComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private spendingService: SpendingService
+    private _spendingService: SpendingService
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +50,12 @@ export class SpendingCardComponent implements OnInit {
     }
   }
 
+  onDelete(categoryName: string, spendingId: string) {
+    this._spendingService.removeSpending(categoryName, spendingId).subscribe();
+
+    location.reload();
+  }
+
   openDialog() {
     const dialogRef = this._dialog.open(AddSpendingDialog, {
       data: this.categoryList,
@@ -60,7 +66,7 @@ export class SpendingCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.spendingService.addSpending(result).subscribe();
+        this._spendingService.addSpending(result).subscribe();
         location.reload();
       }
     });

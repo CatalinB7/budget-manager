@@ -54,6 +54,10 @@ export class SpendingService {
     return this._http.post('http://localhost:3000/expenses_categories/categories?userId=1', body, {responseType: "text"});
   }
 
+  removeSpending(categoryName: string, spendingId: string) {
+    return this._http.delete(`http://localhost:3000/expenses_categories/spendings?userId=1&spendingId=${spendingId}&category=${categoryName}`, {responseType: "text"});
+  }
+
   removeSpendingCategory(categoryName: string) {
     return this._http.delete(`http://localhost:3000/expenses_categories/categories?userId=1&name=${categoryName}`, {responseType: "text"});
   }
