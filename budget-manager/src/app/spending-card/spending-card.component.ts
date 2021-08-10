@@ -15,6 +15,7 @@ import {
   IComputedSpendCateg,
   ISpendingCategory,
 } from '../model/spendingCategory';
+import { SpendingService } from '../services/spending.service';
 
 @Component({
   selector: 'app-spending-card',
@@ -26,7 +27,10 @@ export class SpendingCardComponent implements OnInit {
   @Input() categoryList: IComputedSpendCateg[] = []; //mapped spendingList so it contains total
   iconText = "arrow_upward";
 
-  constructor(private _dialog: MatDialog) { }
+  constructor(
+    private _dialog: MatDialog,
+    private spendingService: SpendingService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -48,7 +52,7 @@ export class SpendingCardComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this._dialog.open(AddSpendingDialog, {
-      data: this.spendingList,
+      data: this.categoryList,
       disableClose: true,
       autoFocus: true,
       width: '300px',
@@ -56,7 +60,8 @@ export class SpendingCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        
+        this.spendingService.addSpending(result).subscribe();
+        location.reload();
       }
     });
   }
