@@ -94,7 +94,7 @@ export const db = {
                             "recurring": "none"
                         },
                         {
-                            "id": 3,
+                            "id": 4,
                             "name": "DELL Monitor",
                             "value": 3000,
                             "date": "2021-07-15T15:29:56.128Z",
@@ -171,7 +171,7 @@ export const db = {
                             "recurring": "none"
                         },
                         {
-                            "id": 3,
+                            "id": 4,
                             "name": "DELL Monitor",
                             "value": 3000,
                             "date": "2021-07-15T15:29:56.128Z",
@@ -248,7 +248,7 @@ export const db = {
                             "recurring": "none"
                         },
                         {
-                            "id": 3,
+                            "id": 4,
                             "name": "DELL Monitor",
                             "value": 3000,
                             "date": "2021-07-15T15:29:56.128Z",
@@ -327,4 +327,64 @@ let editCategory = (userId: string, oldName: string, newName: string) => {
     });
 }
 
-export { checkCategoryExists, editCategory, insertCategory, removeCategory };
+interface ISpending {
+    name: string;
+    value: number;
+    date: string;
+    recurring: string;
+};
+
+let insertSpendingInCategory = (userId: string, category: string, spending: ISpending) => {
+    let expenses = db.expenses_categories.filter(el => el.userId == userId)[0].categories
+        .filter(el => el.name === category)[0].expenses;
+    expenses.forEach(el => {
+        if(el.name === spending.name)
+            throw new CustomError("Item already defined!", 409);
+    });
+    let id = expenses.length + 1;
+    expenses.push({...spending, id});
+}
+
+let editSpendingInCategory = (userId: string, spendingId: number, category: string, spending: ISpending) => {
+    let expenses = db.expenses_categories.filter(el => el.userId == userId)[0].categories
+        .filter(el => el.name === category)[0].expenses;
+    let found = false;
+    let sameNameCounter = 0;
+    expenses.forEach((el, idx) => {
+
+        if(el.id == spendingId) {
+            expenses[idx] = {...spending, id: spendingId};
+            found = true;
+        } else if(spending.name == el.name)
+                sameNameCounter++;
+    });
+    if(!found)
+        throw new CustomError(`Item with id ${spendingId} not found!`, 404);
+    if(sameNameCounter >= 1)
+        throw new CustomError("Item having same name already defined!", 409);
+    }
+
+let deleteSpendingInCategory = (userId: string, spendingId: number, category: string) => {
+    let expenses = db.expenses_categories.filter(el => el.userId == userId)[0].categories
+        .filter(el => el.name === category)[0].expenses;
+    let found = false;
+    for (let i = 0; i < expenses.length; i++) {
+        if(expenses[i].id == spendingId) {
+            found = true;
+            expenses.splice(i, 1);
+            return;
+        }
+    }
+    if(!found)
+        throw new CustomError(`Item with id ${spendingId} not found!`, 404);
+}
+
+export {
+  checkCategoryExists,
+  deleteSpendingInCategory,
+  editCategory,
+  editSpendingInCategory,
+  insertCategory,
+  insertSpendingInCategory,
+  removeCategory,
+};
