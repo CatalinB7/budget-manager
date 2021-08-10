@@ -8,8 +8,13 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
 
-import { ISpending } from '../model/spending';
-import { ISpendingCategory } from '../model/spendingCategory';
+import {
+  CategoryModalComponent,
+} from '../category-modal/category-modal.component';
+import {
+  IComputedSpendCateg,
+  ISpendingCategory,
+} from '../model/spendingCategory';
 
 @Component({
   selector: 'app-spending-card',
@@ -18,7 +23,7 @@ import { ISpendingCategory } from '../model/spendingCategory';
 })
 export class SpendingCardComponent implements OnInit {
   @Input() spendingList: ISpendingCategory[] = [];
-  categoryList: { name: string, total: number, expenses: ISpending[] }[] = []; //mapped spendingList so it contains total
+  @Input() categoryList: IComputedSpendCateg[] = []; //mapped spendingList so it contains total
   iconText = "arrow_upward";
 
   constructor(private _dialog: MatDialog) { }
@@ -27,15 +32,8 @@ export class SpendingCardComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    let names = changes.spendingList.currentValue.map((el: ISpendingCategory) => el.name);
-    let totals: number[] = changes.spendingList.currentValue
-      .map((cat: ISpendingCategory) => cat.expenses
-        .reduce((a: number, b: ISpending) => a + b.value, 0));
-    this.categoryList = totals.map((el, idx) => ({
-      total: el,
-      name: names[idx],
-      expenses: changes.spendingList.currentValue[idx].expenses
-    })).sort((a, b) => a.total < b.total ? -1 : 1);
+    this.categoryList = changes.categoryList.currentValue
+    .sort((a: IComputedSpendCateg, b: IComputedSpendCateg) => a.total < b.total ? -1 : 1);
   }
 
   clickedIcon() {
@@ -62,4 +60,18 @@ export class SpendingCardComponent implements OnInit {
     });
   }
   
+  openDialogCategories() {
+    const dialogRef = this._dialog.open(CategoryModalComponent, {
+      width: '75vw',
+      height: '75vh',
+      data: {categoryList: this.categoryList},
+      disableClose: true 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.clickedIcon(); //sort new array
+      this.clickedIcon();
+    });
+  }
+
 }

@@ -1,0 +1,23 @@
+<div id="chart" *ngIf="pieDisplay">
+  <h1>Pie representation of categories' values</h1>
+  <!-- [view]="view" -->
+  <ngx-charts-pie-chart
+    [scheme]="'horizon'"
+    [results]="data"
+    [gradient]="gradient"
+    [legend]="showLegend"
+    [legendPosition]="legendPosition"
+    [labels]="showLabels"
+    [doughnut]="isDoughnut"
+    (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onDeactivate($event)"
+    >
+  </ngx-charts-pie-chart>
+</div>
+
+<div id="chart" *ngIf="!pieDisplay">
+  <app-line-graph [data]="expenses" [category]="clickedCategory"
+    (toggle)="togglePieDisplay()">
+  </app-line-graph>
+</div>

@@ -7,24 +7,35 @@ import {
 
 import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+import {
+  CategoryModalComponent,
+} from '../category-modal/category-modal.component';
 import { AllMaterialModule } from '../material.module';
+import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
   SpendingCardComponent,
 } from '../spending-card/spending-card.component';
+import { LineGraphComponent } from '../line-graph/line-graph.component';
 
 @NgModule({
   declarations: [
     SpendingCardComponent,
     ShowIfTruncatedDirective,
-    AddSpendingDialog
+    AddSpendingDialog,
+    CategoryModalComponent,
+    PieChartComponent,
+    LineGraphComponent
   ],
   imports: [
     CommonModule,
     AllMaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxChartsModule
   ],
-  exports: [SpendingCardComponent]
+  exports: [SpendingCardComponent, PieChartComponent]
 })
 export class SpendingsModule { }
