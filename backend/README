@@ -1,5 +1,27 @@
-url=http://localhost:3000/
+DELETE spending having spendingId 2, from category electronics, from user having userId = 1
+http://localhost:3000/expenses_categories/spendings?userId=1&spendingId=2&category=electronics
 
-there are 3 users and each has the same expenses
-GET request for john user: http://localhost:3000/users?username=John
-GET request for john's expenses categories http://localhost:3000/expenses_categories?username=John
+POST new spending in category hobbies from userId = 1
+http://localhost:3000/expenses_categories/spendings?userId=1
+
+body = {
+"category": "hobbies",
+"spending": {
+  "name": "unNumeFrumi",
+  "value": 123,
+  "date": "2021-06-30T15:29:56.128Z",
+  "recurring": "cevaRandomSaExiste"
+	}
+}
+
+PUT spending having spendingId 3 from userId 1
+http://localhost:3000/expenses_categories/spendings?userId=1&spendingId=3
+body = {
+"category": "hobbies",
+"spending": {
+  "name": "unNume",
+  "value": 12345,
+  "date": "2021-06-30T15:29:56.128Z",
+  "recurring": "cevaRandomSaExiste"
+	}
+}
