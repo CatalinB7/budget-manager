@@ -4,11 +4,10 @@
     position: relative;
 }
 
-
 .graph {
     position: absolute;
     width: 100%;
-    height: 130%;
+    height: 100%;
 }
 
 .down-div {
@@ -17,11 +16,17 @@
     width: 100%;
     height: 10%;
     position: absolute;
-    bottom: 0;
+    bottom: 10%;
+    margin-bottom: 15px;
 }
 
 
 .btn {
     height: 5vh;
     width: 6vw;
+}
+
+.tooltip {
+    font-size: 1rem;
+    padding: 3px;
 }

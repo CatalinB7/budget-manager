@@ -8,16 +8,17 @@
         [xAxis]="xAxis"
         [yAxis]="yAxis"
         [yAxisLabel]="yAxisLabel"
-        [timeline]="timeline"
-    
+        [timeline]="true"
         [results]="data"
         (select)="onSelect($event)"
-        (activate)="onActivate($event)"
+        (isActive)="onActivate($event)"
         (deactivate)="onDeactivate($event)"
         >
-        <ng-template #tooltipTemplate>
-            {{selectedItem}}
-        </ng-template>
+            <ng-template #tooltipTemplate let-model="model">
+                <div class="tooltip">
+                    {{model.tooltipText}}
+                </div>
+            </ng-template>
     
         </ngx-charts-line-chart>
     </div>

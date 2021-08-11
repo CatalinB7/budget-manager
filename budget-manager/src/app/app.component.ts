@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   spendingList: ISpendingCategory[] = [];
   categoryList: IComputedSpendCateg[] = []; //mapped spendingList so it contains computed total
   budget: IBudget = {value: 0, plannedSaving: 0};
-
+  colsNo = 2;
   constructor(private _spengingService: SpendingService, private _budgetService: BudgetService) {}
 
   ngOnInit(): void {
@@ -37,4 +37,14 @@ export class AppComponent implements OnInit {
     });
     this._budgetService.getBudget().subscribe(budget => this.budget = budget);
   }
+
+
+
+  onResize(event: any) {
+    if (event.target.innerWidth <= 1200) 
+      this.colsNo = 1;
+    else this.colsNo = 2;
+  }
+
+
 }
