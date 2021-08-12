@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 mat-card-header {
     margin-top: 10px;
     margin-left: 20px;
@@ -9,7 +11,7 @@ mat-card-content {
 }
 
 .remaining-budget {
-    color: #43A547;
+    color: $money-color;
     text-align: center;
     font-size: x-large;
     border-style: solid;
@@ -21,4 +23,5 @@ button {
     position: absolute;
     top: 20px;
     right: 20px;
+    background-color: $manage-btn-color;
 }
