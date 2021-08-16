@@ -7,31 +7,29 @@
 </div>
 
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let category of categoryList; let i=index">
+    <mat-expansion-panel *ngFor="let category of categoryList">
         <mat-expansion-panel-header>
             <mat-panel-title class="header-div">
-                <p>{{categoryList[i].name}}</p>
-                <p class="money">{{categoryList[i].total}}$</p>
+                <p>{{category.name}}</p>
+                <p class="money">{{category.total}}$</p>
             </mat-panel-title>
         </mat-expansion-panel-header>
-
         <mat-list role="list">
-            <div *ngFor="let spending of categoryList[i].expenses">
+            <div *ngFor="let spending of category.expenses">
                 <mat-list-item class="header-div" role="listitem">
                     <div class="header-div">
                         <p id="spendingName" matTooltip={{spending.name}} appShowIfTruncated>{{spending.name}} </p>
-                        <!-- <p>{{spending.recurring}}</p>
-                     <p>{{spending.date}}</p> -->
                         <span>
                             <span class="money">{{spending.value}}$</span>
-                            <button mat-icon-button (click)="onDelete(categoryList[i].name ,spending.id)"><mat-icon color="warn">delete</mat-icon></button>
+                            <button mat-icon-button (click)="onDelete(category.name, spending.id)">
+                                <mat-icon color="warn">delete</mat-icon>
+                            </button>
                         </span>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
             </div>
         </mat-list>
-
     </mat-expansion-panel>
 </mat-accordion>
 

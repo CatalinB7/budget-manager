@@ -39,7 +39,6 @@ export class CategoryModalComponent {
   }
 
   addCategory(): void {
-    console.log("form = ", this.form);
     if(this.form.status == 'VALID') {
       this._spendingService.addSpendingCategory(this.form.value.category)
       .subscribe((result: any) => {
