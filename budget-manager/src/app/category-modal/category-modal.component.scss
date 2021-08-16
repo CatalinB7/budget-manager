@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .mat-dialog-content {
     height: 10%;
     display: flex;
@@ -11,9 +13,8 @@
 
 input {
     height: 3vh;
+    text-align: center;
 }
-
-
 
 .grid-div {
     display:grid;
@@ -24,7 +25,7 @@ input {
 mat-card {
     height: 10vh;
     width: 16vw;
-    background-color: rgb(77, 46, 10);
+    background-color: $category-card-color;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,12 +35,8 @@ mat-card {
         font-size: 1.1rem;
         font-weight: 600;
         width: 16vw;
-        // overflow: hidden;
-        // white-space: nowrap;
-        // text-overflow: ellipsis;
+        text-align: center;
     }
-    // button {
-    // }
 }
 
 .mat-dialog-actions {
@@ -60,7 +57,12 @@ mat-card {
 }
 
 #exit {
-    font-size: 1.4rem;
-    font-weight: 500;
+    user-select: none;
     color: red;
+}
+
+#exit:hover {
+    cursor: pointer;
+    background-color: $exit-btn-background; 
+    color: white;
 }

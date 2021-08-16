@@ -1,8 +1,12 @@
 import {
   Component,
   Inject,
-  OnInit,
 } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -16,8 +20,14 @@ import { SpendingService } from '../services/spending.service';
   templateUrl: './category-modal.component.html',
   styleUrls: ['./category-modal.component.scss']
 })
-export class CategoryModalComponent implements OnInit {
-  newCategory = "";
+export class CategoryModalComponent {
+
+  form = new FormGroup({
+    category: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+    ]),
+  });
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { categoryList: IComputedSpendCateg[] },
@@ -28,27 +38,25 @@ export class CategoryModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-    // console.log("dialog data", this.data);
-  }
-
   addCategory(): void {
-    this._spendingService.addSpendingCategory(this.newCategory).
-      subscribe((result: any) => {
-        this.data.categoryList.push({ total: 0, name: this.newCategory, expenses: [] });
-        this.newCategory = "";
+    console.log("form = ", this.form);
+    if(this.form.status == 'VALID') {
+      this._spendingService.addSpendingCategory(this.form.value.category)
+      .subscribe((result: any) => {
+        this.data.categoryList.push({ total: 0, name: this.form.value.category, expenses: [] });
+        this.form.reset();
       },
         err => console.log(err));
+    } else {
+      //display an error
+    }
   }
 
   removeCategory(categoryName: string): void {
-
     this._spendingService.removeSpendingCategory(categoryName).
       subscribe((res: any) => {
-        //this.data.categoryList = this.data.categoryList.filter(el => el.name != categoryName);
-        //i need to edit the same array i got from parent
         this.data.categoryList.forEach((el, idx) => {
-          if(el.name == categoryName) {
+          if (el.name == categoryName) {
             this.data.categoryList.splice(idx, 1);
             return;
           }
@@ -60,12 +68,11 @@ export class CategoryModalComponent implements OnInit {
     this._spendingService.editCategory(oldCategory, newCategory).
       subscribe((res: any) => {
         this.data.categoryList.forEach((el, idx) => {
-          if(el.name == oldCategory) {
+          if (el.name == oldCategory) {
             this.data.categoryList[idx].name = newCategory;
             return;
           }
         });
-      }), (err: any) => console.log(err)
+      }, (err: any) => console.log(err));
   }
-
 }

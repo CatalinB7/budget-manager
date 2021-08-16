@@ -1,24 +1,30 @@
 <div id="title-div">
   <h1 mat-dialog-title>Manage categories</h1>
-  <button mat-button (click)="onNoClick()" id="exit">X</button>
+  <mat-icon (click)="onNoClick()" id="exit">close</mat-icon>
 </div>
 
-<div mat-dialog-content>
-  <p>Insert Spending Category</p>
-    <input matInput [(ngModel)]="newCategory">
+
+<form [formGroup]="form">
+  <div mat-dialog-content>
+    <p>Insert Spending Category</p>
+    <mat-form-field>
+      <mat-label>New Category</mat-label>
+      <input type="text" matInput formControlName="category" />
+    </mat-form-field>
     <button mat-button (click)="addCategory()">Submit</button>
-</div>
+  </div>
+</form>
 <div class="grid-div">
-    <mat-card *ngFor="let category of data.categoryList">
-
+  <mat-card *ngFor="let category of data.categoryList">
+    <form>
+      <mat-form-field>
+        <mat-label>Edit Category</mat-label>
         <input matInput placeholder="Category Name" value={{category.name}} #inptVal>
-        <span id="btn-span">
-          <button mat-button (click)="removeCategory(category.name)">Delete</button>
-          <button mat-button (click)="editCategory(category.name, inptVal.value)">Edit</button>
-        </span>
-    </mat-card>
+      </mat-form-field>
+    </form>
+    <span id="btn-span">
+      <button type="button" mat-button (click)="removeCategory(category.name)">Delete</button>
+      <button mat-button (click)="editCategory(category.name, inptVal.value)">Edit</button>
+    </span>
+  </mat-card>
 </div>
-<!-- <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Exit</button>
-  <button mat-button>Save</button>
-</div> -->
