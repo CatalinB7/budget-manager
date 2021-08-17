@@ -17,6 +17,7 @@ import { ISpendingCategory } from 'src/app/model/spendingCategory';
 @Component({
     selector: 'add-spending-dialog',
     templateUrl: 'add-spending-dialog.html',
+    styleUrls: ['./add-spending-dialog.scss']
 })
 export class AddSpendingDialog {
     form = new FormGroup({
