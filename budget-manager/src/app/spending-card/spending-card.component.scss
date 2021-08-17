@@ -52,12 +52,7 @@ span {
     margin-right: 15px;
 }
 
-.ellipsis-text {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-::ng-deep .mat-tooltip {
+::ng-deep .tool-tip {
     font-size: 1rem !important;
+    word-break: break-all !important;
 }

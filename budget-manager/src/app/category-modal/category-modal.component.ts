@@ -28,6 +28,10 @@ export class CategoryModalComponent {
       Validators.minLength(1),
     ]),
   });
+  oldCategory = "";
+  showSubmit = true;
+  labelName = "New Category";
+
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { categoryList: IComputedSpendCateg[] },
@@ -39,7 +43,7 @@ export class CategoryModalComponent {
   }
 
   addCategory(): void {
-    if(this.form.status == 'VALID') {
+    if(this.form.status === 'VALID') {
       this._spendingService.addSpendingCategory(this.form.value.category)
       .subscribe((result: any) => {
         this.data.categoryList.push({ total: 0, name: this.form.value.category, expenses: [] });
@@ -63,15 +67,35 @@ export class CategoryModalComponent {
       })
   }
 
-  editCategory(oldCategory: string, newCategory: string): void {
-    this._spendingService.editCategory(oldCategory, newCategory).
+  editCategory(newCategory: string): void {
+    this._spendingService.editCategory(this.oldCategory, newCategory).
       subscribe((res: any) => {
         this.data.categoryList.forEach((el, idx) => {
-          if (el.name == oldCategory) {
+          if (el.name == this.oldCategory) {
             this.data.categoryList[idx].name = newCategory;
             return;
           }
         });
+        this.dropEdit();
       }, (err: any) => console.log(err));
   }
+
+  changeInputToEdit(category: string) {
+    this.setInput(category);
+    this.oldCategory = category;
+    this.showSubmit = false;
+    this.labelName = "Edit Category";
+  }
+
+  dropEdit() {
+    this.setInput("");
+    this.showSubmit = true;
+    this.labelName = "New Category";
+    this.oldCategory = "";
+  }
+
+  setInput(val: string) {
+    this.form.setValue({'category': val});
+  }
+
 }

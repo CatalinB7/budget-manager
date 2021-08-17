@@ -8,7 +8,7 @@ h1 {
     letter-spacing: 0.1rem;
 }
 
-::ng-deep .ngx-charts {
+:host ::ng-deep .ngx-charts {
     text {
         fill: white !important;
         font-size: 0.8rem;
