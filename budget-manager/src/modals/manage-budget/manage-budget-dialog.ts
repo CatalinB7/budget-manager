@@ -17,6 +17,7 @@ import { IBudget } from 'src/app/model/budget';
 @Component({
     selector: 'manage-budget-dialog',
     templateUrl: 'manage-budget-dialog.html',
+    styleUrls: ['./manage-budget-dialog.scss']
 })
 export class ManageBudgetDialog {
     form = new FormGroup({
