@@ -1,6 +1,6 @@
-<form>
-    <h1 mat-dialog-title>Add Spending</h1>
-    <div mat-dialog-content [formGroup]="form">
+<form >
+    <h1 mat-dialog-title class="title">Add Spending</h1>
+    <div mat-dialog-content [formGroup]="form" class="container">
         <mat-form-field>
             <mat-label>Value</mat-label>
             <input type="number" matInput formControlName="value" />
@@ -22,8 +22,8 @@
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
     </div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions class="button-group">
         <button type="button" mat-button (click)="onCancel()">Cancel</button>
-        <button type="submit" mat-button (click)="onSubmit()" [disabled]="!form.valid">Submit</button>
+        <button mat-button (click)="onSubmit()" [disabled]="!form.valid">Submit</button>
     </div>
 </form>
