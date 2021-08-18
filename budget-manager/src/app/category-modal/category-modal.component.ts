@@ -1,12 +1,17 @@
 import {
   Component,
   Inject,
-  OnInit,
 } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { IComputedSpendCateg } from '../model/spendingCategory';
 import { SpendingService } from '../services/spending.service';
@@ -16,56 +21,89 @@ import { SpendingService } from '../services/spending.service';
   templateUrl: './category-modal.component.html',
   styleUrls: ['./category-modal.component.scss']
 })
-export class CategoryModalComponent implements OnInit {
-  newCategory = "";
+export class CategoryModalComponent {
+
+  form = new FormGroup({
+    category: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(22)
+    ]),
+  });
+  oldCategory = "";
+  showSubmit = true;
+  labelName = "New Category";
+
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { categoryList: IComputedSpendCateg[] },
-    private _spendingService: SpendingService
+    private _spendingService: SpendingService,
+    private _snackBar: MatSnackBar
   ) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-    // console.log("dialog data", this.data);
-  }
-
   addCategory(): void {
-    this._spendingService.addSpendingCategory(this.newCategory).
-      subscribe((result: any) => {
-        this.data.categoryList.push({ total: 0, name: this.newCategory, expenses: [] });
-        this.newCategory = "";
+    if(this.form.status === 'VALID') {
+      this._spendingService.addSpendingCategory(this.form.value.category)
+      .subscribe((result: any) => {
+        this.data.categoryList.push({ total: 0, name: this.form.value.category, expenses: [] });
+        this.openSnackBar(`Created ${this.form.value.category}`, 800);
+        this.form.reset();
       },
-        err => console.log(err));
+        err => this.openSnackBar(err.error, 1000));
+    } else {
+      this.openSnackBar('Category name must have length between 1 and 22 characters', 2000);
+    }
   }
 
   removeCategory(categoryName: string): void {
-
     this._spendingService.removeSpendingCategory(categoryName).
       subscribe((res: any) => {
-        //this.data.categoryList = this.data.categoryList.filter(el => el.name != categoryName);
-        //i need to edit the same array i got from parent
         this.data.categoryList.forEach((el, idx) => {
-          if(el.name == categoryName) {
+          if (el.name == categoryName) {
             this.data.categoryList.splice(idx, 1);
             return;
           }
         });
-      })
+      }, (err: any) =>this.openSnackBar(err.error, 1000));
   }
 
-  editCategory(oldCategory: string, newCategory: string): void {
-    this._spendingService.editCategory(oldCategory, newCategory).
+  editCategory(newCategory: string): void {
+    this._spendingService.editCategory(this.oldCategory, newCategory).
       subscribe((res: any) => {
         this.data.categoryList.forEach((el, idx) => {
-          if(el.name == oldCategory) {
+          if (el.name == this.oldCategory) {
             this.data.categoryList[idx].name = newCategory;
             return;
           }
         });
-      }), (err: any) => console.log(err)
+        this.dropEdit();
+      }, (err: any) =>this.openSnackBar(err.error, 1000));
+  }
+
+  changeInputToEdit(category: string) {
+    this.setInput(category);
+    this.oldCategory = category;
+    this.showSubmit = false;
+    this.labelName = "Edit Category";
+  }
+
+  dropEdit() {
+    this.setInput("");
+    this.showSubmit = true;
+    this.labelName = "New Category";
+    this.oldCategory = "";
+  }
+
+  setInput(val: string) {
+    this.form.setValue({'category': val});
+  }
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message,'', { duration });
   }
 
 }

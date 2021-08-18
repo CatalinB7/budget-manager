@@ -2,7 +2,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -14,7 +13,7 @@ import { ISpending } from '../model/spending';
   templateUrl: './line-graph.component.html',
   styleUrls: ['./line-graph.component.scss']
 })
-export class LineGraphComponent implements OnInit {
+export class LineGraphComponent {
   @Input() data: any[] = [];
   @Input() category: string = "";
   @Output() toggle = new EventEmitter<void>();
@@ -30,19 +29,15 @@ export class LineGraphComponent implements OnInit {
   yAxisLabel: string = 'Value($)';
   timeline: boolean = true;
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#5AA454']
   };
 
-
-  selectedItem = "";
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {//TODO: make the input for this component equal to data on line 43
     this.category = changes.category.currentValue;
-    let sortedArr = changes.data.currentValue.sort((a: any, b: any) => ('' + a.date).localeCompare(b.date));
+    let sortedArr: ISpending[] = changes.data.currentValue.sort((a: any, b: any) => ('' + a.date).localeCompare(b.date))
+      .map((el: ISpending) => ({...el}));
     let values = sortedArr.map((el: any) => el.value);
     for (let i = 1; i < sortedArr.length; i++) sortedArr[i].value += sortedArr[i - 1].value;
     this.data = [{
@@ -54,18 +49,6 @@ export class LineGraphComponent implements OnInit {
           tooltipText: `${el.name} : ${values[idx]}$`
         }))
     }];
-  }
-
-  onSelect(data: any): void {
-    this.selectedItem = data.itemName;
-  }
-
-  onActivate(data: any): void {
-    //console.log('Activate data val = ', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    //console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   clickBack() {

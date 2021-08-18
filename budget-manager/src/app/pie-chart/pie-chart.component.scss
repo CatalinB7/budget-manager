@@ -1,4 +1,4 @@
-#chart {
+.chart {
     width: 100% !important;
     height: 100% !important;
 }
@@ -6,4 +6,11 @@
 h1 {
     font-size: 1rem;
     letter-spacing: 0.1rem;
+}
+
+:host::ng-deep .ngx-charts {
+    text {
+        fill: white !important;
+        font-size: 0.8rem;
+    }
 }

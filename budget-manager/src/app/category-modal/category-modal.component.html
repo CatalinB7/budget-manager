@@ -1,24 +1,35 @@
 <div id="title-div">
   <h1 mat-dialog-title>Manage categories</h1>
-  <button mat-button (click)="onNoClick()" id="exit">X</button>
+  <button mat-icon-button (click)="onNoClick()" id="exit">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
-
-<div mat-dialog-content>
-  <p>Insert Spending Category</p>
-    <input matInput [(ngModel)]="newCategory">
-    <button mat-button (click)="addCategory()">Submit</button>
-</div>
-<div class="grid-div">
-    <mat-card *ngFor="let category of data.categoryList">
-
-        <input matInput placeholder="Category Name" value={{category.name}} #inptVal>
-        <span id="btn-span">
-          <button mat-button (click)="removeCategory(category.name)">Delete</button>
-          <button mat-button (click)="editCategory(category.name, inptVal.value)">Edit</button>
+<div class="flex-div">
+  <div class="form-div">
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>{{labelName}}</mat-label>
+        <input type="text" matInput formControlName="category" />
+      </mat-form-field>
+      <button *ngIf="showSubmit; else showUpdate" mat-button (click)="addCategory()">Submit</button>
+      <ng-template #showUpdate>
+        <span class="edit-btns">
+          <button mat-button (click)="editCategory(form.value.category)">Update</button>
+          <button mat-button (click)="dropEdit()">Discard</button>
         </span>
-    </mat-card>
+      </ng-template>
+    </form>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card *ngFor="let category of data.categoryList">
+    <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
+    <span class="span-icons">
+      <button [disabled]="!showSubmit" mat-icon-button (click)="removeCategory(category.name)">
+        <mat-icon color="{{category.name !== oldCategory ? 'warn' : ''}}">delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="changeInputToEdit(category.name)">
+        <mat-icon color="primary">edit</mat-icon>
+      </button>
+    </span>
+  </mat-card>
 </div>
-<!-- <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Exit</button>
-  <button mat-button>Save</button>
-</div> -->

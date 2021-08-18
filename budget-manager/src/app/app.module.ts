@@ -4,6 +4,13 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,7 +22,6 @@ import { DollarPipe } from 'src/utils/dollar.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BudgetComponent } from './budget/budget.component';
-import { AllMaterialModule } from './material.module';
 import { SpendingsModule } from './spendings/spendings.module';
 
 @NgModule({
@@ -29,11 +35,17 @@ import { SpendingsModule } from './spendings/spendings.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AllMaterialModule,
     HttpClientModule,
     SpendingsModule,
     ReactiveFormsModule,
     FormsModule,
+    MatIconModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

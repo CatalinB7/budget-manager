@@ -11,10 +11,7 @@ import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
 import {
   CategoryModalComponent,
 } from '../category-modal/category-modal.component';
-import {
-  IComputedSpendCateg,
-  ISpendingCategory,
-} from '../model/spendingCategory';
+import { IComputedSpendCateg } from '../model/spendingCategory';
 import { SpendingService } from '../services/spending.service';
 
 @Component({
@@ -23,8 +20,7 @@ import { SpendingService } from '../services/spending.service';
   styleUrls: ['./spending-card.component.scss']
 })
 export class SpendingCardComponent implements OnInit {
-  @Input() spendingList: ISpendingCategory[] = [];
-  @Input() categoryList: IComputedSpendCateg[] = []; //mapped spendingList so it contains total
+  @Input() categoryList: IComputedSpendCateg[] = [];
   iconText = "arrow_upward";
 
   constructor(
@@ -37,7 +33,7 @@ export class SpendingCardComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     this.categoryList = changes.categoryList.currentValue
-    .sort((a: IComputedSpendCateg, b: IComputedSpendCateg) => a.total < b.total ? -1 : 1);
+      .sort((a: IComputedSpendCateg, b: IComputedSpendCateg) => a.total < b.total ? -1 : 1);
   }
 
   clickedIcon() {
@@ -52,7 +48,6 @@ export class SpendingCardComponent implements OnInit {
 
   onDelete(categoryName: string, spendingId: string) {
     this._spendingService.removeSpending(categoryName, spendingId).subscribe();
-
     location.reload();
   }
 
@@ -65,19 +60,19 @@ export class SpendingCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this._spendingService.addSpending(result).subscribe();
         location.reload();
       }
     });
   }
-  
+
   openDialogCategories() {
     const dialogRef = this._dialog.open(CategoryModalComponent, {
       width: '75vw',
       height: '75vh',
-      data: {categoryList: this.categoryList},
-      disableClose: true 
+      data: { categoryList: this.categoryList },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

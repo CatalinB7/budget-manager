@@ -1,56 +1,42 @@
-.mat-dialog-content {
-    height: 10%;
-    display: flex;
-    align-items: center;
-    p {
-        margin: 0;
-        margin-right: 1vw;
-        padding: 0;
-    }
-}
+@import "../../variables.scss";
 
 input {
     height: 3vh;
+    text-align: center;
 }
 
-
-
-.grid-div {
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto;
-}
-
-mat-card {
-    height: 10vh;
-    width: 16vw;
-    background-color: rgb(77, 46, 10);
+.flex-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 5px;
-    input {
-        font-size: 1.1rem;
-        font-weight: 600;
-        width: 16vw;
-        // overflow: hidden;
-        // white-space: nowrap;
-        // text-overflow: ellipsis;
-    }
-    // button {
-    // }
 }
 
-.mat-dialog-actions {
+mat-card {
+    height: 1.5vh;
+    width: 95%;
+    background-color: $category-card-color;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2px;
+    p {
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+        width: 90%;
+        text-align-last: left;
+        margin: 0;
+    }
 }
 
-#btn-span {
+.form-div {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 #title-div {
@@ -60,7 +46,26 @@ mat-card {
 }
 
 #exit {
-    font-size: 1.4rem;
-    font-weight: 500;
+    user-select: none;
     color: red;
+}
+
+#exit:hover {
+    cursor: pointer;
+    background-color: $exit-btn-background;
+    color: white;
+}
+
+.mat-divider {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.edit-btns {
+    width: 10vw;
+    margin-left: 10px;
+}
+
+.span-icons {
+    min-width: 80px;
 }
