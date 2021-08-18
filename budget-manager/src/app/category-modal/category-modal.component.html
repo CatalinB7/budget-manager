@@ -1,30 +1,35 @@
 <div id="title-div">
   <h1 mat-dialog-title>Manage categories</h1>
-  <button mat-icon-button (click)="onNoClick()" id="exit"><mat-icon>close</mat-icon></button >
+  <button mat-icon-button (click)="onNoClick()" id="exit">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
-
-
-<form [formGroup]="form">
-  <div mat-dialog-content>
-    <p>Insert Spending Category</p>
-    <mat-form-field>
-      <mat-label>New Category</mat-label>
-      <input type="text" matInput formControlName="category" />
-    </mat-form-field>
-    <button mat-button (click)="addCategory()">Submit</button>
-  </div>
-</form>
-<div class="grid-div">
-  <mat-card *ngFor="let category of data.categoryList">
-    <form>
+<div class="flex-div">
+  <div class="form-div">
+    <form [formGroup]="form">
       <mat-form-field>
-        <mat-label>Edit Category</mat-label>
-        <input matInput placeholder="Category Name" value={{category.name}} #inptVal>
+        <mat-label>{{labelName}}</mat-label>
+        <input type="text" matInput formControlName="category" />
       </mat-form-field>
+      <button *ngIf="showSubmit; else showUpdate" mat-button (click)="addCategory()">Submit</button>
+      <ng-template #showUpdate>
+        <span class="edit-btns">
+          <button mat-button (click)="editCategory(form.value.category)">Update</button>
+          <button mat-button (click)="dropEdit()">Discard</button>
+        </span>
+      </ng-template>
     </form>
-    <span id="btn-span">
-      <button type="button" mat-button (click)="removeCategory(category.name)">Delete</button>
-      <button mat-button (click)="editCategory(category.name, inptVal.value)">Edit</button>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card *ngFor="let category of data.categoryList">
+    <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
+    <span class="span-icons">
+      <button [disabled]="!showSubmit" mat-icon-button (click)="removeCategory(category.name)">
+        <mat-icon color="{{category.name !== oldCategory ? 'warn' : ''}}">delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="changeInputToEdit(category.name)">
+        <mat-icon color="primary">edit</mat-icon>
+      </button>
     </span>
   </mat-card>
 </div>

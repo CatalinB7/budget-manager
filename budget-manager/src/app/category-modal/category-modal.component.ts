@@ -11,6 +11,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { IComputedSpendCateg } from '../model/spendingCategory';
 import { SpendingService } from '../services/spending.service';
@@ -28,10 +29,15 @@ export class CategoryModalComponent {
       Validators.minLength(1),
     ]),
   });
+  oldCategory = "";
+  showSubmit = true;
+  labelName = "New Category";
+
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { categoryList: IComputedSpendCateg[] },
-    private _spendingService: SpendingService
+    private _spendingService: SpendingService,
+    private _snackBar: MatSnackBar
   ) { }
 
   onNoClick(): void {
@@ -39,15 +45,16 @@ export class CategoryModalComponent {
   }
 
   addCategory(): void {
-    if(this.form.status == 'VALID') {
+    if(this.form.status === 'VALID') {
       this._spendingService.addSpendingCategory(this.form.value.category)
       .subscribe((result: any) => {
         this.data.categoryList.push({ total: 0, name: this.form.value.category, expenses: [] });
+        this.openSnackBar(`Created ${this.form.value.category}`, 800);
         this.form.reset();
       },
-        err => console.log(err));
+        err => this.openSnackBar(err.error, 1000));
     } else {
-      //display an error
+      this.openSnackBar('Category name must have length > 1', 1700);
     }
   }
 
@@ -60,18 +67,42 @@ export class CategoryModalComponent {
             return;
           }
         });
-      })
+      }, (err: any) =>this.openSnackBar(err.error, 1000));
   }
 
-  editCategory(oldCategory: string, newCategory: string): void {
-    this._spendingService.editCategory(oldCategory, newCategory).
+  editCategory(newCategory: string): void {
+    this._spendingService.editCategory(this.oldCategory, newCategory).
       subscribe((res: any) => {
         this.data.categoryList.forEach((el, idx) => {
-          if (el.name == oldCategory) {
+          if (el.name == this.oldCategory) {
             this.data.categoryList[idx].name = newCategory;
             return;
           }
         });
-      }, (err: any) => console.log(err));
+        this.dropEdit();
+      }, (err: any) =>this.openSnackBar(err.error, 1000));
   }
+
+  changeInputToEdit(category: string) {
+    this.setInput(category);
+    this.oldCategory = category;
+    this.showSubmit = false;
+    this.labelName = "Edit Category";
+  }
+
+  dropEdit() {
+    this.setInput("");
+    this.showSubmit = true;
+    this.labelName = "New Category";
+    this.oldCategory = "";
+  }
+
+  setInput(val: string) {
+    this.form.setValue({'category': val});
+  }
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message,'', { duration });
+  }
+
 }

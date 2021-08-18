@@ -10,7 +10,7 @@
     <mat-expansion-panel *ngFor="let category of categoryList">
         <mat-expansion-panel-header>
             <mat-panel-title class="header-div">
-                <p class="ellipsis-text" matTooltip={{category.name}} appShowIfTruncated>{{category.name}}</p>
+                <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
                 <p class="money">{{category.total}}$</p>
             </mat-panel-title>
         </mat-expansion-panel-header>
@@ -18,7 +18,7 @@
             <div *ngFor="let spending of category.expenses">
                 <mat-list-item class="header-div" role="listitem">
                     <div class="header-div">
-                        <p class="ellipsis-text" matTooltip={{spending.name}} appShowIfTruncated>{{spending.name}} </p>
+                        <p class="ellipsis-text" [matTooltip]="spending.name" appShowIfTruncated>{{spending.name}}</p>
                         <span>
                             <span class="money">{{spending.value}}$</span>
                             <button mat-icon-button (click)="onDelete(category.name, spending.id)">
