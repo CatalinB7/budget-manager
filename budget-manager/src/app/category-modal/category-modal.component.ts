@@ -11,6 +11,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { IComputedSpendCateg } from '../model/spendingCategory';
 import { SpendingService } from '../services/spending.service';
@@ -35,7 +36,8 @@ export class CategoryModalComponent {
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { categoryList: IComputedSpendCateg[] },
-    private _spendingService: SpendingService
+    private _spendingService: SpendingService,
+    private _snackBar: MatSnackBar
   ) { }
 
   onNoClick(): void {
@@ -47,11 +49,12 @@ export class CategoryModalComponent {
       this._spendingService.addSpendingCategory(this.form.value.category)
       .subscribe((result: any) => {
         this.data.categoryList.push({ total: 0, name: this.form.value.category, expenses: [] });
+        this.openSnackBar(`Created ${this.form.value.category}`, 800);
         this.form.reset();
       },
-        err => console.log(err));
+        err => this.openSnackBar(err.error, 1000));
     } else {
-      //display an error
+      this.openSnackBar('Category name must have length > 1', 1700);
     }
   }
 
@@ -64,7 +67,7 @@ export class CategoryModalComponent {
             return;
           }
         });
-      })
+      }, (err: any) =>this.openSnackBar(err.error, 1000));
   }
 
   editCategory(newCategory: string): void {
@@ -77,7 +80,7 @@ export class CategoryModalComponent {
           }
         });
         this.dropEdit();
-      }, (err: any) => console.log(err));
+      }, (err: any) =>this.openSnackBar(err.error, 1000));
   }
 
   changeInputToEdit(category: string) {
@@ -96,6 +99,10 @@ export class CategoryModalComponent {
 
   setInput(val: string) {
     this.form.setValue({'category': val});
+  }
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message,'', { duration });
   }
 
 }

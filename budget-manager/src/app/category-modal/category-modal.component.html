@@ -22,7 +22,7 @@
   </div>
   <mat-divider></mat-divider>
   <mat-card *ngFor="let category of data.categoryList">
-    <p class="ellipsis-text" matTooltipClass="tool-tip" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
+    <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
     <span class="span-icons">
       <button [disabled]="!showSubmit" mat-icon-button (click)="removeCategory(category.name)">
         <mat-icon color="{{category.name !== oldCategory ? 'warn' : ''}}">delete</mat-icon>
