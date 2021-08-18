@@ -1,13 +1,7 @@
-import {
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import {
-  Observable,
-  Subject,
-} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import {
   map,
   tap,
@@ -15,61 +9,47 @@ import {
 
 import { Recurrence } from '../enums/recurrences';
 import { ISpendingCategory } from '../model/spendingCategory';
-import { ISpendingTotal } from '../model/spendingTotal';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }),
-};
+import { SpendingResponse } from '../model/spendingResponse';
 
 @Injectable({ providedIn: 'root' })
 export class SpendingService {
-  spendingList: ISpendingCategory[] = [];
-  spendingList$ = new Subject<ISpendingCategory[]>();
+  spendingList$ = new BehaviorSubject<ISpendingCategory[]>([]);
 
-  spendingTotals$ = new Subject<ISpendingTotal[]>();
+  spendingTotals$ = this.spendingList$.pipe(
+    map((categories) => {
+      return categories.map((category) => {
+        let total = 0;
+        category.expenses.forEach(element => {
+          total += element.value;
+        });
 
-  constructor(private _http: HttpClient) {
-    this.spendingList$.subscribe(data => this.spendingList = data);
-  }
+        return { total: total, name: category.name };
+      });
+    }));
 
-  handleResponse(data: string) {
-    if (data === "OK") {
-      this.computeTotals();
+  constructor(private _http: HttpClient) { }
+
+  handleResponse(data: string, newValue: ISpendingCategory[]) {
+    if (data === 'OK') {
+      this.spendingList$.next(newValue);
     } else {
-      location.reload();
+      this.getSpendingList();
     }
   }
 
-  computeTotals() {
-    this.spendingTotals$.next(this.spendingList.map((category) => {
-      let total = 0;
-      category.expenses.forEach(element => {
-        total += element.value;
-      });
-
-      
-      return { total: total, name: category.name };
-    }));
-  }
-
   getCategotyPosition(categoryName: string): number {
-    return this.spendingList.map((obj) => obj.name).indexOf(categoryName);
+    return this.spendingList$.value.map((obj) => obj.name).indexOf(categoryName);
   }
 
   getSpendingPosition(categoryPosition: number, spendingId: string): number {
-    return this.spendingList[categoryPosition].expenses.map(obj => obj.id).indexOf(spendingId);
+    return this.spendingList$.value[categoryPosition].expenses.map(obj => obj.id).indexOf(spendingId);
   }
 
-  getSpendingList(): Observable<ISpendingCategory[]> {
-    return this._http.get('http://localhost:3000/expenses_categories?userId=1').pipe(
-      map((data: any) => data[0].categories),
+  getSpendingList() {
+    return this._http.get<SpendingResponse>('http://localhost:3000/expenses_categories?userId=1').pipe(
+      map((data) => data[0].categories),
       tap(data => {
         this.spendingList$.next(data);
-
-        this.computeTotals();
       })
     );
   }
@@ -88,12 +68,14 @@ export class SpendingService {
       spending: newSpending
     };
 
-    this.spendingList[this.getCategotyPosition(spending.category)].expenses.push(newSpending);
-    this.spendingList$.next(this.spendingList);
 
     return this._http.post('http://localhost:3000/expenses_categories/spendings?userId=1', body, { responseType: "text" }).pipe(
       tap(data => {
-        this.handleResponse(data);
+        const currentSpending = this.spendingList$.value;
+
+        currentSpending[this.getCategotyPosition(spending.category)].expenses.push(newSpending);
+
+        this.handleResponse(data, [...currentSpending]);
       })
     );
   }
@@ -101,12 +83,9 @@ export class SpendingService {
   addSpendingCategory(categoryName: string) {
     const body: ISpendingCategory = { name: categoryName, expenses: [] };
 
-    this.spendingList.push(body);
-    this.spendingList$.next(this.spendingList);
-
     return this._http.post('http://localhost:3000/expenses_categories/categories?userId=1', body, { responseType: "text" }).pipe(
       tap(data => {
-        this.handleResponse(data);
+        this.handleResponse(data, [...this.spendingList$.value, body]);
       })
     );
   }
@@ -115,12 +94,11 @@ export class SpendingService {
     const categoryPosition = this.getCategotyPosition(categoryName);
     const spendingPosition = this.getSpendingPosition(categoryPosition, spendingId);
 
-    this.spendingList[categoryPosition].expenses.splice(spendingPosition, 1);
-    this.spendingList$.next(this.spendingList);
-
     return this._http.delete(`http://localhost:3000/expenses_categories/spendings?userId=1&spendingId=${spendingId}&category=${categoryName}`, { responseType: "text" }).pipe(
       tap(data => {
-        this.handleResponse(data);
+        this.spendingList$.value[categoryPosition].expenses.splice(spendingPosition, 1);
+
+        this.handleResponse(data, this.spendingList$.value);
       })
     );
   }
@@ -128,12 +106,11 @@ export class SpendingService {
   removeSpendingCategory(categoryName: string) {
     const categoryPosition = this.getCategotyPosition(categoryName);
 
-    this.spendingList.splice(categoryPosition, 1);
-    this.spendingList$.next(this.spendingList);
-
     return this._http.delete(`http://localhost:3000/expenses_categories/categories?userId=1&name=${categoryName}`, { responseType: "text" }).pipe(
       tap(data => {
-        this.handleResponse(data);
+        this.spendingList$.value.splice(categoryPosition, 1);
+
+        this.handleResponse(data, this.spendingList$.value);
       })
     );
   }
@@ -141,12 +118,11 @@ export class SpendingService {
   editCategory(oldCategory: string, newCategory: string) {
     const categoryPosition = this.getCategotyPosition(oldCategory);
 
-    this.spendingList[categoryPosition].name = newCategory;
-    this.spendingList$.next(this.spendingList);
-
     return this._http.put(`http://localhost:3000/expenses_categories/categories?userId=1&oldName=${oldCategory}&newName=${newCategory}`, {}, { responseType: "text" }).pipe(
       tap(data => {
-        this.handleResponse(data);
+        this.spendingList$.value[categoryPosition].name = newCategory;
+
+        this.handleResponse(data, this.spendingList$.value);
       })
     );
 
