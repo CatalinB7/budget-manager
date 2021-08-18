@@ -27,6 +27,7 @@ export class CategoryModalComponent {
     category: new FormControl('', [
       Validators.required,
       Validators.minLength(1),
+      Validators.maxLength(22)
     ]),
   });
   oldCategory = "";
@@ -54,7 +55,7 @@ export class CategoryModalComponent {
       },
         err => this.openSnackBar(err.error, 1000));
     } else {
-      this.openSnackBar('Category name must have length > 1', 1700);
+      this.openSnackBar('Category name must have length between 1 and 22 characters', 2000);
     }
   }
 
