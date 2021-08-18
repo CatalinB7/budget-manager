@@ -6,8 +6,7 @@ mat-card-header {
 }
 
 mat-card-content {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px 20px 0px 20px;
 }
 
 .remaining-budget {
@@ -19,9 +18,14 @@ mat-card-content {
     border-radius: 20px;   
 }
 
+.button-title-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
 button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    flex-shrink: 0;
     background-color: $manage-btn-color;
 }

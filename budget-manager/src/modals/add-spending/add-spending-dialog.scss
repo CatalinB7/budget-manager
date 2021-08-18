@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    text-align: center;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
