@@ -37,4 +37,8 @@ export class AppComponent implements OnInit {
       this.colsNo = 1;
     else this.colsNo = 2;
   }
+
+  updateBudget(newBudget: IBudget) {
+    this._budgetService.editBudget(newBudget);
+  }
 }
