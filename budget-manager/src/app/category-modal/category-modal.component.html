@@ -24,8 +24,9 @@
   <mat-card *ngFor="let category of data.categoryList">
     <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
     <span class="span-icons">
-      <button [disabled]="!showSubmit" mat-icon-button (click)="removeCategory(category.name)">
-        <mat-icon color="{{category.name !== oldCategory ? 'warn' : ''}}">delete</mat-icon>
+      <button [disabled]="!showSubmit && category.name == oldCategory" mat-icon-button
+        (click)="openDialogDelWarn(category.name)">
+        <mat-icon [color]="category.name !== oldCategory ? 'warn' : ''">delete</mat-icon>
       </button>
       <button mat-icon-button (click)="changeInputToEdit(category.name)">
         <mat-icon color="primary">edit</mat-icon>

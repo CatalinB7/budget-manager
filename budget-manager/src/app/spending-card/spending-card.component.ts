@@ -11,6 +11,9 @@ import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
 import {
   CategoryModalComponent,
 } from '../category-modal/category-modal.component';
+import {
+  DeleteWarningDialogComponent,
+} from '../delete-warning-dialog/delete-warning-dialog.component';
 import { IComputedSpendCateg } from '../model/spendingCategory';
 import { SpendingService } from '../services/spending.service';
 
@@ -78,6 +81,17 @@ export class SpendingCardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.clickedIcon(); //sort new array
       this.clickedIcon();
+    });
+  }
+  openDialogDelWarn(toDelete: string, categoryName: string, spendingId: string) {
+    const dialogRef = this._dialog.open(DeleteWarningDialogComponent, {
+      width: '350px',
+      data: toDelete,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.onDelete(categoryName, spendingId);
     });
   }
 
