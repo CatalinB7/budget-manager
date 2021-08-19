@@ -8,7 +8,7 @@
     <mat-grid-list cols={{colsNo}} (window:resize)="onResize($event)" rowHeight="26vh" gutterSize="20px" class="grid-container">
         <mat-grid-tile rowspan="1">
             <mat-card class="budget-card">
-                <app-budget [budget]="budget" [spendingList]="spendingList"></app-budget>
+                <app-budget [budget]="budget" [spendingTotals]="spendingTotals"></app-budget>
             </mat-card>
         </mat-grid-tile>
         <mat-grid-tile rowspan="3">
