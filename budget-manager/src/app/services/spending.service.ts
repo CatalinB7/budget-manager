@@ -23,7 +23,7 @@ export class SpendingService {
           total += element.value;
         });
 
-        return { total: total, name: category.name };
+        return { total, name: category.name };
       });
     }));
 
