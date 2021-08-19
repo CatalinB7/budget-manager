@@ -16,9 +16,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 
-import { SnackbarService } from 'src/app/utils/services/snackbar.service';
-
-import { IComputedSpendCateg } from '../../model/spendingCategory';
+import { ISpendingCategory } from '../../model/spendingCategory';
 import { SpendingService } from '../../utils/services/spending.service';
 import {
   DeleteWarningDialogComponent,
@@ -45,7 +43,7 @@ export class CategoryModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { categoryList: IComputedSpendCateg[] },
+    @Inject(MAT_DIALOG_DATA) public data: { categoryList: ISpendingCategory[] },
     private _spendingService: SpendingService,
     private _snackBarService: SnackbarService,
     private _dialog: MatDialog,
@@ -62,8 +60,7 @@ export class CategoryModalComponent {
     if (this.form.status === 'VALID') {
       this._spendingService.addSpendingCategory(this.form.value.category)
         .subscribe((result: any) => {
-          this.data.categoryList.push({ total: 0, name: this.form.value.category, expenses: [] });
-          this._snackBarService.openSuccessSnackBar(`Created ${this.form.value.category}`, 800);
+          this.openSnackBar(`Created ${this.form.value.category}`, 800);
           this.form.reset();
         },
           err =>  this._snackBarService.openErrorSnackBar(err.error, 1000));
