@@ -9,8 +9,8 @@ import {
   IComputedSpendCateg,
   ISpendingCategory,
 } from './model/spendingCategory';
-import { BudgetService } from './services/budget.service';
-import { SpendingService } from './services/spending.service';
+import { BudgetService } from './utils/services/budget.service';
+import { SpendingService } from './utils/services/spending.service';
 
 @Component({
   selector: 'app-root',

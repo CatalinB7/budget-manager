@@ -21,7 +21,7 @@
                         <p class="ellipsis-text" [matTooltip]="spending.name" appShowIfTruncated>{{spending.name}}</p>
                         <span>
                             <span class="money">{{spending.value}}$</span>
-                            <button mat-icon-button (click)="onDelete(category.name, spending.id)">
+                            <button mat-icon-button (click)="openDialogDelWarn(spending.name, category.name, spending.id)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
                         </span>

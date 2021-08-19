@@ -16,8 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   ManageBudgetDialog,
-} from 'src/modals/manage-budget/manage-budget-dialog';
-import { DollarPipe } from 'src/utils/dollar.pipe';
+} from 'src/app/modals/manage-budget/manage-budget-dialog';
+import { DollarPipe } from 'src/app/utils/pipes/dollar.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

@@ -24,11 +24,14 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import {
   AddSpendingDialog,
-} from '../../modals/add-spending/add-spending-dialog';
+} from '../../app/modals/add-spending/add-spending-dialog';
+import { LineGraphComponent } from '../line-graph/line-graph.component';
 import {
   CategoryModalComponent,
-} from '../category-modal/category-modal.component';
-import { LineGraphComponent } from '../line-graph/line-graph.component';
+} from '../modals/category/category-modal.component';
+import {
+  DeleteWarningDialogComponent,
+} from '../modals/delete-warning/delete-warning-dialog.component';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
@@ -42,7 +45,8 @@ import {
     AddSpendingDialog,
     CategoryModalComponent,
     PieChartComponent,
-    LineGraphComponent
+    LineGraphComponent,
+    DeleteWarningDialogComponent
   ],
   imports: [
     CommonModule,
