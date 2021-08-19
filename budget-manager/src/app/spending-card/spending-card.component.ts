@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,8 +19,12 @@ import {
 import {
   DeleteWarningDialogComponent,
 } from '../modals/delete-warning/delete-warning-dialog.component';
-import { IComputedSpendCateg } from '../model/spendingCategory';
-import { SnackbarService } from '../utils/services/snackbar.service';
+import {
+  IComputedSpendCateg,
+  ISpendingCategory,
+} from '../model/spendingCategory';
+import { ISpendingDeleteData } from '../model/spendingOperations';
+import { ISpendingTotal } from '../model/spendingTotal';
 import { SpendingService } from '../utils/services/spending.service';
 
 @Component({
@@ -28,7 +34,23 @@ import { SpendingService } from '../utils/services/spending.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpendingCardComponent implements OnInit {
-  @Input() categoryList: IComputedSpendCateg[] = [];
+  @Input()
+  get spendingList() { return this._spendingList }
+  set spendingList(spendingList: ISpendingCategory[]) {
+    this._spendingList = spendingList;
+  }
+
+  @Input()
+  get spendingTotals() { return this._spendingTotals }
+  set spendingTotals(spendingTotals: ISpendingTotal[]) {
+    this._spendingTotals = spendingTotals;
+  }
+
+  @Output() deleteEvent = new EventEmitter<ISpendingDeleteData>() 
+
+  private _spendingList: ISpendingCategory[] = [];
+  private _spendingTotals: ISpendingTotal[] = [];
+  
   iconText = "arrow_upward";
 
   constructor(
@@ -41,17 +63,17 @@ export class SpendingCardComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.categoryList = changes.categoryList.currentValue
+    this.spendingList = changes.spendingList.currentValue
       .sort((a: IComputedSpendCateg, b: IComputedSpendCateg) => a.total < b.total ? -1 : 1);
   }
 
   clickedIcon() {
     if (this.iconText == "arrow_upward") {
       this.iconText = "arrow_downward";
-      this.categoryList = this.categoryList.sort((a: any, b: any) => a.total > b.total ? -1 : 1);
+      this.spendingList = this.spendingList.sort((a: any, b: any) => a.total > b.total ? -1 : 1);
     } else {
       this.iconText = "arrow_upward";
-      this.categoryList = this.categoryList.sort((a: any, b: any) => a.total < b.total ? -1 : 1);
+      this.spendingList = this.spendingList.sort((a: any, b: any) => a.total < b.total ? -1 : 1);
     }
   }
 
@@ -63,7 +85,7 @@ export class SpendingCardComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this._dialog.open(AddSpendingDialog, {
-      data: this.categoryList,
+      data: this.spendingList,
       disableClose: true,
       autoFocus: true,
       width: '300px',
@@ -83,7 +105,7 @@ export class SpendingCardComponent implements OnInit {
     const dialogRef = this._dialog.open(CategoryModalComponent, {
       width: '75vw',
       height: '75vh',
-      data: { categoryList: this.categoryList },
+      data: { spendingList: this.spendingList },
       disableClose: true
     });
 
@@ -92,6 +114,7 @@ export class SpendingCardComponent implements OnInit {
       this.clickedIcon();
     });
   }
+
   openDialogDelWarn(toDelete: string, categoryName: string, spendingId: string) {
     const dialogRef = this._dialog.open(DeleteWarningDialogComponent, {
       width: '350px',
