@@ -1,15 +1,11 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   OnInit,
 } from '@angular/core';
 
 import { IBudget } from './model/budget';
-import { ISpending } from './model/spending';
-import {
-  IComputedSpendCateg,
-  ISpendingCategory,
-} from './model/spendingCategory';
+import { ISpendingCategory } from './model/spendingCategory';
+import { ISpendingTotal } from './model/spendingTotal';
 import { BudgetService } from './utils/services/budget.service';
 import { SpendingService } from './utils/services/spending.service';
 
@@ -17,7 +13,6 @@ import { SpendingService } from './utils/services/spending.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   title = 'budget-manager';
