@@ -17,6 +17,7 @@ import {
   DeleteWarningDialogComponent,
 } from '../modals/delete-warning/delete-warning-dialog.component';
 import { IComputedSpendCateg } from '../model/spendingCategory';
+import { SnackbarService } from '../snackbar.service';
 import { SpendingService } from '../utils/services/spending.service';
 
 @Component({
@@ -30,7 +31,8 @@ export class SpendingCardComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _spendingService: SpendingService
+    private _spendingService: SpendingService,
+    private _snackBarService: SnackbarService,
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class SpendingCardComponent implements OnInit {
 
   onDelete(categoryName: string, spendingId: string) {
     this._spendingService.removeSpending(categoryName, spendingId).subscribe();
+    this._snackBarService.openSuccessSnackBar('Successfully deleted', 1000);
     location.reload();
   }
 
@@ -66,7 +69,9 @@ export class SpendingCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this._spendingService.addSpending(result).subscribe();
+        this._spendingService.addSpending(result).subscribe(
+          () => this._snackBarService.openSuccessSnackBar('Successfully created spending', 1000)
+        );
         location.reload();
       }
     });

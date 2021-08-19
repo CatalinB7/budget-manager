@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Inject,
 } from '@angular/core';
@@ -10,7 +11,8 @@ import {
 @Component({
   selector: 'app-delete-warning-dialog',
   templateUrl: './delete-warning-dialog.component.html',
-  styleUrls: ['./delete-warning-dialog.component.scss']
+  styleUrls: ['./delete-warning-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeleteWarningDialogComponent {
 
