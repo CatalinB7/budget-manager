@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
@@ -66,6 +67,7 @@ import {
     MatSelectModule,
     MatSnackBarModule,
     MatNativeDateModule,
+    ScrollingModule
   ],
   exports: [SpendingCardComponent, PieChartComponent]
 })

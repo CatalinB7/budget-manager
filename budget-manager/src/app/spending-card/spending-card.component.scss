@@ -44,10 +44,22 @@ span {
     cursor: pointer;
 }
 
-.add-button {
-    position: absolute;
-    bottom: 5%;
-    right: 2.5%;
-    margin-bottom: 20px;
+.list-viewport {
+    height: 75%;
+    max-height: max(calc(75vh - 105px));
+}
+
+.bottom-div {
+    width: 100%;
+    margin-top: 5vh;
     margin-right: 15px;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.card-container {
+    height: 100%;
+    width: 100%;
 }
