@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   SimpleChanges,
@@ -12,7 +13,8 @@ import { IComputedSpendCateg } from '../model/spendingCategory';
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss']
+  styleUrls: ['./pie-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PieChartComponent {
 

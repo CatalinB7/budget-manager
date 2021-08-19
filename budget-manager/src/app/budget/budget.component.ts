@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
@@ -15,7 +16,8 @@ import { ISpendingCategory } from '../model/spendingCategory';
 @Component({
   selector: 'app-budget',
   templateUrl: './budget.component.html',
-  styleUrls: ['./budget.component.scss']
+  styleUrls: ['./budget.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BudgetComponent implements OnChanges {
   @Input()spendingList: ISpendingCategory[] = [];

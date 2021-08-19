@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnInit,
@@ -22,7 +23,8 @@ import { SpendingService } from '../utils/services/spending.service';
 @Component({
   selector: 'app-spending-card',
   templateUrl: './spending-card.component.html',
-  styleUrls: ['./spending-card.component.scss']
+  styleUrls: ['./spending-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpendingCardComponent implements OnInit {
   @Input() categoryList: IComputedSpendCateg[] = [];
