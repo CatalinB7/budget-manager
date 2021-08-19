@@ -1,0 +1,39 @@
+@import "../../variables.scss";
+
+
+
+button {
+    background-color: $manage-btn-color;
+    color: white;
+    margin-left: 8px;
+}
+
+.distanced-btns {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.continue-btn {
+    background-color: $warn-color;
+}
+
+.dialog-title {
+    display: flex;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.mat-icon {
+    color: $warn-color;
+    font-size: 32px;
+    margin-right: 10px;
+}
+
