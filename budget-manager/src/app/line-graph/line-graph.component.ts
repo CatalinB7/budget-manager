@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -11,7 +12,8 @@ import { ISpending } from '../model/spending';
 @Component({
   selector: 'app-line-graph',
   templateUrl: './line-graph.component.html',
-  styleUrls: ['./line-graph.component.scss']
+  styleUrls: ['./line-graph.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LineGraphComponent {
   @Input() data: any[] = [];

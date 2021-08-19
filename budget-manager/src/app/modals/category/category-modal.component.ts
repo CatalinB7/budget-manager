@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Inject,
@@ -26,7 +27,8 @@ import {
 @Component({
   selector: 'app-category-modal',
   templateUrl: './category-modal.component.html',
-  styleUrls: ['./category-modal.component.scss']
+  styleUrls: ['./category-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryModalComponent {
 
