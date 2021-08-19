@@ -34,6 +34,7 @@ import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
   SpendingCardComponent,
 } from '../spending-card/spending-card.component';
+import { DeleteWarningDialogComponent } from '../delete-warning-dialog/delete-warning-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {
     AddSpendingDialog,
     CategoryModalComponent,
     PieChartComponent,
-    LineGraphComponent
+    LineGraphComponent,
+    DeleteWarningDialogComponent
   ],
   imports: [
     CommonModule,
