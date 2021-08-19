@@ -3,6 +3,6 @@
         <h1>This Month's Budget: <strong>{{budget.value}}</strong></h1>
         <button mat-raised-button (click)="openDialog()">MANAGE</button>
     </div>
-    <h2>Target Savings: <strong>{{budget.value*budget.plannedSaving}}</strong></h2>
+    <h2>Target Savings: <strong>{{targetSavings}}</strong></h2>
     <h2 class="remaining-budget">Left in Budget: <strong>{{leftInBudget}}</strong></h2> <!-- TODO money pipe -->
 </mat-card-content>
