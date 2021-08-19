@@ -7,13 +7,18 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { AddSpendingDialog } from 'src/modals/add-spending/add-spending-dialog';
+import {
+  AddSpendingDialog,
+} from 'src/app/modals/add-spending/add-spending-dialog';
 
 import {
   CategoryModalComponent,
-} from '../category-modal/category-modal.component';
+} from '../modals/category/category-modal.component';
+import {
+  DeleteWarningDialogComponent,
+} from '../modals/delete-warning/delete-warning-dialog.component';
 import { IComputedSpendCateg } from '../model/spendingCategory';
-import { SpendingService } from '../services/spending.service';
+import { SpendingService } from '../utils/services/spending.service';
 
 @Component({
   selector: 'app-spending-card',
@@ -80,6 +85,17 @@ export class SpendingCardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.clickedIcon(); //sort new array
       this.clickedIcon();
+    });
+  }
+  openDialogDelWarn(toDelete: string, categoryName: string, spendingId: string) {
+    const dialogRef = this._dialog.open(DeleteWarningDialogComponent, {
+      width: '350px',
+      data: toDelete,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.onDelete(categoryName, spendingId);
     });
   }
 

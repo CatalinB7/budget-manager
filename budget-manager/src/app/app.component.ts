@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   OnInit,
 } from '@angular/core';
@@ -7,14 +6,13 @@ import {
 import { IBudget } from './model/budget';
 import { ISpendingCategory } from './model/spendingCategory';
 import { ISpendingTotal } from './model/spendingTotal';
-import { BudgetService } from './services/budget.service';
-import { SpendingService } from './services/spending.service';
+import { BudgetService } from './utils/services/budget.service';
+import { SpendingService } from './utils/services/spending.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   title = 'budget-manager';
@@ -24,14 +22,14 @@ export class AppComponent implements OnInit {
   colsNo = 2;
 
   constructor(private _spengingService: SpendingService, private _budgetService: BudgetService) {
+    this._budgetService.budget$.subscribe(value => this.budget = value);
     this._spengingService.spendingList$.subscribe(value => this.spendingList = value);
     this._spengingService.spendingTotals$.subscribe(value => this.spendingTotals = value);
-    this._budgetService.budget$.subscribe(value => this.budget = value);
   }
 
   ngOnInit(): void {
-    this._spengingService.getSpendingList().subscribe();
     this._budgetService.getBudget().subscribe();
+    this._spengingService.getSpendingList().subscribe();
   }
 
   onResize(event: any) {

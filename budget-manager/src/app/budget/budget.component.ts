@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import {
   ManageBudgetDialog,
-} from 'src/modals/manage-budget/manage-budget-dialog';
+} from 'src/app/modals/manage-budget/manage-budget-dialog';
 
 import { IBudget } from '../model/budget';
 import { ISpendingCategory } from '../model/spendingCategory';

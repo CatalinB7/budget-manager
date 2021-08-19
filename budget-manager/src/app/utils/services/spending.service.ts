@@ -7,9 +7,9 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import { Recurrence } from '../enums/recurrences';
-import { ISpendingCategory } from '../model/spendingCategory';
-import { SpendingResponse } from '../model/spendingResponse';
+import { Recurrence } from '../../enums/recurrences';
+import { ISpendingCategory } from '../../model/spendingCategory';
+import { SpendingResponse } from '../../model/spendingResponse';
 
 @Injectable({ providedIn: 'root' })
 export class SpendingService {

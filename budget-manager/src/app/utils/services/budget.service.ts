@@ -7,8 +7,8 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import { IBudget } from '../model/budget';
-import { BudgetResponse } from '../model/budgetResponse';
+import { IBudget } from '../../model/budget';
+import { BudgetResponse } from '../../model/budgetResponse';
 
 @Injectable({ providedIn: 'root' })
 export class BudgetService {
