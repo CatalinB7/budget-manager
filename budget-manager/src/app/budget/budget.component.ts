@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -43,6 +45,8 @@ export class BudgetComponent implements OnInit {
     this.computeLeftInBudget();
   }
 
+  @Output() changeBudgetEvent = new EventEmitter<IBudget>();
+
 
   computeTargetSavings() {
     this.targetSavings = this.budget.value * this.budget.plannedSaving;
@@ -69,8 +73,7 @@ export class BudgetComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.budget.value = result.value;
-        this.budget.plannedSaving = result.plannedSaving;
+        this.changeBudgetEvent.emit({value: result.value, plannedSaving: result.plannedSaving});
       }
     });
   }
