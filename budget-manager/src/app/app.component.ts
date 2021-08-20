@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+} from '@angular/core';
 
 import { IBudget } from './model/budget';
 import { BudgetService } from './utils/services/budget.service';
@@ -9,6 +12,7 @@ import { SpendingService } from './utils/services/spending.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   title = 'budget-manager';
@@ -20,6 +24,11 @@ export class AppComponent {
     private _budgetService: BudgetService, 
     private _dataService: DataService,
   ) { }
+
+  ngOnInit(): void {
+    this._budgetService.getBudget().subscribe();
+    this._spendingService.getSpendingList().subscribe();
+  }
 
   onResize(event: any) {
     if (event.target.innerWidth <= 1200)
