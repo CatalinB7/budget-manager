@@ -5,26 +5,29 @@
         <mat-icon>menu</mat-icon>
     </mat-toolbar>
 
-    <mat-grid-list cols={{colsNo}}
-                   (window:resize)="onResize($event)" 
-                   rowHeight="26vh" gutterSize="20px" 
-                   class="grid-container">
-        <mat-grid-tile rowspan="1">
-            <mat-card class="budget-card">
-                <app-budget [budget]="budget" 
-                            [spendingTotals]="spendingTotals" 
-                            (changeBudgetEvent)= "updateBudget($event)"></app-budget>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="3">
-            <mat-card class="fill">
-                <app-spending-card [categoryList]="categoryList"></app-spending-card>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="2">
-            <mat-card class="fill">
-                <app-pie-chart></app-pie-chart>
-            </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <ng-container *ngIf="(data$ | async) as data">
+        <mat-grid-list cols={{colsNo}}
+                       (window:resize)="onResize($event)" 
+                       rowHeight="26vh" 
+                       gutterSize="20px" 
+                       class="grid-container">
+            <mat-grid-tile rowspan="1">
+                <mat-card class="budget-card">
+                    <app-budget [budget]="data.budget"
+                                [spendingTotals]="data.spendingTotals"
+                                (changeBudgetEvent)= "updateBudget($event)"></app-budget>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="3">
+                <mat-card id="spendingCard" class="fill">
+                    <app-spending-card></app-spending-card>
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="2">
+                <mat-card class="fill">
+                    <app-pie-chart></app-pie-chart>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </ng-container>
 </div>

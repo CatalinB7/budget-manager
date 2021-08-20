@@ -35,6 +35,7 @@ export class BudgetComponent implements OnInit {
     this._budget = budget;
 
     this.computeTargetSavings();
+    this.computeLeftInBudget();
   }
 
   @Input()
@@ -73,7 +74,7 @@ export class BudgetComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.changeBudgetEvent.emit({value: result.value, plannedSaving: result.plannedSaving});
+        this.changeBudgetEvent.emit({ value: result.value, plannedSaving: result.plannedSaving });
       }
     });
   }
