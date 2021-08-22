@@ -6,9 +6,9 @@ import {
 
 import { LegendPosition } from '@swimlane/ngx-charts';
 
+import { IPieInput } from '../model/pieInput';
 import { ISpending } from '../model/spending';
 import { ISpendingCategory } from '../model/spendingCategory';
-import { ISpendingTotal } from '../model/spendingTotal';
 
 @Component({
   selector: 'app-pie-chart',
@@ -18,18 +18,16 @@ import { ISpendingTotal } from '../model/spendingTotal';
 })
 export class PieChartComponent {
 
-  data: {name: string, value: number}[] = [];
+  data: IPieInput[] = [];
   pieDisplay = true;
   clickedCategory = "";
   expensesCategory: ISpending[] = [];
-  private _spendingTotals: ISpendingTotal[] = [];
   private _spendingList: ISpendingCategory[] = [];
 
   @Input()
-  get spendingTotals(): ISpendingTotal[] { return this._spendingTotals; }
-  set spendingTotals(spendingTotals: ISpendingTotal[]) {
-    this.data = ((spendingTotals && spendingTotals) || [])
-    .map(el => ({value: el.total, name: el.name}));
+  get spendingTotals(): IPieInput[] { return this.data; }
+  set spendingTotals(spendingTotals: IPieInput[]) {
+    this.data = spendingTotals;
   };
 
   @Input()

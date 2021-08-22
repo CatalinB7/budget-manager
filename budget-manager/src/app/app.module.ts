@@ -23,13 +23,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BudgetComponent } from './budget/budget.component';
 import { SpendingsModule } from './spendings/spendings.module';
+import { PieInputPipe } from './utils/pipes/pie-input.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     BudgetComponent,
     ManageBudgetDialog,
-    DollarPipe
+    DollarPipe,
+    PieInputPipe,
   ],
   imports: [
     BrowserModule,
