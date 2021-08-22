@@ -31,3 +31,10 @@ body {
 .snackbar-success {
     background-color: $money-color;
 }
+
+.card-content {
+    height: 100%;
+    width: 100%;
+    padding: $content-padding;
+    box-sizing: border-box;
+}

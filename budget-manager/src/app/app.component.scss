@@ -8,16 +8,11 @@ mat-card {
     margin: 30px;
 }
 
-#spendingCard {
-    overflow-y: auto;
-}
-
 .budget-card {
     min-height: 130px;
     padding: 0px;
     overflow: auto;
 }
-
 
 .mat-grid-list {
     height: 100%;
@@ -25,4 +20,9 @@ mat-card {
 
 .content {
     height: 100%;
+}
+
+.fill {
+    overflow: auto;
+    padding: 0px;
 }
