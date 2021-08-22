@@ -22,7 +22,7 @@ h1 {
 
 .money {
     align-items: center;
-    color: #43a547;
+    color: $money-color;
 }
 
 .mat-expansion-panel {
@@ -47,6 +47,7 @@ span {
 .list-viewport {
     height: 75%;
     max-height: max(calc(75vh - 105px));
+    overflow-x: auto;
 }
 
 .bottom-div {
