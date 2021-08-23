@@ -1,38 +1,50 @@
-<div class="header-div">
-    <span>
-        <h1>My spendings</h1>
-        <mat-icon (click)="clickedIcon()">{{iconText}}</mat-icon>
-    </span>
-    <button mat-button (click)="openDialogCategories()">MANAGE</button>
-</div>
+<div class="card-container">
 
-<mat-accordion>
-    <mat-expansion-panel *ngFor="let category of categoryList">
-        <mat-expansion-panel-header>
-            <mat-panel-title class="header-div">
-                <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
-                <p class="money">{{category.total}}$</p>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-list role="list">
-            <div *ngFor="let spending of category.expenses">
-                <mat-list-item class="header-div" role="listitem">
-                    <div class="header-div">
-                        <p class="ellipsis-text" [matTooltip]="spending.name" appShowIfTruncated>{{spending.name}}</p>
-                        <span>
-                            <span class="money">{{spending.value}}$</span>
-                            <button mat-icon-button (click)="openDialogDelWarn(spending.name, category.name, spending.id)">
-                                <mat-icon color="warn">delete</mat-icon>
-                            </button>
-                        </span>
+
+    <div class="header-div">
+        <span>
+            <h1>My spendings</h1>
+            <mat-icon (click)="clickedIcon()">{{iconText}}</mat-icon>
+        </span>
+        <button mat-button (click)="openDialogCategories()">MANAGE</button>
+    </div>
+
+
+    <mat-accordion>
+        <div class="list-viewport">
+            <mat-expansion-panel *ngFor="let category of categoryList">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="header-div">
+                        <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
+                        <p class="money">{{category.total}}$</p>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-list role="list">
+                    <div *ngFor="let spending of category.expenses">
+                        <mat-list-item class="header-div" role="listitem">
+                            <div class="header-div">
+                                <p class="ellipsis-text" [matTooltip]="spending.name" appShowIfTruncated>
+                                    {{spending.name}}
+                                </p>
+                                <span>
+                                    <span class="money">{{spending.value}}$</span>
+                                    <button mat-icon-button
+                                        (click)="openDialogDelWarn(spending.name, category.name, spending.id)">
+                                        <mat-icon color="warn">delete</mat-icon>
+                                    </button>
+                                </span>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
                     </div>
-                </mat-list-item>
-                <mat-divider></mat-divider>
-            </div>
-        </mat-list>
-    </mat-expansion-panel>
-</mat-accordion>
+                </mat-list>
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
+    <div class="bottom-div">
+        <button mat-fab color="primary" (click)="openDialog()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
 
-<button mat-fab color="primary" class="add-button" (click)="openDialog()">
-    <mat-icon>add</mat-icon>
-</button>
+</div>
