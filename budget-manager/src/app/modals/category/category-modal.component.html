@@ -9,7 +9,7 @@
     <form [formGroup]="form">
       <mat-form-field>
         <mat-label>{{labelName}}</mat-label>
-        <input type="text" matInput formControlName="category" />
+        <input type="text" matInput formControlName="category" cdkFocusInitial #categoryInput />
       </mat-form-field>
       <button *ngIf="showSubmit; else showUpdate" mat-button (click)="addCategory()">Submit</button>
       <ng-template #showUpdate>

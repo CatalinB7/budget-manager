@@ -1,6 +1,8 @@
 import {
   Component,
+  ElementRef,
   Inject,
+  ViewChild,
 } from '@angular/core';
 import {
   FormControl,
@@ -45,6 +47,9 @@ export class CategoryModalComponent {
     private _snackBar: MatSnackBar,
     private _dialog: MatDialog,
   ) { }
+
+  @ViewChild('categoryInput')
+  inputElement!: ElementRef;
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -104,6 +109,7 @@ export class CategoryModalComponent {
   }
 
   setInput(val: string) {
+    this.inputElement.nativeElement.focus();
     this.form.setValue({ 'category': val });
   }
 
