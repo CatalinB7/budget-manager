@@ -14,7 +14,8 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { SnackbarService } from 'src/app/utils/services/snackbar.service';
 
 import { IComputedSpendCateg } from '../../model/spendingCategory';
 import { SpendingService } from '../../utils/services/spending.service';
@@ -44,7 +45,7 @@ export class CategoryModalComponent {
     public dialogRef: MatDialogRef<CategoryModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { categoryList: IComputedSpendCateg[] },
     private _spendingService: SpendingService,
-    private _snackBar: MatSnackBar,
+    private _snackBarService: SnackbarService,
     private _dialog: MatDialog,
   ) { }
 
@@ -60,12 +61,12 @@ export class CategoryModalComponent {
       this._spendingService.addSpendingCategory(this.form.value.category)
         .subscribe((result: any) => {
           this.data.categoryList.push({ total: 0, name: this.form.value.category, expenses: [] });
-          this.openSnackBar(`Created ${this.form.value.category}`, 800);
+          this._snackBarService.openSuccessSnackBar(`Created ${this.form.value.category}`, 800);
           this.form.reset();
         },
-          err => this.openSnackBar(err.error, 1000));
+          err =>  this._snackBarService.openErrorSnackBar(err.error, 1000));
     } else {
-      this.openSnackBar('Category name must have length between 1 and 22 characters', 2000);
+      this._snackBarService.openErrorSnackBar('Category name must have length between 1 and 22 characters', 2000);
     }
   }
 
@@ -78,7 +79,8 @@ export class CategoryModalComponent {
             return;
           }
         });
-      }, (err: any) => this.openSnackBar(err.error, 1000));
+        this._snackBarService.openSuccessSnackBar(`Deleted ${categoryName}`, 1000)
+      }, (err: any) => this._snackBarService.openErrorSnackBar(err.error, 1000));
   }
 
   editCategory(newCategory: string): void {
@@ -91,7 +93,8 @@ export class CategoryModalComponent {
           }
         });
         this.dropEdit();
-      }, (err: any) => this.openSnackBar(err.error, 1000));
+        this._snackBarService.openSuccessSnackBar(`Edited ${this.oldCategory} to ${newCategory}`, 1500)
+      }, (err: any) => this._snackBarService.openErrorSnackBar(err.error, 1000));
   }
 
   changeInputToEdit(category: string) {
@@ -112,11 +115,6 @@ export class CategoryModalComponent {
     this.inputElement.nativeElement.focus();
     this.form.setValue({ 'category': val });
   }
-
-  openSnackBar(message: string, duration: number) {
-    this._snackBar.open(message, '', { duration });
-  }
-
 
   openDialogDelWarn(toDelete: string) {
     const dialogRef = this._dialog.open(DeleteWarningDialogComponent, {

@@ -1,0 +1,14 @@
+<div class="container">
+    <h1 mat-dialog-title class="dialog-title">
+        <mat-icon role="img" aria-hidden="true" data-mat-icon-type="font"> error </mat-icon>
+        Delete confirmation</h1>
+    <div mat-dialog-content>
+        <p>
+            Do you really want to delete {{toDelete}}?
+        </p>
+    </div>
+    <div mat-dialog-actions class="distanced-btns">
+        <button mat-button (click)="cancelClick()">Cancel</button>
+        <button mat-button class="continue-btn" (click)="continueClick()">Continue</button>
+    </div>
+</div>
