@@ -15,7 +15,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 
-import { SnackbarService } from 'src/app/snackbar.service';
+import { SnackbarService } from 'src/app/utils/services/snackbar.service';
 
 import { IComputedSpendCateg } from '../../model/spendingCategory';
 import { SpendingService } from '../../utils/services/spending.service';

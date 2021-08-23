@@ -17,7 +17,7 @@ import {
   DeleteWarningDialogComponent,
 } from '../modals/delete-warning/delete-warning-dialog.component';
 import { IComputedSpendCateg } from '../model/spendingCategory';
-import { SnackbarService } from '../snackbar.service';
+import { SnackbarService } from '../utils/services/snackbar.service';
 import { SpendingService } from '../utils/services/spending.service';
 
 @Component({
