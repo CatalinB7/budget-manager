@@ -2,13 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  SimpleChanges,
 } from '@angular/core';
 
 import { LegendPosition } from '@swimlane/ngx-charts';
 
+import { IPieInput } from '../model/pieInput';
 import { ISpending } from '../model/spending';
-import { IComputedSpendCateg } from '../model/spendingCategory';
+import { ISpendingCategory } from '../model/spendingCategory';
 
 @Component({
   selector: 'app-pie-chart',
@@ -18,11 +18,24 @@ import { IComputedSpendCateg } from '../model/spendingCategory';
 })
 export class PieChartComponent {
 
-  data: {name: string, value: number}[] = [];
+  data: IPieInput[] = [];
   pieDisplay = true;
   clickedCategory = "";
-  expenses: ISpending[] = [];
-  @Input() categoryList: IComputedSpendCateg[] = [];
+  expensesCategory: ISpending[] = [];
+  private _spendingList: ISpendingCategory[] = [];
+
+  @Input()
+  get spendingTotals(): IPieInput[] { return this.data; }
+  set spendingTotals(spendingTotals: IPieInput[]) {
+    this.data = spendingTotals;
+  };
+
+  @Input()
+  get spendingList(): ISpendingCategory[] { return this._spendingList; }
+  set spendingList(spendingList: ISpendingCategory[]) {
+    this._spendingList = spendingList;
+  }
+
   // pie options
   gradient: boolean = false;
   showLegend: boolean = true;
@@ -38,15 +51,10 @@ export class PieChartComponent {
     this.toggleCharts(this.clickedCategory);
   }
 
-  ngOnChanges(changes: SimpleChanges) {//TODO: pass correct input, so no modifications would be required here
-    this.categoryList = changes.categoryList.currentValue;
-    this.data = this.categoryList.map(el => ({value: el.total, name: el.name}))
-      .filter(el => el.value !=0);
-  }
-
   toggleCharts(category: string) {
     this.togglePieDisplay();
-    this.expenses = this.categoryList.filter(el => el.name == category)[0].expenses;
+    let categoryIndex = this.spendingList.findIndex(el=> el.name === category);
+    this.expensesCategory = this.spendingList[categoryIndex].expenses;
   }
 
   togglePieDisplay() {

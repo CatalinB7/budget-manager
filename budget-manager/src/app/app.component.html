@@ -25,7 +25,8 @@
             </mat-grid-tile>
             <mat-grid-tile rowspan="2">
                 <mat-card class="fill">
-                    <app-pie-chart></app-pie-chart>
+                    <app-pie-chart [spendingTotals]="data.spendingTotals | pieInput"
+                        [spendingList]="data.spendingList"></app-pie-chart>
                 </mat-card>
             </mat-grid-tile>
         </mat-grid-list>

@@ -14,7 +14,7 @@
 </div>
 <ng-template #showLine>
   <div class="chart">
-    <app-line-graph [data]="expenses" [category]="clickedCategory"
+    <app-line-graph [data]="expensesCategory | graphInput: clickedCategory"
       (toggle)="togglePieDisplay()">
     </app-line-graph>
   </div>
