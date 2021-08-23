@@ -3,12 +3,14 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
+import { Observable } from 'rxjs';
 import {
   AddSpendingDialog,
 } from 'src/app/modals/add-spending/add-spending-dialog';
@@ -19,13 +21,10 @@ import {
 import {
   DeleteWarningDialogComponent,
 } from '../modals/delete-warning/delete-warning-dialog.component';
+import { IAppData } from '../model/data';
 import { ISpending } from '../model/spending';
-import {
-  IComputedSpendCateg,
-  ISpendingCategory,
-} from '../model/spendingCategory';
+import { IComputedSpendCateg } from '../model/spendingCategory';
 import { ISpendingDeleteData } from '../model/spendingOperations';
-import { ISpendingTotal } from '../model/spendingTotal';
 
 @Component({
   selector: 'app-spending-card',
@@ -33,51 +32,42 @@ import { ISpendingTotal } from '../model/spendingTotal';
   styleUrls: ['./spending-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpendingCardComponent implements OnInit {
-  @Input()
-  get spendingList() { return this._spendingList }
-  set spendingList(spendingList: ISpendingCategory[]) {
-    this._spendingList = spendingList;
-  }
+export class SpendingCardComponent {
+
+  sortOrder = 1;
 
   @Input()
-  get spendingTotals() { return this._spendingTotals }
-  set spendingTotals(spendingTotals: ISpendingTotal[]) {
-    this._spendingTotals = spendingTotals;
+  get spendingList() { return this._spendingList; }
+  set spendingList(spendingList: IComputedSpendCateg[]) {
+    this._spendingList = this.sortArray(spendingList, this.sortOrder);
   }
+
+  @Input() modalObs: Observable<IAppData> | undefined = undefined;
 
   @Output() deleteEvent = new EventEmitter<ISpendingDeleteData>();
   @Output() addEvent = new EventEmitter<ISpending>();
 
-  private _spendingList: ISpendingCategory[] = [];
-  private _spendingTotals: ISpendingTotal[] = [];
-  
-  iconText = "arrow_upward";
+  private _spendingList: IComputedSpendCateg[] = [];
+
+  iconText = 'arrow_upward';
+  dialogRef: MatDialogRef<CategoryModalComponent, any> | undefined;
 
   constructor(
     private _dialog: MatDialog,
   ) { }
 
-  ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.spendingList = changes.spendingList.currentValue
-      .sort((a: IComputedSpendCateg, b: IComputedSpendCateg) => a.total < b.total ? -1 : 1);
+  sortArray(list: IComputedSpendCateg[], order: number) {
+    return list.sort((a, b) => a.total < b.total ? order : order * (-1));
   }
 
   clickedIcon() {
-    if (this.iconText == "arrow_upward") {
-      this.iconText = "arrow_downward";
-      this.spendingList = this.spendingList.sort((a: any, b: any) => a.total > b.total ? -1 : 1);
-    } else {
-      this.iconText = "arrow_upward";
-      this.spendingList = this.spendingList.sort((a: any, b: any) => a.total < b.total ? -1 : 1);
-    }
+    this.iconText = this.iconText === 'arrow_upward' ? 'arrow_downward' : 'arrow_upward';
+    this.sortOrder *= -1;
+    this.spendingList = this.sortArray(this.spendingList, this.sortOrder);
   }
 
   onDelete(categoryName: string, spendingId: string) {
-    this.deleteEvent.emit({categoryName, spendingId});
+    this.deleteEvent.emit({ categoryName, spendingId });
   }
 
   openDialog() {
@@ -96,17 +86,16 @@ export class SpendingCardComponent implements OnInit {
   }
 
   openDialogCategories() {
-    const dialogRef = this._dialog.open(CategoryModalComponent, {
-      width: '75vw',
-      height: '75vh',
-      data: { spendingList: this.spendingList },
+    this.dialogRef = this._dialog.open(CategoryModalComponent, {
+      width: '500px',
+      height: '700px',
+      data: this.modalObs,
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.clickedIcon(); //sort new array
-      this.clickedIcon();
-    });
+    this.dialogRef.afterClosed().subscribe(
+      () => this.dialogRef = undefined
+    );
   }
 
   openDialogDelWarn(toDelete: string, categoryName: string, spendingId: string) {
@@ -120,5 +109,4 @@ export class SpendingCardComponent implements OnInit {
         this.onDelete(categoryName, spendingId);
     });
   }
-
 }

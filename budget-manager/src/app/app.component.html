@@ -20,8 +20,9 @@
             </mat-grid-tile>
             <mat-grid-tile rowspan="3">
                 <mat-card id="spendingCard" class="fill">
-                    <app-spending-card [spendingList]="data.spendingList"
-                                       [spendingTotals]="data.spendingTotals"
+                    <app-spending-card
+                                       [spendingList]="data.spendingList | spendcardInput : data.spendingTotals"
+                                       [modalObs]="data$"
                                        (deleteEvent)="onDeleteSpending($event)"
                                        (addEvent)="onAddSpending($event)"></app-spending-card>
                 </mat-card>

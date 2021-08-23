@@ -16,7 +16,9 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 
-import { ISpendingCategory } from '../../model/spendingCategory';
+import { Observable } from 'rxjs';
+import { IAppData } from 'src/app/model/data';
+
 import { SpendingService } from '../../utils/services/spending.service';
 import {
   DeleteWarningDialogComponent,
@@ -37,13 +39,13 @@ export class CategoryModalComponent {
       Validators.maxLength(22)
     ]),
   });
-  oldCategory = "";
+  oldCategory = '';
   showSubmit = true;
-  labelName = "New Category";
+  labelName = 'New Category';
 
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { categoryList: ISpendingCategory[] },
+    @Inject(MAT_DIALOG_DATA) public data$: Observable<IAppData> | undefined,
     private _spendingService: SpendingService,
     private _snackBarService: SnackbarService,
     private _dialog: MatDialog,
@@ -71,26 +73,12 @@ export class CategoryModalComponent {
 
   deleteCategory(categoryName: string) {
     this._spendingService.removeSpendingCategory(categoryName).
-      subscribe((res: any) => {
-        this.data.categoryList.forEach((el, idx) => {
-          if (el.name == categoryName) {
-            this.data.categoryList.splice(idx, 1);
-            return;
-          }
-        });
-        this._snackBarService.openSuccessSnackBar(`Deleted ${categoryName}`, 1000)
-      }, (err: any) => this._snackBarService.openErrorSnackBar(err.error, 1000));
+      subscribe(() => {}, (err: any) => this.openSnackBar(err.error, 1000));
   }
 
   editCategory(newCategory: string): void {
     this._spendingService.editCategory(this.oldCategory, newCategory).
       subscribe((res: any) => {
-        this.data.categoryList.forEach((el, idx) => {
-          if (el.name == this.oldCategory) {
-            this.data.categoryList[idx].name = newCategory;
-            return;
-          }
-        });
         this.dropEdit();
         this._snackBarService.openSuccessSnackBar(`Edited ${this.oldCategory} to ${newCategory}`, 1500)
       }, (err: any) => this._snackBarService.openErrorSnackBar(err.error, 1000));
@@ -104,15 +92,19 @@ export class CategoryModalComponent {
   }
 
   dropEdit() {
-    this.setInput("");
+    this.setInput('');
     this.showSubmit = true;
-    this.labelName = "New Category";
-    this.oldCategory = "";
+    this.labelName = 'New Category';
+    this.oldCategory = '';
   }
 
   setInput(val: string) {
     this.inputElement.nativeElement.focus();
     this.form.setValue({ 'category': val });
+  }
+
+  openSnackBar(message: string, duration: number) {
+    this._snackBar.open(message, '', { duration });
   }
 
   openDialogDelWarn(toDelete: string) {
