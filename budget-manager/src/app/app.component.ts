@@ -25,11 +25,6 @@ export class AppComponent {
     private _dataService: DataService,
   ) { }
 
-  ngOnInit(): void {
-    this._budgetService.getBudget().subscribe();
-    this._spendingService.getSpendingList().subscribe();
-  }
-
   onResize(event: any) {
     if (event.target.innerWidth <= 1200)
       this.colsNo = 1;
