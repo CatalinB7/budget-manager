@@ -6,4 +6,5 @@ export interface IAppData {
     budget: IBudget, 
     spendingList: ISpendingCategory[],
     spendingTotals: ISpendingTotal[],
+    loading: boolean,
 } 
