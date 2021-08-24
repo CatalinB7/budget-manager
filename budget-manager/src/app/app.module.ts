@@ -17,20 +17,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ManageBudgetDialog,
 } from 'src/app/modals/manage-budget/manage-budget-dialog';
-import { DollarPipe } from 'src/app/utils/pipes/dollar.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BudgetComponent } from './budget/budget.component';
 import { SpendingsModule } from './spendings/spendings.module';
 import { PieInputPipe } from './utils/pipes/pie-input.pipe';
+import {
+  SharedPipesModule,
+} from './utils/pipes/shared-pipes/shared-pipes.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     BudgetComponent,
     ManageBudgetDialog,
-    DollarPipe,
     PieInputPipe,
   ],
   imports: [
@@ -48,6 +49,7 @@ import { PieInputPipe } from './utils/pipes/pie-input.pipe';
     MatGridListModule,
     MatToolbarModule,
     MatDialogModule,
+    SharedPipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
