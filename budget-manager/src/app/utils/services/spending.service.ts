@@ -45,6 +45,10 @@ export class SpendingService {
     return this.spendingList$.value[categoryPosition].expenses.map(obj => obj.id).indexOf(spendingId);
   }
 
+  ID() {
+    return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+  }
+
   getSpendingList() {
     return this._http.get<SpendingResponse>('http://localhost:3000/expenses_categories?userId=1').pipe(
       map((data) => data[0].categories),
@@ -56,7 +60,7 @@ export class SpendingService {
 
   addSpending(spending: any) {
     const newSpending = {
-      id: "|BLANK|",
+      id: this.ID(),
       name: spending.name,
       value: spending.value,
       date: spending.date,
