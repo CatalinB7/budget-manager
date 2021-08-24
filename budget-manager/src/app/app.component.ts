@@ -20,6 +20,7 @@ export class AppComponent {
   title = 'budget-manager';
   data$ = this._dataService.data$;
   colsNo = 2;
+  splitSize = 1200;
 
   constructor(
     private _spendingService: SpendingService, 
@@ -30,10 +31,12 @@ export class AppComponent {
   ngOnInit(): void {
     this._budgetService.getBudget().subscribe();
     this._spendingService.getSpendingList().subscribe();
+    if(window.innerWidth <= this.splitSize)
+      this.colsNo = 1;
   }
 
   onResize(event: any) {
-    if (event.target.innerWidth <= 1200)
+    if (event.target.innerWidth <= this.splitSize)
       this.colsNo = 1;
     else this.colsNo = 2;
   }

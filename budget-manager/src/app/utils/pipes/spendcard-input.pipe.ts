@@ -13,7 +13,6 @@ import { ISpendingTotal } from 'src/app/model/spendingTotal';
   name: 'spendcardInput'
 })
 export class SpendcardInputPipe implements PipeTransform {
-
   transform(list: ISpendingCategory[], totals: ISpendingTotal[]): IComputedSpendCateg[] {
     if(list.length !== totals.length) return []; //error
     return list.map( (el, idx) => {

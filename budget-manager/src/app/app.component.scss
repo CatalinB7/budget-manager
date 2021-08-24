@@ -9,9 +9,8 @@ mat-card {
 }
 
 .budget-card {
-    min-height: 130px;
+    overflow-x: auto;
     padding: 0px;
-    overflow: auto;
 }
 
 .mat-grid-list {

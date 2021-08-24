@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .container {
     width: 100%;
     height: 100%;
@@ -5,24 +7,16 @@
 }
 
 .graph {
-    position: absolute;
+    margin-top: 40px;
     width: 100%;
     height: 100%;
 }
 
-.down-div {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: 10%;
+.back-button {
     position: absolute;
-    bottom: 10%;
-    margin-bottom: 15px;
-}
-
-.btn {
-    height: 5vh;
-    width: 6vw;
+    bottom: 20px;
+    right: 20px;
+    background-color: $manage-btn-color;
 }
 
 .tooltip {

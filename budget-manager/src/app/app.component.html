@@ -19,7 +19,7 @@
                 </mat-card>
             </mat-grid-tile>
             <mat-grid-tile rowspan="3">
-                <mat-card id="spendingCard" class="fill">
+                <mat-card id="spendingCard" class="fill" *ngIf="!data.loading; else loading">
                     <app-spending-card
                                        [spendingList]="data.spendingList | spendcardInput : data.spendingTotals"
                                        [modalObs]="data$"

@@ -15,9 +15,11 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable } from 'rxjs';
 import { IAppData } from 'src/app/model/data';
+import { SnackbarService } from 'src/app/utils/services/snackbar.service';
 
 import { SpendingService } from '../../utils/services/spending.service';
 import {
@@ -49,6 +51,7 @@ export class CategoryModalComponent {
     private _spendingService: SpendingService,
     private _snackBarService: SnackbarService,
     private _dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) { }
 
   @ViewChild('categoryInput')

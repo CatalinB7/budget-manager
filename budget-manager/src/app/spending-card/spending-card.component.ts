@@ -39,7 +39,7 @@ export class SpendingCardComponent {
   @Input()
   get spendingList() { return this._spendingList; }
   set spendingList(spendingList: IComputedSpendCateg[]) {
-    this._spendingList = this.sortArray(spendingList, this.sortOrder);
+    this._spendingList = this.sortArrayByTotals(spendingList, this.sortOrder);
   }
 
   @Input() modalObs: Observable<IAppData> | undefined = undefined;
@@ -49,21 +49,25 @@ export class SpendingCardComponent {
 
   private _spendingList: IComputedSpendCateg[] = [];
 
-  iconText = 'arrow_upward';
+  get iconText() {
+    if(this.sortOrder === 1)
+      return 'arrow_upward';
+    return 'arrow_downward';
+  };
+
   dialogRef: MatDialogRef<CategoryModalComponent, any> | undefined;
 
   constructor(
     private _dialog: MatDialog,
   ) { }
 
-  sortArray(list: IComputedSpendCateg[], order: number) {
+  sortArrayByTotals(list: IComputedSpendCateg[], order: number) {
     return list.sort((a, b) => a.total < b.total ? order : order * (-1));
   }
 
   clickedIcon() {
-    this.iconText = this.iconText === 'arrow_upward' ? 'arrow_downward' : 'arrow_upward';
     this.sortOrder *= -1;
-    this.spendingList = this.sortArray(this.spendingList, this.sortOrder);
+    this.spendingList = this.sortArrayByTotals(this.spendingList, this.sortOrder);
   }
 
   onDelete(categoryName: string, spendingId: string) {
