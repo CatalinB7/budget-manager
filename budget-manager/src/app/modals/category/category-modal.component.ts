@@ -70,7 +70,7 @@ export class CategoryModalComponent {
   addCategory(): void {
     if (this.form.valid) {
       this._spendingService.addSpendingCategory(this.form.value.category)
-        .subscribe((result: any) => {
+        .subscribe(() => {
           this._snackBarService.openSuccessSnackBar(`Created ${this.form.value.category}`, 800);
           this.form.reset();
         },
@@ -88,10 +88,10 @@ export class CategoryModalComponent {
 
   editCategory(newCategory: string): void {
     this._spendingService.editCategory(this.oldCategory, newCategory).
-      subscribe((res: any) => {
+      subscribe(() => {
         this.dropEdit();
         this._snackBarService.openSuccessSnackBar(`Edited ${this.oldCategory} to ${newCategory}`, 1500)
-      }, (err: any) => this._snackBarService.openErrorSnackBar(err.error, 1000));
+      }, (err) => this._snackBarService.openErrorSnackBar(err.error, 1000));
   }
 
   changeInputToEdit(category: string) {
