@@ -15,15 +15,22 @@ import { LoadingService } from '../services/loading.service';
 })
 export class LoadingInterceptorService {
 
-    activeRequests: number = 0;
+    isPending = true;
+    activeRequests = 0;
 
     constructor(
         private _loadingScreenService: LoadingService
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        this.isPending = true;
+
         if (this.activeRequests === 0) {
-            this._loadingScreenService.startLoading();
+            setTimeout(() => {
+                if(this.isPending) {
+                    this._loadingScreenService.startLoading();
+                }
+            }, 500);
         }
 
         this.activeRequests++;
@@ -31,6 +38,7 @@ export class LoadingInterceptorService {
         return next.handle(request).pipe(
             finalize(() => {
                 this.activeRequests--;
+                this.isPending = false;
                 if (this.activeRequests === 0) {
                     this._loadingScreenService.stopLoading();
                 }

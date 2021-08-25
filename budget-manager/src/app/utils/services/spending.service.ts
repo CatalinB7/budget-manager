@@ -56,6 +56,7 @@ export class SpendingService {
 
   addSpending(spendingPayload: any) {
     const newSpending = {
+      // FIXME: set id to '[BLANCK]' and change the http response handling once the backend is fixed
       id: this.spendingList$.value[this.getCategotyPosition(spendingPayload.category)].expenses.slice(-1)[0].id + 1,
       name: spendingPayload.name,
       value: spendingPayload.value,
