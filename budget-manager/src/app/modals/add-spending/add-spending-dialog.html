@@ -12,7 +12,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
             <mat-select formControlName="category">
-                <mat-option *ngFor="let category of data" value="{{category.name}}">{{category.name}}</mat-option>
+                <mat-option *ngFor="let category of data" [value]="category.name">{{category.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
@@ -23,7 +23,7 @@
         </mat-form-field>
     </div>
     <div mat-dialog-actions class="button-group">
-        <button type="button" mat-button (click)="onCancel()">Cancel</button>
-        <button mat-button (click)="onSubmit()" [disabled]="!form.valid">Submit</button>
+        <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!form.valid">Submit</button>
     </div>
 </form>
