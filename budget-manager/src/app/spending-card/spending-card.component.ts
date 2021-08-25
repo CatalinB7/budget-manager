@@ -23,7 +23,7 @@ import {
 } from '../modals/delete-warning/delete-warning-dialog.component';
 import { IAppData } from '../model/data';
 import { ISpending } from '../model/spending';
-import { IComputedSpendCateg } from '../model/spendingCategory';
+import { IComputedSpendCategory } from '../model/spendingCategoryComputed';
 import { ISpendingDeleteData } from '../model/spendingOperations';
 
 @Component({
@@ -38,7 +38,7 @@ export class SpendingCardComponent {
 
   @Input()
   get spendingList() { return this._spendingList; }
-  set spendingList(spendingList: IComputedSpendCateg[]) {
+  set spendingList(spendingList: IComputedSpendCategory[]) {
     this._spendingList = this.sortArrayByTotals(spendingList, this.sortOrder);
   }
 
@@ -47,7 +47,7 @@ export class SpendingCardComponent {
   @Output() deleteEvent = new EventEmitter<ISpendingDeleteData>();
   @Output() addEvent = new EventEmitter<ISpending>();
 
-  private _spendingList: IComputedSpendCateg[] = [];
+  private _spendingList: IComputedSpendCategory[] = [];
 
   get iconText() {
     if(this.sortOrder === 1)
@@ -61,7 +61,7 @@ export class SpendingCardComponent {
     private _dialog: MatDialog,
   ) { }
 
-  sortArrayByTotals(list: IComputedSpendCateg[], order: number) {
+  sortArrayByTotals(list: IComputedSpendCategory[], order: number) {
     return list.sort((a, b) => a.total < b.total ? order : order * (-1));
   }
 
