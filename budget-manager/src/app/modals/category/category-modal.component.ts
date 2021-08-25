@@ -37,11 +37,12 @@ import {
 })
 export class CategoryModalComponent {
   matcher = new MyErrorStateMatcher();
+  maxCharLen = 22;
 
   form = new FormGroup({
     category: new FormControl('', [
       Validators.required,
-      Validators.maxLength(22)
+      Validators.maxLength(this.maxCharLen)
     ]),
   });
 

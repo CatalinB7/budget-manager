@@ -14,6 +14,9 @@ import {
 } from '@angular/material/dialog';
 
 import { ISpendingCategory } from 'src/app/model/spendingCategory';
+import {
+  MyErrorStateMatcher,
+} from 'src/app/utils/form-validators/MyErrorStateMatcher';
 
 @Component({
     selector: 'add-spending-dialog',
@@ -22,13 +25,19 @@ import { ISpendingCategory } from 'src/app/model/spendingCategory';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddSpendingDialog {
+    matcher = new MyErrorStateMatcher();
+    maxVal = 9999999999;
+    minVal = 0;
+    maxCharLen = 22;
+
+
     form = new FormGroup({
         value: new FormControl('', [
             Validators.required,
-            Validators.max(9999999),
-            Validators.min(0),
+            Validators.max(this.maxVal),
+            Validators.min(this.minVal),
         ]),
-        date: new FormControl('', [
+        date: new FormControl((new Date()).toISOString(), [
             Validators.required,
         ]),
         category: new FormControl('', [
@@ -36,6 +45,7 @@ export class AddSpendingDialog {
         ]),
         name: new FormControl('', [
             Validators.required,
+            Validators.maxLength(this.maxCharLen),
         ])
     });
 
