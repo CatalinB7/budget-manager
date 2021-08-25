@@ -13,11 +13,12 @@
       >
     </ngx-charts-pie-chart>
   </div>
-  <ng-template #showLine>
-    <div class="chart">
-      <app-line-graph [data]="expenses" [category]="clickedCategory"
-        (toggle)="togglePieDisplay()">
-      </app-line-graph>
-    </div>
-  </ng-template>
 </div>
+
+<ng-template #showLine>
+  <div class="chart">
+    <app-line-graph [data]="expensesCategory | graphInput: clickedCategory"
+      (toggle)="togglePieDisplay()">
+    </app-line-graph>
+  </div>
+</ng-template>

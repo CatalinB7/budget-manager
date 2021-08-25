@@ -37,6 +37,10 @@ import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
   SpendingCardComponent,
 } from '../spending-card/spending-card.component';
+import { GraphInputPipe } from '../utils/pipes/graph-input.pipe';
+import {
+  SharedPipesModule,
+} from '../utils/pipes/shared-pipes/shared-pipes.module';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,8 @@ import {
     CategoryModalComponent,
     PieChartComponent,
     LineGraphComponent,
-    DeleteWarningDialogComponent
+    DeleteWarningDialogComponent,
+    GraphInputPipe,
   ],
   imports: [
     CommonModule,
@@ -66,6 +71,7 @@ import {
     MatSelectModule,
     MatSnackBarModule,
     MatNativeDateModule,
+    SharedPipesModule,
   ],
   exports: [SpendingCardComponent, PieChartComponent]
 })

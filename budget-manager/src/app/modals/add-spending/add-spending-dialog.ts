@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Inject,
 } from '@angular/core';
@@ -17,7 +18,8 @@ import { ISpendingCategory } from 'src/app/model/spendingCategory';
 @Component({
     selector: 'add-spending-dialog',
     templateUrl: 'add-spending-dialog.html',
-    styleUrls: ['./add-spending-dialog.scss']
+    styleUrls: ['./add-spending-dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddSpendingDialog {
     form = new FormGroup({

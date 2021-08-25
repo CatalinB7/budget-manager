@@ -1,6 +1,6 @@
 @import "../../variables.scss";
 
-.header-div {
+.text-wrapper {
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -14,10 +14,8 @@
     }
 }
 
-h1 {
-    letter-spacing: 0.1rem;
-    font-size: 1.5rem;
-    font-weight: 500;
+.margin-bottom20 {
+    margin-bottom: $content-padding;
 }
 
 .money {
@@ -30,8 +28,9 @@ h1 {
     margin-top: 3px;
 }
 
-.mat-button {
+.mat-raised-button {
     background-color: $manage-btn-color;
+    flex-shrink: 0;
 }
 
 span {
@@ -46,21 +45,16 @@ span {
 
 .list-viewport {
     height: 75%;
-    max-height: max(calc(75vh - 105px));
+    max-height: max(calc(75vh - 135px));
     overflow-x: auto;
 }
 
-.bottom-div {
-    width: 100%;
-    margin-top: 5vh;
-    margin-right: 15px;
-    height: 60px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.add-button {
+    position: absolute;
+    bottom: $content-padding;
+    right: $content-padding;
 }
 
-.card-container {
-    height: 100%;
-    width: 100%;
+.line-height {
+    line-height: 1.5em;
 }

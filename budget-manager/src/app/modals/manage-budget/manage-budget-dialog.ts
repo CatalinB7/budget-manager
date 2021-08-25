@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Inject,
 } from '@angular/core';
@@ -17,7 +18,8 @@ import { IBudget } from 'src/app/model/budget';
 @Component({
     selector: 'manage-budget-dialog',
     templateUrl: 'manage-budget-dialog.html',
-    styleUrls: ['./manage-budget-dialog.scss']
+    styleUrls: ['./manage-budget-dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManageBudgetDialog {
     form = new FormGroup({
