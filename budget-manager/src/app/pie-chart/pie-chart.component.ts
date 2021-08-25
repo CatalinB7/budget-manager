@@ -18,23 +18,15 @@ import { ISpendingCategory } from '../model/spendingCategory';
 })
 export class PieChartComponent {
 
-  data: IPieInput[] = [];
   pieDisplay = true;
   clickedCategory = "";
   expensesCategory: ISpending[] = [];
-  private _spendingList: ISpendingCategory[] = [];
 
   @Input()
-  get spendingTotals(): IPieInput[] { return this.data; }
-  set spendingTotals(spendingTotals: IPieInput[]) {
-    this.data = spendingTotals;
-  };
+  data: IPieInput[] = [];
 
   @Input()
-  get spendingList(): ISpendingCategory[] { return this._spendingList; }
-  set spendingList(spendingList: ISpendingCategory[]) {
-    this._spendingList = spendingList;
-  }
+  spendingList: ISpendingCategory[] = [];
 
   // pie options
   gradient: boolean = false;
