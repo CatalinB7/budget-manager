@@ -45,7 +45,7 @@ span {
 
 .list-viewport {
     height: 75%;
-    max-height: max(calc(75vh - 105px));
+    max-height: max(calc(75vh - 135px));
     overflow-x: auto;
 }
 
@@ -53,4 +53,8 @@ span {
     position: absolute;
     bottom: $content-padding;
     right: $content-padding;
+}
+
+.line-height {
+    line-height: 1.5em;
 }

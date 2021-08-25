@@ -19,6 +19,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable } from 'rxjs';
 import { IAppData } from 'src/app/model/data';
+import {
+  MyErrorStateMatcher,
+} from 'src/app/utils/form-validators/MyErrorStateMatcher';
 import { SnackbarService } from 'src/app/utils/services/snackbar.service';
 
 import { SpendingService } from '../../utils/services/spending.service';
@@ -33,14 +36,15 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryModalComponent {
+  matcher = new MyErrorStateMatcher();
 
   form = new FormGroup({
     category: new FormControl('', [
       Validators.required,
-      Validators.minLength(1),
       Validators.maxLength(22)
     ]),
   });
+
   oldCategory = '';
   showSubmit = true;
   labelName = 'New Category';
@@ -51,7 +55,7 @@ export class CategoryModalComponent {
     private _spendingService: SpendingService,
     private _snackBarService: SnackbarService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
   ) { }
 
   @ViewChild('categoryInput')
@@ -70,7 +74,7 @@ export class CategoryModalComponent {
         },
           err =>  this._snackBarService.openErrorSnackBar(err.error, 1000));
     } else {
-      this._snackBarService.openErrorSnackBar('Category name must have length between 1 and 22 characters', 2000);
+      // this._snackBarService.openErrorSnackBar('Category name must have length between 1 and 22 characters', 2000);
     }
   }
 

@@ -1,8 +1,7 @@
 @import "../../../variables.scss";
 
-input {
-    height: 3vh;
-    text-align: center;
+h1 {
+    margin: 0;
 }
 
 .flex-div {
@@ -12,9 +11,14 @@ input {
     align-items: center;
 }
 
+.flex-div button {
+    margin-left: 10px;
+
+}
+
 mat-card {
     height: 1.5vh;
-    width: 95%;
+    width: 92.5%;
     background-color: $category-card-color;
     display: flex;
     flex-direction: row;
@@ -39,18 +43,30 @@ mat-card {
     align-items: center;
 }
 
-#title-div {
+.title-div {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-#exit {
-    user-select: none;
-    color: red;
+.exit-btn {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(1,1,1,0);
+    margin: 0;
+    padding: 0;
+    border: none;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $warn-color;
 }
 
-#exit:hover {
+.exit-btn:hover {
+    border-radius: 50%;
     cursor: pointer;
     background-color: $exit-btn-background;
     color: white;
@@ -76,4 +92,9 @@ mat-card {
     max-height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.input-text-form {
+    width: 50%;
+    margin-bottom: 15px;
 }

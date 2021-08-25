@@ -1,17 +1,24 @@
-<div id="title-div">
+<div class="title-div">
   <h1 mat-dialog-title>Manage categories</h1>
-  <button mat-icon-button (click)="onNoClick()" id="exit">
+  <button (click)="onNoClick()" color="warn" class="exit-btn">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 <div class="flex-div">
-  <div class="form-div">
-    <form [formGroup]="form">
-      <mat-form-field>
+    <form [formGroup]="form" class="form-div">
+      <mat-form-field class="input-text-form">
         <mat-label>{{labelName}}</mat-label>
-        <input type="text" matInput formControlName="category" cdkFocusInitial #categoryInput />
+        <input type="text" matInput formControlName="category" cdkFocusInitial #categoryInput [errorStateMatcher]="matcher"
+          placeholder="Your category here" appearance="fill"/>
+        <mat-error *ngIf="form.get('category')!.hasError('required') && !form.get('category')!.hasError('maxlength')">
+          Name is required.
+        </mat-error>
+        <mat-error *ngIf="form.get('category')!.hasError('maxlength')">
+          Name must be shorter than 22 characters.
+        </mat-error>
       </mat-form-field>
-      <button *ngIf="showSubmit; else showUpdate" mat-button (click)="addCategory()">Submit</button>
+      <button *ngIf="showSubmit; else showUpdate" mat-raised-button color="primary" (click)="addCategory()">Submit</button>
+
       <ng-template #showUpdate>
         <span class="edit-btns">
           <button mat-button (click)="editCategory(form.value.category)">Update</button>
@@ -34,6 +41,5 @@
         </button>
       </span>
     </mat-card>
-  </div>
 
 </div>
