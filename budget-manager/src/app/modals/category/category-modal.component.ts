@@ -20,8 +20,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { IAppData } from 'src/app/model/data';
 import {
-  MyErrorStateMatcher,
-} from 'src/app/utils/form-validators/MyErrorStateMatcher';
+  BasicErrorStateMatcher,
+} from 'src/app/utils/form-validators/BasicErrorStateMatcher';
 import { SnackbarService } from 'src/app/utils/services/snackbar.service';
 
 import { SpendingService } from '../../utils/services/spending.service';
@@ -36,7 +36,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryModalComponent {
-  matcher = new MyErrorStateMatcher();
+  matcher = new BasicErrorStateMatcher();
   maxCharLen = 22;
 
   form = new FormGroup({
