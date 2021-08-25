@@ -33,6 +33,7 @@ import { PieInputPipe } from './utils/pipes/pie-input.pipe';
 import {
   SharedPipesModule,
 } from './utils/pipes/shared-pipes/shared-pipes.module';
+import { SpendcardInputPipe } from './utils/pipes/spendcard-input.pipe';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {
     BudgetComponent,
     ManageBudgetDialog,
     PieInputPipe,
+    SpendcardInputPipe
   ],
   imports: [
     BrowserModule,

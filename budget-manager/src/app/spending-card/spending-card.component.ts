@@ -1,12 +1,16 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
-  OnInit,
-  SimpleChanges,
+  Output,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
+import { Observable } from 'rxjs';
 import {
   AddSpendingDialog,
 } from 'src/app/modals/add-spending/add-spending-dialog';
@@ -17,9 +21,10 @@ import {
 import {
   DeleteWarningDialogComponent,
 } from '../modals/delete-warning/delete-warning-dialog.component';
+import { IAppData } from '../model/data';
+import { ISpending } from '../model/spending';
 import { IComputedSpendCateg } from '../model/spendingCategory';
-import { SnackbarService } from '../utils/services/snackbar.service';
-import { SpendingService } from '../utils/services/spending.service';
+import { ISpendingDeleteData } from '../model/spendingOperations';
 
 @Component({
   selector: 'app-spending-card',
@@ -27,43 +32,51 @@ import { SpendingService } from '../utils/services/spending.service';
   styleUrls: ['./spending-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpendingCardComponent implements OnInit {
-  @Input() categoryList: IComputedSpendCateg[] = [];
-  iconText = "arrow_upward";
+export class SpendingCardComponent {
+
+  sortOrder = 1;
+
+  @Input()
+  get spendingList() { return this._spendingList; }
+  set spendingList(spendingList: IComputedSpendCateg[]) {
+    this._spendingList = this.sortArrayByTotals(spendingList, this.sortOrder);
+  }
+
+  @Input() modalObs: Observable<IAppData> | undefined = undefined;
+
+  @Output() deleteEvent = new EventEmitter<ISpendingDeleteData>();
+  @Output() addEvent = new EventEmitter<ISpending>();
+
+  private _spendingList: IComputedSpendCateg[] = [];
+
+  get iconText() {
+    if(this.sortOrder === 1)
+      return 'arrow_upward';
+    return 'arrow_downward';
+  };
+
+  dialogRef: MatDialogRef<CategoryModalComponent, any> | undefined;
 
   constructor(
     private _dialog: MatDialog,
-    private _spendingService: SpendingService,
-    private _snackBarService: SnackbarService,
   ) { }
 
-  ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.categoryList = changes.categoryList.currentValue
-      .sort((a: IComputedSpendCateg, b: IComputedSpendCateg) => a.total < b.total ? -1 : 1);
+  sortArrayByTotals(list: IComputedSpendCateg[], order: number) {
+    return list.sort((a, b) => a.total < b.total ? order : order * (-1));
   }
 
   clickedIcon() {
-    if (this.iconText == "arrow_upward") {
-      this.iconText = "arrow_downward";
-      this.categoryList = this.categoryList.sort((a: any, b: any) => a.total > b.total ? -1 : 1);
-    } else {
-      this.iconText = "arrow_upward";
-      this.categoryList = this.categoryList.sort((a: any, b: any) => a.total < b.total ? -1 : 1);
-    }
+    this.sortOrder *= -1;
+    this.spendingList = this.sortArrayByTotals(this.spendingList, this.sortOrder);
   }
 
   onDelete(categoryName: string, spendingId: string) {
-    this._spendingService.removeSpending(categoryName, spendingId).subscribe();
-    this._snackBarService.openSuccessSnackBar('Successfully deleted', 1000);
-    location.reload();
+    this.deleteEvent.emit({ categoryName, spendingId });
   }
 
   openDialog() {
     const dialogRef = this._dialog.open(AddSpendingDialog, {
-      data: this.categoryList,
+      data: this.spendingList,
       disableClose: true,
       autoFocus: true,
       width: '300px',
@@ -71,27 +84,24 @@ export class SpendingCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this._spendingService.addSpending(result).subscribe(
-          () => this._snackBarService.openSuccessSnackBar('Successfully created spending', 1000)
-        );
-        location.reload();
+        this.addEvent.emit(result);
       }
     });
   }
 
   openDialogCategories() {
-    const dialogRef = this._dialog.open(CategoryModalComponent, {
-      width: '75vw',
-      height: '75vh',
-      data: { categoryList: this.categoryList },
+    this.dialogRef = this._dialog.open(CategoryModalComponent, {
+      width: '500px',
+      height: '700px',
+      data: this.modalObs,
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.clickedIcon(); //sort new array
-      this.clickedIcon();
-    });
+    this.dialogRef.afterClosed().subscribe(
+      () => this.dialogRef = undefined
+    );
   }
+
   openDialogDelWarn(toDelete: string, categoryName: string, spendingId: string) {
     const dialogRef = this._dialog.open(DeleteWarningDialogComponent, {
       width: '350px',
@@ -103,5 +113,4 @@ export class SpendingCardComponent implements OnInit {
         this.onDelete(categoryName, spendingId);
     });
   }
-
 }

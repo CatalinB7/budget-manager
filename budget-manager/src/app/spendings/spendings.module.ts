@@ -71,7 +71,7 @@ import {
     MatSelectModule,
     MatSnackBarModule,
     MatNativeDateModule,
-    SharedPipesModule
+    SharedPipesModule,
   ],
   exports: [SpendingCardComponent, PieChartComponent]
 })

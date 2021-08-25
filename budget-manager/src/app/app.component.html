@@ -20,7 +20,11 @@
             </mat-grid-tile>
             <mat-grid-tile rowspan="3">
                 <mat-card id="spendingCard" class="fill" *ngIf="!data.loading; else loading">
-                    <app-spending-card></app-spending-card>
+                    <app-spending-card
+                                       [spendingList]="data.spendingList | spendcardInput : data.spendingTotals"
+                                       [modalObs]="data$"
+                                       (deleteEvent)="onDeleteSpending($event)"
+                                       (addEvent)="onAddSpending($event)"></app-spending-card>
                 </mat-card>
             </mat-grid-tile>
             <mat-grid-tile rowspan="2">

@@ -1,8 +1,16 @@
 @import '../../variables.scss';
 
+mat-card-content {
+    margin: 0px;
+}
+
 mat-card-header {
     margin-top: 10px;
     margin-left: 20px;
+}
+
+.card-content {
+    height: fit-content;
 }
 
 .remaining-budget {
@@ -11,7 +19,8 @@ mat-card-header {
     font-size: x-large;
     border-style: solid;
     border-width: 2px;
-    border-radius: 20px;   
+    border-radius: 20px;
+    margin-top: 5vh;
 }
 
 .button-title-group {

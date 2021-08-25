@@ -9,8 +9,7 @@
         [yAxis]="yAxis"
         [yAxisLabel]="yAxisLabel"
         [timeline]="true"
-        [results]="data"
-        >
+        [results]="data">
             <ng-template #tooltipTemplate let-model="model">
                 <div class="tooltip">
                     {{model.tooltipText}}
@@ -19,7 +18,6 @@
     
         </ngx-charts-line-chart>
     </div>
-    <div class="down-div">
-        <button mat-button class="btn" (click)="clickBack()">Back</button>
-    </div>
+
+    <button mat-raised-button class="back-button" (click)="clickBack()">BACK</button>
 </div>
