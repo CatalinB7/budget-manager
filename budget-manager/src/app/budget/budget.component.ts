@@ -3,7 +3,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,7 +20,7 @@ import { ISpendingTotal } from '../model/spendingTotal';
   styleUrls: ['./budget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BudgetComponent implements OnInit {
+export class BudgetComponent {
   private _spendingTotals: ISpendingTotal[] = [];
   private _budget = { value: 0, plannedSaving: 0 };
 
@@ -74,11 +73,11 @@ export class BudgetComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        this.changeBudgetEvent.emit({ value: result.value, plannedSaving: result.plannedSaving });
+      if(!result){
+        return;
       }
+      this.changeBudgetEvent.emit({ value: result.value, plannedSaving: result.plannedSaving });
     });
   }
 
-  ngOnInit(): void { }
 }
