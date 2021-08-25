@@ -33,7 +33,6 @@ import {
   DeleteWarningDialogComponent,
 } from '../modals/delete-warning/delete-warning-dialog.component';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
-import { ShowIfTruncatedDirective } from '../show-if-truncated.directive';
 import {
   SpendingCardComponent,
 } from '../spending-card/spending-card.component';
@@ -45,7 +44,6 @@ import {
 @NgModule({
   declarations: [
     SpendingCardComponent,
-    ShowIfTruncatedDirective,
     AddSpendingDialog,
     CategoryModalComponent,
     PieChartComponent,
