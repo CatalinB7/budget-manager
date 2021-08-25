@@ -52,7 +52,8 @@ export class CategoryModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CategoryModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data$: Observable<IAppData> | undefined,
+    @Inject(MAT_DIALOG_DATA)
+    public data$: Observable<IAppData> | undefined,
     private _spendingService: SpendingService,
     private _snackBarService: SnackbarService,
     private _dialog: MatDialog,
