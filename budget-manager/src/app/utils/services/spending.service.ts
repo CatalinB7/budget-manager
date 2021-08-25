@@ -45,10 +45,6 @@ export class SpendingService {
     return this.spendingList$.value[categoryPosition].expenses.map(obj => obj.id).indexOf(spendingId);
   }
 
-  ID() {
-    return (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
-  }
-
   getSpendingList() {
     return this._http.get<SpendingResponse>('http://localhost:3000/expenses_categories?userId=1').pipe(
       map((data) => data[0].categories),
@@ -58,28 +54,25 @@ export class SpendingService {
     );
   }
 
-  addSpending(spending: any) {
+  addSpending(spendingPayload: any) {
     const newSpending = {
-      id: this.ID(),
-      name: spending.name,
-      value: spending.value,
-      date: spending.date,
+      id: this.spendingList$.value[this.getCategotyPosition(spendingPayload.category)].expenses.slice(-1)[0].id + 1,
+      name: spendingPayload.name,
+      value: spendingPayload.value,
+      date: spendingPayload.date,
       recurring: Recurrence.Daily
     }
 
     const body = {
-      category: spending.category,
+      category: spendingPayload.category,
       spending: newSpending
     };
 
-
     return this._http.post('http://localhost:3000/expenses_categories/spendings?userId=1', body, { responseType: "text" }).pipe(
       tap(data => {
-        const currentSpending = this.spendingList$.value;
+        this.spendingList$.value[this.getCategotyPosition(spendingPayload.category)].expenses.push(newSpending);
 
-        currentSpending[this.getCategotyPosition(spending.category)].expenses.push(newSpending);
-
-        this.handleResponse(data, [...currentSpending]);
+        this.handleResponse(data, this.spendingList$.value);
       })
     );
   }
