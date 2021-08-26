@@ -11,10 +11,10 @@
         <input type="text" matInput formControlName="category" cdkFocusInitial #categoryInput [errorStateMatcher]="matcher"
           placeholder="Your category here" appearance="fill"/>
         <mat-error *ngIf="form.get('category')!.hasError('required') && !form.get('category')!.hasError('maxlength')">
-          Name is required.
+          Name is <strong>required</strong>.
         </mat-error>
         <mat-error *ngIf="form.get('category')!.hasError('maxlength')">
-          Name must be shorter than 22 characters.
+          Name must be shorter than <strong>{{maxCharLen}}</strong> characters.
         </mat-error>
       </mat-form-field>
       <button *ngIf="showSubmit; else showUpdate" mat-raised-button color="primary" (click)="addCategory()">Submit</button>

@@ -1,25 +1,44 @@
-<form >
+<form>
     <h1 mat-dialog-title class="title">Add Spending</h1>
     <div mat-dialog-content [formGroup]="form" class="container">
         <mat-form-field>
             <mat-label>Value</mat-label>
-            <input type="number" matInput formControlName="value" />
+            <input type="number" matInput formControlName="value" [errorStateMatcher]="matcher" />
+            <mat-error *ngIf="form.get('value')!.hasError('max') || form.get('value')!.hasError('min')">
+                Value must be between <strong>{{minVal}}</strong> and <strong>{{maxVal}}</strong>.
+            </mat-error>
+            <mat-error *ngIf="form.get('value')!.hasError('required')">
+                Value is <strong>required</strong>.
+            </mat-error>
         </mat-form-field>
+
         <mat-form-field>
             <mat-label>Name</mat-label>
-            <input type="text" matInput formControlName="name" />
+            <input type="text" matInput formControlName="name" placeholder="Spending name"
+                [errorStateMatcher]="matcher" />
+            <mat-error *ngIf="form.get('name')!.hasError('maxlength')">
+                Name is limited to <strong>{{maxCharLen}}</strong> characters.
+            </mat-error>
+            <mat-error *ngIf="form.get('name')!.hasError('required')">
+                Name is <strong>required</strong>.
+            </mat-error>
         </mat-form-field>
+        
         <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
             <mat-select formControlName="category">
                 <mat-option *ngFor="let category of data" value="{{category.name}}">{{category.name}}</mat-option>
             </mat-select>
         </mat-form-field>
+
         <mat-form-field>
             <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="date">
+            <input matInput [matDatepicker]="picker" formControlName="date" [errorStateMatcher]="matcher">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="!form.get('date')!.valid">
+                Please enter a <strong>valid</strong> date.
+            </mat-error>
         </mat-form-field>
     </div>
     <div mat-dialog-actions class="button-group">
