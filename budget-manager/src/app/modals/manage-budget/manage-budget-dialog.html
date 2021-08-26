@@ -25,6 +25,6 @@
     </div>
     <div mat-dialog-actions class="button-group">
         <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancel</button>
-        <button mat-raised-button color="primary" (click)="onSubmit()" cdkFocusInitial>Submit</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!form.valid || form.pristine" cdkFocusInitial>Submit</button>
     </div>
 </form>
