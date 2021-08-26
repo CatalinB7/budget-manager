@@ -1,17 +1,17 @@
 <div class="title-div">
   <h1 mat-dialog-title>Manage categories</h1>
-  <button (click)="onNoClick()" color="warn" class="exit-btn">
+  <button color="warn" class="exit-btn" (click)="onNoClick()">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
 <div class="flex-div">
   <form [formGroup]="form" class="form-div">
-    <mat-spinner *ngIf="loading$ | async" [diameter]="20" class="spinner"></mat-spinner>
+    <mat-spinner class="spinner" *ngIf="loading$ | async" [diameter]="20"></mat-spinner>
     <mat-form-field class="input-text-form">
       <mat-label>{{labelName}}</mat-label>
-      <input type="text" matInput formControlName="category" cdkFocusInitial #categoryInput
-        [errorStateMatcher]="matcher" placeholder="Your category here" appearance="fill" />
+      <input matInput cdkFocusInitial type="text" formControlName="category" placeholder="Your category here"
+        appearance="fill" #categoryInput [errorStateMatcher]="matcher" />
       <mat-error *ngIf="form.get('category')!.hasError('required') && !form.get('category')!.hasError('maxlength')">
         Name is <strong>required</strong>.
       </mat-error>
@@ -19,24 +19,16 @@
         Name must be shorter than <strong>{{maxCharLen}}</strong> characters.
       </mat-error>
     </mat-form-field>
-    <button *ngIf="showSubmit; else showUpdate" [disabled]="!form.valid" mat-raised-button color="primary"
+    <button mat-raised-button color="primary" *ngIf="showSubmit; else showUpdate" [disabled]="!form.valid"
       (click)="addCategory()">Submit</button>
-
-    <ng-template #showUpdate>
-      <span class="edit-btns">
-        <button mat-raised-button color="primary" [disabled]="!form.valid || form.pristine"
-          (click)="editCategory(form.value.category)">Update</button>
-        <button mat-raised-button color="warn" (click)="dropEdit()">Discard</button>
-      </span>
-    </ng-template>
   </form>
 </div>
 <mat-divider></mat-divider>
 <div class="scroll-div" *ngIf="(data$ | async) as data">
   <mat-card *ngFor="let category of data.spendingList">
-    <p class="ellipsis-text" [matTooltip]="category.name" appShowIfTruncated>{{category.name}}</p>
+    <p appShowIfTruncated class="ellipsis-text" [matTooltip]="category.name">{{category.name}}</p>
     <span class="span-icons">
-      <button [disabled]="!showSubmit && category.name == oldCategory" mat-icon-button
+      <button mat-icon-button [disabled]="!showSubmit && category.name == oldCategory"
         (click)="openDialogDelWarn(category.name)">
         <mat-icon [color]="category.name !== oldCategory ? 'warn' : ''">delete</mat-icon>
       </button>
@@ -46,3 +38,11 @@
     </span>
   </mat-card>
 </div>
+
+<ng-template #showUpdate>
+  <span class="edit-btns">
+    <button mat-raised-button color="primary" [disabled]="!form.valid || form.pristine"
+      (click)="editCategory(form.value.category)">Update</button>
+    <button mat-raised-button color="warn" (click)="dropEdit()">Discard</button>
+  </span>
+</ng-template>

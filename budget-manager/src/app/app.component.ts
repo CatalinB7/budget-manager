@@ -23,15 +23,15 @@ export class AppComponent {
   splitSize = 1200;
 
   constructor(
-    private _spendingService: SpendingService, 
-    private _budgetService: BudgetService, 
+    private _spendingService: SpendingService,
+    private _budgetService: BudgetService,
     private _dataService: DataService,
   ) { }
 
   ngOnInit(): void {
     this._budgetService.getBudget().subscribe();
     this._spendingService.getSpendingList().subscribe();
-    if(window.innerWidth <= this.splitSize)
+    if (window.innerWidth <= this.splitSize)
       this.colsNo = 1;
   }
 
