@@ -30,7 +30,6 @@ export class AddSpendingDialog {
     minVal = 0;
     maxCharLen = 22;
 
-
     form = new FormGroup({
         value: new FormControl('', [
             Validators.required,

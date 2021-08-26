@@ -73,9 +73,10 @@ export class BudgetComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(!result){
+      if(!result) {
         return;
       }
+      
       this.changeBudgetEvent.emit({ value: result.value, plannedSaving: result.plannedSaving });
     });
   }
