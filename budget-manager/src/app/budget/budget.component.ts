@@ -24,9 +24,10 @@ import { ISpendingTotal } from '../model/spendingTotal';
 export class BudgetComponent implements OnInit {
   private _spendingTotals: ISpendingTotal[] = [];
   private _budget = { value: 0, plannedSaving: 0 };
-  
+
   targetSavings = 0;
   leftInBudget = 0;
+
   constructor(private _dialog: MatDialog) {}
 
   @Input()

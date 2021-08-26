@@ -14,6 +14,9 @@ import {
 } from '@angular/material/dialog';
 
 import { IBudget } from 'src/app/model/budget';
+import {
+  BasicErrorStateMatcher,
+} from 'src/app/utils/form-validators/BasicErrorStateMatcher';
 
 @Component({
     selector: 'manage-budget-dialog',
@@ -21,11 +24,13 @@ import { IBudget } from 'src/app/model/budget';
     styleUrls: ['./manage-budget-dialog.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManageBudgetDialog {
+export class ManageBudgetDialog {  
+    matcher = new BasicErrorStateMatcher();
+
     form = new FormGroup({
         value: new FormControl(this.data.value, [
             Validators.required,
-            Validators.max(9999999),
+            Validators.max(999999999),
             Validators.min(0)
         ]),
         plannedSaving: new FormControl(this.data.plannedSaving, [
