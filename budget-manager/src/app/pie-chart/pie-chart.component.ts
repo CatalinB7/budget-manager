@@ -19,14 +19,22 @@ import { ISpendingCategory } from '../model/spendingCategory';
 export class PieChartComponent {
 
   pieDisplay = true;
-  clickedCategory = "";
+  clickedCategory = '';
   expensesCategory: ISpending[] = [];
 
   @Input()
   data: IPieInput[] = [];
 
+  private _spendingList: ISpendingCategory[] = [];
+
   @Input()
-  spendingList: ISpendingCategory[] = [];
+  get spendingList(): ISpendingCategory[] { return this._spendingList; }
+  set spendingList(spendingList: ISpendingCategory[]) {
+    this._spendingList = spendingList;
+    if(!this.pieDisplay) {
+      this.setExpensesCategory(this.clickedCategory);
+    }
+  }
 
   // pie options
   gradient: boolean = false;
@@ -44,12 +52,16 @@ export class PieChartComponent {
   }
 
   toggleCharts(category: string) {
+    this.setExpensesCategory(category);
     this.togglePieDisplay();
-    let categoryIndex = this.spendingList.findIndex(el=> el.name === category);
-    this.expensesCategory = this.spendingList[categoryIndex].expenses;
   }
 
   togglePieDisplay() {
     this.pieDisplay = !this.pieDisplay;
+  }
+
+  setExpensesCategory(category: string) {
+    const categoryIndex = this.spendingList.findIndex(el => el.name === category);
+    this.expensesCategory = [...this.spendingList[categoryIndex].expenses];
   }
 }
