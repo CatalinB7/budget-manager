@@ -31,7 +31,7 @@ export class SpendingService {
 
   handleResponse(data: string, newValue: ISpendingCategory[]) {
     if (data === 'OK') {
-      this.spendingList$.next(newValue);
+      this.spendingList$.next([...newValue]);
     } else {
       this.getSpendingList();
     }
