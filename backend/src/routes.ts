@@ -4,24 +4,35 @@ import { db } from './db/db';
 import {
   checkCategoryExists,
   deleteSpendingInCategory,
+  editBudget,
   editCategory,
   editSpendingInCategory,
   insertCategory,
   insertSpendingInCategory,
   removeCategory,
 } from './db/db_API';
+import { isTypeOfIBudget } from './model/IBudget';
 import {
-  isInstanceOfISpending,
-  isInstanceOfISpendingArray,
+  isTypeOfISpending,
+  isTypeOfISpendingArray,
 } from './model/ISpending';
 import { CustomError } from './utils/CustomError';
 
 const router = express.Router();
+const succObj = { status: "SUCCESS", statusCode: 200 };
 
 router.get('/budgets', (req, res) => {
     const userId = req.query.userId;
     res.send(db.budgets.filter(el => el.userId === userId));
 });
+
+router.put('/budgets', (req, res) => {
+    const userId = req.query.userId;
+    const { budget } = req.body;
+    if (typeof userId != 'string' || !isTypeOfIBudget(budget))
+        throw new CustomError('Bad query params!', 400);
+    res.json({ ...succObj, response: editBudget(userId, budget) });
+})
 
 router.get('/expenses_categories', (req, res) => {
     const userId = req.query.userId;
@@ -34,7 +45,7 @@ router.post('/expenses_categories/categories', (req, res) => {
     const { name, expenses } = req.body;
 
     if (typeof userId !== 'string' || typeof name !== 'string' ||
-        !isInstanceOfISpendingArray(expenses)) {
+        !isTypeOfISpendingArray(expenses)) {
         throw new CustomError('Bad query params!', 400);
     }
     if (checkCategoryExists(userId, name)) {
@@ -42,7 +53,7 @@ router.post('/expenses_categories/categories', (req, res) => {
     }
 
     insertCategory(userId, name, expenses);
-    res.json({ status: "SUCCESS", statusCode: 200, response: { name, expenses } });
+    res.json({ ...succObj, response: { name, expenses } });
 });
 
 router.delete('/expenses_categories/categories', (req, res) => {
@@ -56,7 +67,7 @@ router.delete('/expenses_categories/categories', (req, res) => {
         throw new CustomError('Category is not defined!', 404);
     }
 
-    res.json({ status: "SUCCESS", statusCode: 200, response: removeCategory(userId, name) });
+    res.json({ ...succObj, response: removeCategory(userId, name) });
 });
 
 router.put('/expenses_categories/categories', (req, res) => {
@@ -74,7 +85,7 @@ router.put('/expenses_categories/categories', (req, res) => {
         throw new CustomError(`Category ${newName} already defined!`, 409);
     }
 
-    res.json({ status: "SUCCESS", response: editCategory(userId, oldName, newName) });
+    res.json({ ...succObj, response: editCategory(userId, oldName, newName) });
 });
 
 router.post('/expenses_categories/spendings', (req, res) => {
@@ -82,17 +93,14 @@ router.post('/expenses_categories/spendings', (req, res) => {
     const { category, spending } = req.body;
 
     if (typeof userId !== 'string' || typeof category !== 'string' ||
-        !isInstanceOfISpending(spending)) {
+        !isTypeOfISpending(spending)) {
         throw new CustomError('Bad query params!', 400);
     }
     if (!checkCategoryExists(userId, category)) {
         throw new CustomError('Category not defined!', 404);
     }
 
-    res.json({
-        status: "SUCCESS", statusCode: 200,
-        response: insertSpendingInCategory(userId, category, spending)
-    });
+    res.json({ ...succObj, response: insertSpendingInCategory(userId, category, spending) });
 });
 
 router.put('/expenses_categories/spendings', (req, res) => {
@@ -100,7 +108,7 @@ router.put('/expenses_categories/spendings', (req, res) => {
     const { category, spending } = req.body;
 
     if (typeof userId !== 'string' || typeof category !== 'string' ||
-        typeof req.query.spendingId !== 'string' || !isInstanceOfISpending(spending)) {
+        typeof req.query.spendingId !== 'string' || !isTypeOfISpending(spending)) {
         throw new CustomError('Bad query params!', 400);
     }
     if (!checkCategoryExists(userId, category)) {
@@ -109,7 +117,7 @@ router.put('/expenses_categories/spendings', (req, res) => {
 
     const spendingId = parseInt(req.query.spendingId);
     const toEdit = editSpendingInCategory(userId, spendingId, category, spending);
-    res.json({ status: "SUCCESS", statusCode: 200, response: toEdit });
+    res.json({ ...succObj, response: toEdit });
 });
 
 router.delete('/expenses_categories/spendings', (req, res) => {
@@ -125,7 +133,7 @@ router.delete('/expenses_categories/spendings', (req, res) => {
 
     const spendingId = parseInt(req.query.spendingId);
     const toDelete = deleteSpendingInCategory(userId, spendingId, category);
-    res.json({ status: "SUCCESS", statusCode: 200, response: toDelete });
+    res.json({ ...succObj, response: toDelete });
 });
 
 export default router;

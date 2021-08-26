@@ -1,8 +1,8 @@
 export class CustomError extends Error {
-    #statusCode: number;
+    _statusCode: number;
     constructor(message: string, httpStatus: number) {
         super(message);
-        this.#statusCode = httpStatus;
+        this._statusCode = httpStatus;
     }
 
     get Message() {
@@ -10,6 +10,6 @@ export class CustomError extends Error {
     }
 
     get StatusCode() {
-        return this.#statusCode;
+        return this._statusCode;
     }
 }
