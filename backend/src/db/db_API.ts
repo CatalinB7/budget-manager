@@ -21,16 +21,28 @@ const insertCategory = (userId: string, newCategory: string, expenses: ISpending
 
 const removeCategory = (userId: string, name: string) => {
     const a = db.expenses_categories.filter(el => el.userId == userId)[0];
-    a.categories = a.categories.filter(el => el.name != name);
+    let toDelete = {};
+    a.categories = a.categories.filter(el => {
+        if(el.name === name) {
+            toDelete = el;
+            return false;
+        }
+        return true;
+    });
+    return toDelete;
 }
 
 const editCategory = (userId: string, oldName: string, newName: string) => {
     const a = db.expenses_categories.filter(el => el.userId == userId)[0];
+    let toEdit = {};
     a.categories = a.categories.map(el => {
-        if(el.name == oldName)
+        if(el.name == oldName) {
             el.name = newName;
+            toEdit = el;
+        }
         return el;
     });
+    return toEdit;
 }
 
 const insertSpendingInCategory = (userId: string, category: string, spending: ISpending) => {
@@ -41,17 +53,20 @@ const insertSpendingInCategory = (userId: string, category: string, spending: IS
             throw new CustomError("Item already defined!", 409);
     });
     const id = expenses.length + 1;
-    expenses.push({...spending, id});
+    const toInsert = {...spending, id};
+    expenses.push(toInsert);
+    return toInsert;
 }
 
 const editSpendingInCategory = (userId: string, spendingId: number, category: string, spending: ISpending) => {
     const expenses = db.expenses_categories.filter(el => el.userId == userId)[0].categories
         .filter(el => el.name === category)[0].expenses;
+    const toEdit = {...spending, id: spendingId};
     let found = false;
     let sameNameCounter = 0;
     expenses.forEach((el, idx) => {
         if(el.id == spendingId) {
-            expenses[idx] = {...spending, id: spendingId};
+            expenses[idx] = toEdit;
             found = true;
         } else if(spending.name == el.name)
                 sameNameCounter++;
@@ -60,21 +75,18 @@ const editSpendingInCategory = (userId: string, spendingId: number, category: st
         throw new CustomError(`Item with id ${spendingId} not found!`, 404);
     if(sameNameCounter >= 1)
         throw new CustomError("Item having same name already defined!", 409);
+    return toEdit;
     }
 
 const deleteSpendingInCategory = (userId: string, spendingId: number, category: string) => {
     const expenses = db.expenses_categories.filter(el => el.userId == userId)[0].categories
         .filter(el => el.name === category)[0].expenses;
-    let found = false;
     for (let i = 0; i < expenses.length; i++) {
         if(expenses[i].id == spendingId) {
-            found = true;
-            expenses.splice(i, 1);
-            return;
+            return expenses.splice(i, 1)[0];
         }
     }
-    if(!found)
-        throw new CustomError(`Item with id ${spendingId} not found!`, 404);
+    throw new CustomError(`Item with id ${spendingId} not found!`, 404);
 }
 
 export {

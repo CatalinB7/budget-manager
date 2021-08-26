@@ -42,7 +42,7 @@ router.post('/expenses_categories/categories', (req, res) => {
     }
 
     insertCategory(userId, name, expenses);
-    res.sendStatus(200);
+    res.json({ status: "SUCCESS", statusCode: 200, response: { name, expenses } });
 });
 
 router.delete('/expenses_categories/categories', (req, res) => {
@@ -56,8 +56,7 @@ router.delete('/expenses_categories/categories', (req, res) => {
         throw new CustomError('Category is not defined!', 404);
     }
 
-    removeCategory(userId, name);
-    res.sendStatus(200);
+    res.json({ status: "SUCCESS", statusCode: 200, response: removeCategory(userId, name) });
 });
 
 router.put('/expenses_categories/categories', (req, res) => {
@@ -75,8 +74,7 @@ router.put('/expenses_categories/categories', (req, res) => {
         throw new CustomError(`Category ${newName} already defined!`, 409);
     }
 
-    editCategory(userId, oldName, newName);
-    res.sendStatus(200);
+    res.json({ status: "SUCCESS", response: editCategory(userId, oldName, newName) });
 });
 
 router.post('/expenses_categories/spendings', (req, res) => {
@@ -91,8 +89,10 @@ router.post('/expenses_categories/spendings', (req, res) => {
         throw new CustomError('Category not defined!', 404);
     }
 
-    insertSpendingInCategory(userId, category, spending);
-    res.sendStatus(200);
+    res.json({
+        status: "SUCCESS", statusCode: 200,
+        response: insertSpendingInCategory(userId, category, spending)
+    });
 });
 
 router.put('/expenses_categories/spendings', (req, res) => {
@@ -108,8 +108,8 @@ router.put('/expenses_categories/spendings', (req, res) => {
     }
 
     const spendingId = parseInt(req.query.spendingId);
-    editSpendingInCategory(userId, spendingId, category, spending);
-    res.sendStatus(200);
+    const toEdit = editSpendingInCategory(userId, spendingId, category, spending);
+    res.json({ status: "SUCCESS", statusCode: 200, response: toEdit });
 });
 
 router.delete('/expenses_categories/spendings', (req, res) => {
@@ -122,10 +122,10 @@ router.delete('/expenses_categories/spendings', (req, res) => {
     if (!checkCategoryExists(userId, category)) {
         throw new CustomError('Category not defined!', 404);
     }
-    
+
     const spendingId = parseInt(req.query.spendingId);
-    deleteSpendingInCategory(userId, spendingId, category);
-    res.sendStatus(200);
+    const toDelete = deleteSpendingInCategory(userId, spendingId, category);
+    res.json({ status: "SUCCESS", statusCode: 200, response: toDelete });
 });
 
 export default router;
