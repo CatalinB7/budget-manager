@@ -2,7 +2,9 @@
     <mat-toolbar color="primary">
         <span>Budgeteer</span>
         <span class="spacer"></span>
-        <mat-icon>menu</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
     </mat-toolbar>
 
     <ng-container class="wrapper" *ngIf="(data$ | async) as data">
@@ -34,3 +36,7 @@
 <ng-template #loading>
     <mat-spinner></mat-spinner>
 </ng-template>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>You may click this but it will do nothing</button>
+</mat-menu>
