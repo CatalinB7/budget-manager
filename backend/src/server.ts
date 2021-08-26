@@ -2,8 +2,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 
-import { CustomError } from './db';
 import router from './routes';
+import { CustomError } from './utils/CustomError';
 
 const app = express();
 const port = 3000;
