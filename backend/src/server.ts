@@ -2,8 +2,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 
-import { CustomError } from './db';
 import router from './routes';
+import { CustomError } from './utils/CustomError';
 
 const app = express();
 const port = 3000;
@@ -22,7 +22,7 @@ app.use(router);
 
 app.use(function (err: CustomError, req: any, res: any, next: any) {
   console.log(err.StatusCode, err.message);
-  res.status(err.StatusCode).send(err.message);
+  res.json( {status: "ERROR", statusCode: err.StatusCode, response: { message: err.message } } );
 });
 
 app.listen(port, () => {
