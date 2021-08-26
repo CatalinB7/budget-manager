@@ -4,8 +4,10 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
+
 <div class="flex-div">
   <form [formGroup]="form" class="form-div">
+    <mat-spinner *ngIf="loading$ | async" [diameter]="20" class="spinner"></mat-spinner>
     <mat-form-field class="input-text-form">
       <mat-label>{{labelName}}</mat-label>
       <input type="text" matInput formControlName="category" cdkFocusInitial #categoryInput

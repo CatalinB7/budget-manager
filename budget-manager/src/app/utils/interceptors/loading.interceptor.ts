@@ -14,7 +14,6 @@ import { LoadingService } from '../services/loading.service';
     providedIn: 'root'
 })
 export class LoadingInterceptorService {
-
     isPending = true;
     activeRequests = 0;
 
@@ -25,7 +24,7 @@ export class LoadingInterceptorService {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.isPending = true;
 
-        if (this.activeRequests === 0) {
+        if (this.activeRequests === 0 && !request.url.includes('expenses_categories/categories')) {
             setTimeout(() => {
                 if(this.isPending) {
                     this._loadingScreenService.startLoading();

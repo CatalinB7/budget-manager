@@ -4,7 +4,13 @@ h1 {
     margin: 0;
 }
 
+.spinner {
+    position: absolute;
+    left: 20px;
+}
+
 .flex-div {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
