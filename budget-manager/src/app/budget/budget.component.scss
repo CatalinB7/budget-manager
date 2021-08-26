@@ -6,7 +6,7 @@ mat-card-content {
 
 mat-card-header {
     margin-top: 10px;
-    margin-left: 20px;
+    margin-left: $content-padding;
 }
 
 .card-content {
@@ -21,6 +21,10 @@ mat-card-header {
     border-width: 2px;
     border-radius: 20px;
     margin-top: 5vh;
+}
+
+.low-budget {
+    color: $warn-color;
 }
 
 .button-title-group {
