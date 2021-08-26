@@ -22,7 +22,7 @@ app.use(router);
 
 app.use(function (err: CustomError, req: any, res: any, next: any) {
   console.log(err.StatusCode, err.message);
-  res.status(err.StatusCode).send(err.message);
+  res.json( {status: "ERROR", statusCode: err.StatusCode, response: { message: err.message } } );
 });
 
 app.listen(port, () => {

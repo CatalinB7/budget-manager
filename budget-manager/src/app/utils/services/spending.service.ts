@@ -6,13 +6,17 @@ import {
   map,
   tap,
 } from 'rxjs/operators';
+import { IResponse } from 'src/app/model/IResponse';
 
 import { Recurrence } from '../../enums/recurrences';
 import { ISpendingCategory } from '../../model/spendingCategory';
 import { SpendingResponse } from '../../model/spendingResponse';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({ providedIn: 'root' })
 export class SpendingService {
+  duration = 2000;
+  headers = { responseType: 'application/json' };
   spendingList$ = new BehaviorSubject<ISpendingCategory[]>([]);
 
   spendingTotals$ = this.spendingList$.pipe(
@@ -27,13 +31,18 @@ export class SpendingService {
       });
     }));
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient,
+    private _snackBarService: SnackbarService
+  ) { }
 
-  handleResponse(data: string, newValue: ISpendingCategory[]) {
-    if (data === 'OK') {
+  handleResponse(data: IResponse, newValue: ISpendingCategory[], successMsg: string) {
+    if (data.status === 'SUCCESS') {
       this.spendingList$.next([...newValue]);
+      this._snackBarService.openSuccessSnackBar(successMsg, this.duration);
     } else {
       this.getSpendingList();
+      this._snackBarService.openErrorSnackBar(data.response.message, this.duration);
     }
   }
 
@@ -56,8 +65,6 @@ export class SpendingService {
 
   addSpending(spendingPayload: any) {
     const newSpending = {
-      // FIXME: set id to '[BLANCK]' and change the http response handling once the backend is fixed
-      id: this.spendingList$.value[this.getCategotyPosition(spendingPayload.category)].expenses.slice(-1)[0].id + 1,
       name: spendingPayload.name,
       value: spendingPayload.value,
       date: spendingPayload.date,
@@ -69,21 +76,26 @@ export class SpendingService {
       spending: newSpending
     };
 
-    return this._http.post('http://localhost:3000/expenses_categories/spendings?userId=1', body, { responseType: "text" }).pipe(
-      tap(data => {
-        this.spendingList$.value[this.getCategotyPosition(spendingPayload.category)].expenses.push(newSpending);
+    const successMsg = 'Inserted a new spending';
 
-        this.handleResponse(data, this.spendingList$.value);
-      })
-    );
+    return this._http.post<IResponse>('http://localhost:3000/expenses_categories/spendings?userId=1',
+      body, { headers: this.headers }).pipe(
+        tap(data => {
+          this.spendingList$.value[this.getCategotyPosition(spendingPayload.category)].expenses.push(data.response);
+          
+          this.handleResponse(data, this.spendingList$.value, successMsg);
+        })
+      );
   }
 
   addSpendingCategory(categoryName: string) {
     const body: ISpendingCategory = { name: categoryName, expenses: [] };
+    const successMsg = `Inserted new category ${categoryName} succesfully!`;
 
-    return this._http.post('http://localhost:3000/expenses_categories/categories?userId=1', body, { responseType: "text" }).pipe(
+    return this._http.post<IResponse>('http://localhost:3000/expenses_categories/categories?userId=1',
+      body, { headers: this.headers }).pipe(
       tap(data => {
-        this.handleResponse(data, [...this.spendingList$.value, body]);
+        this.handleResponse(data, [...this.spendingList$.value, body], successMsg);
       })
     );
   }
@@ -92,37 +104,42 @@ export class SpendingService {
     const categoryPosition = this.getCategotyPosition(categoryName);
     const spendingPosition = this.getSpendingPosition(categoryPosition, spendingId);
 
-    return this._http.delete(`http://localhost:3000/expenses_categories/spendings?userId=1&spendingId=${spendingId}&category=${categoryName}`, { responseType: "text" }).pipe(
+    return this._http.delete<IResponse>(`http://localhost:3000/expenses_categories/spendings?userId=1&spendingId=${spendingId}&category=${categoryName}`,
+      { headers: this.headers }).pipe(
       tap(data => {
-        this.spendingList$.value[categoryPosition].expenses.splice(spendingPosition, 1);
+        const spending = this.spendingList$.value[categoryPosition].expenses.splice(spendingPosition, 1);
+        const successMsg = `Deleted ${spending[0].name} succesfully!`;
 
-        this.handleResponse(data, this.spendingList$.value);
+        this.handleResponse(data, this.spendingList$.value, successMsg);
       })
     );
   }
 
   removeSpendingCategory(categoryName: string) {
     const categoryPosition = this.getCategotyPosition(categoryName);
+    const successMsg = `Deleted ${categoryName} succesfully!`
 
-    return this._http.delete(`http://localhost:3000/expenses_categories/categories?userId=1&name=${categoryName}`, { responseType: "text" }).pipe(
+    return this._http.delete<IResponse>(`http://localhost:3000/expenses_categories/categories?userId=1&name=${categoryName}`,
+      { headers: this.headers }).pipe(
       tap(data => {
         this.spendingList$.value.splice(categoryPosition, 1);
 
-        this.handleResponse(data, this.spendingList$.value);
+        this.handleResponse(data, this.spendingList$.value, successMsg);
       })
     );
   }
 
   editCategory(oldCategory: string, newCategory: string) {
     const categoryPosition = this.getCategotyPosition(oldCategory);
+    const successMsg = `Changed category name \"${oldCategory}\" to \"${newCategory}\" succesfully!`;
 
-    return this._http.put(`http://localhost:3000/expenses_categories/categories?userId=1&oldName=${oldCategory}&newName=${newCategory}`, {}, { responseType: "text" }).pipe(
+    return this._http.put<IResponse>(`http://localhost:3000/expenses_categories/categories?userId=1&oldName=${oldCategory}&newName=${newCategory}`, {},
+      { headers: this.headers }).pipe(
       tap(data => {
         this.spendingList$.value[categoryPosition].name = newCategory;
 
-        this.handleResponse(data, this.spendingList$.value);
+        this.handleResponse(data, this.spendingList$.value, successMsg);
       })
     );
-
   }
 }
