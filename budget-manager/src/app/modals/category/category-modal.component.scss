@@ -41,6 +41,7 @@ mat-card {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .title-div {
@@ -78,8 +79,13 @@ mat-card {
 }
 
 .edit-btns {
-    width: 10vw;
-    margin-left: 10px;
+    width: 60px;
+    height: 80px;
+    margin-left: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .span-icons {
@@ -89,7 +95,7 @@ mat-card {
 .scroll-div {
     width: 100%;
     height: 100%;
-    max-height: 500px;
+    max-height: 480px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -97,4 +103,8 @@ mat-card {
 .input-text-form {
     width: 50%;
     margin-bottom: 15px;
+}
+
+.mat-raised-button {
+    min-width: 80px;
 }

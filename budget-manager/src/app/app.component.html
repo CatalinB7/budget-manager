@@ -6,7 +6,7 @@
     </mat-toolbar>
 
     <ng-container *ngIf="(data$ | async) as data">
-        <mat-grid-list cols={{colsNo}}
+        <mat-grid-list [cols]="colsNo"
                        (window:resize)="onResize($event)" 
                        rowHeight="26vh" 
                        gutterSize="20px" 

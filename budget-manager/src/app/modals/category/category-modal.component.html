@@ -17,12 +17,14 @@
           Name must be shorter than <strong>{{maxCharLen}}</strong> characters.
         </mat-error>
       </mat-form-field>
-      <button *ngIf="showSubmit; else showUpdate" mat-raised-button color="primary" (click)="addCategory()">Submit</button>
+      <button *ngIf="showSubmit; else showUpdate" 
+        [disabled]="!form.valid" mat-raised-button color="primary" (click)="addCategory()">Submit</button>
 
       <ng-template #showUpdate>
         <span class="edit-btns">
-          <button mat-button (click)="editCategory(form.value.category)">Update</button>
-          <button mat-button (click)="dropEdit()">Discard</button>
+          <button mat-raised-button color="primary" [disabled]="!form.valid || form.pristine" 
+            (click)="editCategory(form.value.category)">Update</button>
+          <button mat-raised-button color="warn" (click)="dropEdit()">Discard</button>
         </span>
       </ng-template>
     </form>

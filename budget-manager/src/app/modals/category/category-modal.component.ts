@@ -67,21 +67,22 @@ export class CategoryModalComponent {
   }
 
   addCategory(): void {
-    if (this.form.status === 'VALID') {
+    if (this.form.valid) {
       this._spendingService.addSpendingCategory(this.form.value.category)
         .subscribe((result: any) => {
-          this.openSnackBar(`Created ${this.form.value.category}`, 800);
+          this._snackBarService.openSuccessSnackBar(`Created ${this.form.value.category}`, 800);
           this.form.reset();
         },
-          err =>  this._snackBarService.openErrorSnackBar(err.error, 1000));
-    } else {
-      // this._snackBarService.openErrorSnackBar('Category name must have length between 1 and 22 characters', 2000);
+          err => this._snackBarService.openErrorSnackBar(err.error, 1000));
     }
   }
 
   deleteCategory(categoryName: string) {
     this._spendingService.removeSpendingCategory(categoryName).
-      subscribe(() => {}, (err: any) => this.openSnackBar(err.error, 1000));
+      subscribe(
+        () => this._snackBarService.openSuccessSnackBar(`Succesfully deleted ${categoryName}`, 1000),
+        (err: any) => this._snackBarService.openErrorSnackBar(err.error, 1000)
+      );
   }
 
   editCategory(newCategory: string): void {
@@ -97,6 +98,7 @@ export class CategoryModalComponent {
     this.oldCategory = category;
     this.showSubmit = false;
     this.labelName = "Edit Category";
+    this.form.markAsPristine();
   }
 
   dropEdit() {
@@ -109,10 +111,6 @@ export class CategoryModalComponent {
   setInput(val: string) {
     this.inputElement.nativeElement.focus();
     this.form.setValue({ 'category': val });
-  }
-
-  openSnackBar(message: string, duration: number) {
-    this._snackBar.open(message, '', { duration });
   }
 
   openDialogDelWarn(toDelete: string) {
