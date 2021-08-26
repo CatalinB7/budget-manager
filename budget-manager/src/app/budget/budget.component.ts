@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -23,11 +24,15 @@ import { ISpendingTotal } from '../model/spendingTotal';
 export class BudgetComponent {
   private _spendingTotals: ISpendingTotal[] = [];
   private _budget = { value: 0, plannedSaving: 0 };
-
+  
+  lowBudget = false;
   targetSavings = 0;
   leftInBudget = 0;
 
-  constructor(private _dialog: MatDialog) {}
+  constructor(
+    private _dialog: MatDialog,
+    private ref: ChangeDetectorRef
+  ) {}
 
   @Input()
   get budget(): IBudget { return this._budget }
@@ -62,6 +67,8 @@ export class BudgetComponent {
 
     const val = this.budget.value * (1 - this.budget.plannedSaving) - totalSpent;
     this.leftInBudget = val > 0? val : 0;
+
+    this.lowBudget = this.leftInBudget < 0.2 * this.budget.value;
   }
 
   openDialog() {

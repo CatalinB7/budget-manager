@@ -90,7 +90,7 @@ export class CategoryModalComponent {
     this._spendingService.editCategory(this.oldCategory, newCategory).
       subscribe(() => {
         this.dropEdit();
-        this._snackBarService.openSuccessSnackBar(`Edited ${this.oldCategory} to ${newCategory}`, 1500)
+        this._snackBarService.openSuccessSnackBar(`Edited ${this.oldCategory} to ${newCategory}`, 1500);
       }, (err) => this._snackBarService.openErrorSnackBar(err.error, 1000));
   }
 
