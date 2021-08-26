@@ -15,8 +15,8 @@ import {
 
 import { ISpendingCategory } from 'src/app/model/spendingCategory';
 import {
-  MyErrorStateMatcher,
-} from 'src/app/utils/form-validators/MyErrorStateMatcher';
+  BasicErrorStateMatcher,
+} from 'src/app/utils/form-validators/BasicErrorStateMatcher';
 
 @Component({
     selector: 'add-spending-dialog',
@@ -25,7 +25,7 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddSpendingDialog {
-    matcher = new MyErrorStateMatcher();
+    matcher = new BasicErrorStateMatcher();
     maxVal = 9999999999;
     minVal = 0;
     maxCharLen = 22;
