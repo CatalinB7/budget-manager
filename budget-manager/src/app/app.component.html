@@ -29,7 +29,7 @@
             </mat-grid-tile>
             <mat-grid-tile rowspan="2">
                 <mat-card class="fill" *ngIf="!data.loading; else loading">
-                    <app-pie-chart [spendingTotals]="data.spendingTotals | pieInput"
+                    <app-pie-chart [data]="data.spendingTotals | pieInput"
                                    [spendingList]="data.spendingList"></app-pie-chart>
                 </mat-card>
             </mat-grid-tile>
