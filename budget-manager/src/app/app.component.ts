@@ -42,7 +42,7 @@ export class AppComponent {
   }
 
   updateBudget(newBudget: IBudget) {
-    this._budgetService.editBudget(newBudget);
+    this._budgetService.editBudget(newBudget).subscribe();
   }
 
   onDeleteSpending(toDelete: ISpendingDeleteData) {

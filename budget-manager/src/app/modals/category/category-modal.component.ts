@@ -15,7 +15,6 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable } from 'rxjs';
 import { IAppData } from 'src/app/model/data';
@@ -25,7 +24,6 @@ import {
 import {
   ModalLoadingService,
 } from 'src/app/utils/services/modal-loading.service';
-import { SnackbarService } from 'src/app/utils/services/snackbar.service';
 
 import { SpendingService } from '../../utils/services/spending.service';
 import {
@@ -59,9 +57,7 @@ export class CategoryModalComponent {
     @Inject(MAT_DIALOG_DATA)
     public data$: Observable<IAppData> | undefined,
     private _spendingService: SpendingService,
-    private _snackBarService: SnackbarService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
     private _modalLoadingService: ModalLoadingService,
   ) { }
 
@@ -76,32 +72,20 @@ export class CategoryModalComponent {
     if (this.form.valid) {
       this._modalLoadingService.startLoading();
       this._spendingService.addSpendingCategory(this.form.value.category)
-        .subscribe(() => {
-          this._modalLoadingService.stopLoading();
-          this._snackBarService.openSuccessSnackBar(`Created ${this.form.value.category}`, 800);
-          this.form.reset();
-        },
-          err => this._snackBarService.openErrorSnackBar(err.error, 1000));
+        .subscribe(() => this.form.reset());
     }
   }
 
   deleteCategory(categoryName: string) {
     this._modalLoadingService.startLoading();
     this._spendingService.removeSpendingCategory(categoryName).
-      subscribe(() => {
-        this._modalLoadingService.stopLoading();
-        this._snackBarService.openSuccessSnackBar(`Succesfully deleted ${categoryName}`, 1000);
-      }, (err: any) => this._snackBarService.openErrorSnackBar(err.error, 1000));
+      subscribe();
   }
 
   editCategory(newCategory: string): void {
     this._modalLoadingService.startLoading();
     this._spendingService.editCategory(this.oldCategory, newCategory).
-      subscribe(() => {
-        this._modalLoadingService.stopLoading();
-        this.dropEdit();
-        this._snackBarService.openSuccessSnackBar(`Edited ${this.oldCategory} to ${newCategory}`, 1500);
-      }, (err) => this._snackBarService.openErrorSnackBar(err.error, 1000));
+      subscribe(() => this.dropEdit());
   }
 
   changeInputToEdit(category: string) {
