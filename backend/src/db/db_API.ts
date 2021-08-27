@@ -49,10 +49,6 @@ const editCategory = (userId: string, oldName: string, newName: string) => {
 const insertSpendingInCategory = (userId: string, category: string, spending: ISpending) => {
     const expenses = db.expenses_categories.filter(el => el.userId == userId)[0].categories
         .filter(el => el.name === category)[0].expenses;
-    expenses.forEach(el => {
-        if (el.name === spending.name)
-            throw new CustomError("Item already defined!", 409);
-    });
     const id = expenses.length + 1;
     const toInsert = { ...spending, id };
     expenses.push(toInsert);
