@@ -1,0 +1,24 @@
+<div class="card-content">
+  <div class="chart" *ngIf="pieDisplay; else showLine">
+    <h1>Pie representation of categories' values</h1>
+    <ngx-charts-pie-chart
+      [scheme]="scheme"
+      [results]="data"
+      [gradient]="gradient"
+      [legend]="showLegend"
+      [legendPosition]="legendPosition"
+      [labels]="showLabels"
+      [doughnut]="isDoughnut"
+      (select)="onSelect($event)"
+      >
+    </ngx-charts-pie-chart>
+  </div>
+</div>
+
+<ng-template #showLine>
+  <div class="chart">
+    <app-line-graph [data]="expensesCategory | graphInput: clickedCategory"
+      (toggle)="togglePieDisplay()">
+    </app-line-graph>
+  </div>
+</ng-template>

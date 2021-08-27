@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="graph">
+        <ngx-charts-line-chart
+        [scheme]="colorScheme"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [yAxisLabel]="yAxisLabel"
+        [timeline]="true"
+        [results]="data">
+            <ng-template #tooltipTemplate let-model="model">
+                <div class="tooltip">
+                    {{model.tooltipText}}
+                </div>
+            </ng-template>
+    
+        </ngx-charts-line-chart>
+    </div>
+
+    <button mat-raised-button class="back-button" (click)="clickBack()">BACK</button>
+</div>

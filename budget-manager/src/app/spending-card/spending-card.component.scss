@@ -1,0 +1,60 @@
+@import "../../variables.scss";
+
+.text-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    p {
+        padding: 0px;
+        margin: 0px;
+        font-size: 1.25rem;
+        font-weight: 400;
+        text-align: center;
+    }
+}
+
+.margin-bottom20 {
+    margin-bottom: $content-padding;
+}
+
+.money {
+    align-items: center;
+    color: $money-color;
+}
+
+.mat-expansion-panel {
+    background-color: $category-card-color;
+    margin-top: 3px;
+}
+
+.mat-raised-button {
+    background-color: $manage-btn-color;
+    flex-shrink: 0;
+}
+
+span {
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+}
+
+.mat-icon:hover {
+    cursor: pointer;
+}
+
+.list-viewport {
+    height: 75%;
+    max-height: max(calc(75vh - 135px));
+    overflow-x: auto;
+}
+
+.add-button {
+    position: absolute;
+    bottom: $content-padding;
+    right: $content-padding;
+}
+
+.line-height {
+    line-height: 1.5em;
+}

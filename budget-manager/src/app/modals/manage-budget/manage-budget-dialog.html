@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+    <h1 mat-dialog-title class="title">Edit your budget</h1>
+    <div mat-dialog-content class="container">
+        <mat-form-field>
+            <mat-label>Budget</mat-label>
+            <input type="number" matInput formControlName="value" [errorStateMatcher]="matcher"/>
+            <mat-error *ngIf="(form.get('value')!.hasError('max') || form.get('value')!.hasError('min'))  && !form.get('value')!.hasError('required')">
+                Please enter a value between <strong>0</strong> and <strong>999999999</strong>.
+            </mat-error>
+            <mat-error *ngIf="!(form.get('value')!.hasError('max') || form.get('value')!.hasError('min'))  && form.get('value')!.hasError('required')">
+                Budget value is <strong>required</strong>.
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Planned Savings Percentage</mat-label>
+            <input type="number" matInput formControlName="plannedSaving" [errorStateMatcher]="matcher"/>
+            <mat-error *ngIf="(form.get('plannedSaving')!.hasError('max') || form.get('plannedSaving')!.hasError('min'))  && !form.get('plannedSaving')!.hasError('required')">
+                Please enter a value between <strong>0</strong> and <strong>1</strong>.
+            </mat-error>
+            <mat-error *ngIf="!(form.get('plannedSaving')!.hasError('max') || form.get('plannedSaving')!.hasError('min'))  && form.get('plannedSaving')!.hasError('required')">
+                Planned Saving value is <strong>required</strong>.
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="button-group">
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!form.valid || form.pristine">Submit</button>
+    </div>
+</form>

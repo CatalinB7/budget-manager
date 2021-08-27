@@ -1,0 +1,48 @@
+<div class="card-content">
+    <div class="text-wrapper margin-bottom20">
+        <h1>
+            My spendings
+            <mat-icon class="unselectable" (click)="clickedIcon()">{{iconText}}</mat-icon>
+        </h1>
+        <button mat-raised-button (click)="openDialogCategories()">MANAGE</button>
+    </div>
+
+    <mat-accordion>
+        <div class="list-viewport">
+            <mat-expansion-panel *ngFor="let category of spendingList">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="text-wrapper">
+                        <p class="ellipsis-text line-height" [matTooltip]="category.name">
+                            {{category.name}}</p>
+                        <p class="money">{{category.total | dollar}}</p>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-list role="list">
+                    <mat-divider *ngIf="!category.total"></mat-divider>
+                    <div *ngFor="let spending of category.expenses">
+                        <mat-list-item class="text-wrapper" role="listitem">
+                            <div class="text-wrapper">
+                                <p class="ellipsis-text" [matTooltip]="spending.name">
+                                    {{spending.name}}
+                                </p>
+                                <span>
+                                    <span class="money">{{spending.value | dollar}}</span>
+                                    <button mat-icon-button
+                                        (click)="openDialogDelWarn(spending.name, category.name, spending.id)">
+                                        <mat-icon color="warn">delete</mat-icon>
+                                    </button>
+                                </span>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    </div>
+                </mat-list>
+            </mat-expansion-panel>
+        </div>
+    </mat-accordion>
+
+    <button mat-fab color="primary" class="add-button" (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

@@ -1,0 +1,40 @@
+@import '../../variables.scss';
+
+mat-card-content {
+    margin: 0px;
+}
+
+mat-card-header {
+    margin-top: 10px;
+    margin-left: $content-padding;
+}
+
+.card-content {
+    height: fit-content;
+}
+
+.remaining-budget {
+    color: $money-color;
+    text-align: center;
+    font-size: x-large;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 20px;
+    margin-top: 5vh;
+}
+
+.low-budget {
+    color: $warn-color;
+}
+
+.button-title-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+button {
+    flex-shrink: 0;
+    background-color: $manage-btn-color;
+}

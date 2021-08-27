@@ -1,0 +1,116 @@
+@import "../../../variables.scss";
+
+h1 {
+    margin: 0;
+}
+
+.spinner {
+    position: absolute;
+    left: 20px;
+}
+
+.flex-div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-div button {
+    margin-left: 10px;
+
+}
+
+mat-card {
+    height: 1.5vh;
+    width: 92.5%;
+    background-color: $category-card-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2px;
+    p {
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: center;
+        width: 90%;
+        text-align-last: left;
+        margin: 0;
+    }
+}
+
+.form-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.title-div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.exit-btn {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(1,1,1,0);
+    margin: 0;
+    padding: 0;
+    border: none;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $warn-color;
+}
+
+.exit-btn:hover {
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: $exit-btn-background;
+    color: white;
+}
+
+.mat-divider {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.edit-btns {
+    width: 60px;
+    height: 80px;
+    margin-left: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.span-icons {
+    min-width: 80px;
+}
+
+.scroll-div {
+    width: 100%;
+    height: 100%;
+    max-height: 480px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.input-text-form {
+    width: 50%;
+    margin-bottom: 15px;
+}
+
+.mat-raised-button {
+    min-width: 80px;
+}
