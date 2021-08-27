@@ -12,7 +12,7 @@
             <mat-expansion-panel *ngFor="let category of spendingList">
                 <mat-expansion-panel-header>
                     <mat-panel-title class="text-wrapper">
-                        <p class="ellipsis-text line-height" [matTooltip]="category.name" appShowIfTruncated>
+                        <p class="ellipsis-text line-height" [matTooltip]="category.name">
                             {{category.name}}</p>
                         <p class="money">{{category.total | dollar}}</p>
                     </mat-panel-title>
@@ -23,7 +23,7 @@
                     <div *ngFor="let spending of category.expenses">
                         <mat-list-item class="text-wrapper" role="listitem">
                             <div class="text-wrapper">
-                                <p class="ellipsis-text" [matTooltip]="spending.name" appShowIfTruncated>
+                                <p class="ellipsis-text" [matTooltip]="spending.name">
                                     {{spending.name}}
                                 </p>
                                 <span>
