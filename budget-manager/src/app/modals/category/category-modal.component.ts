@@ -72,20 +72,28 @@ export class CategoryModalComponent {
     if (this.form.valid) {
       this._modalLoadingService.startLoading();
       this._spendingService.addSpendingCategory(this.form.value.category)
-        .subscribe(() => this.form.reset());
+        .subscribe(() => {
+          this.form.reset();
+          this._modalLoadingService.stopLoading();
+        });
     }
   }
 
   deleteCategory(categoryName: string) {
     this._modalLoadingService.startLoading();
     this._spendingService.removeSpendingCategory(categoryName).
-      subscribe();
+      subscribe(() => {
+        this._modalLoadingService.stopLoading();
+      });
   }
 
   editCategory(newCategory: string): void {
     this._modalLoadingService.startLoading();
     this._spendingService.editCategory(this.oldCategory, newCategory).
-      subscribe(() => this.dropEdit());
+      subscribe(() => {
+        this.dropEdit();
+        this._modalLoadingService.stopLoading();
+      });
   }
 
   changeInputToEdit(category: string) {

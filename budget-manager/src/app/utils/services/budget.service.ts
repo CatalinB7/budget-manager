@@ -31,9 +31,6 @@ export class BudgetService {
   }
 
   editBudget(newBudget: IBudget) {
-
-
-
     return this._http.put<IResponse>('http://localhost:3000/budgets?userId=1', { budget: newBudget },
       { headers: this.headers }).pipe(
         tap(data => {

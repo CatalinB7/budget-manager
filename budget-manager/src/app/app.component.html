@@ -2,35 +2,31 @@
     <mat-toolbar color="primary">
         <span>Budgeteer</span>
         <span class="spacer"></span>
-        <mat-icon>menu</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
     </mat-toolbar>
 
-    <ng-container *ngIf="(data$ | async) as data">
-        <mat-grid-list [cols]="colsNo"
-                       (window:resize)="onResize($event)" 
-                       rowHeight="26vh" 
-                       gutterSize="20px" 
-                       class="grid-container">
+    <ng-container class="wrapper" *ngIf="(data$ | async) as data">
+        <mat-grid-list rowHeight="26vh" gutterSize="20px" class="grid-container" [cols]="colsNo"
+            (window:resize)="onResize($event)">
             <mat-grid-tile rowspan="1">
                 <mat-card class="budget-card" *ngIf="!data.loading; else loading">
-                    <app-budget [budget]="data.budget"
-                                [spendingTotals]="data.spendingTotals"
-                                (changeBudgetEvent)= "updateBudget($event)"></app-budget>
+                    <app-budget [budget]="data.budget" [spendingTotals]="data.spendingTotals"
+                        (changeBudgetEvent)="updateBudget($event)"></app-budget>
                 </mat-card>
             </mat-grid-tile>
             <mat-grid-tile rowspan="3">
-                <mat-card id="spendingCard" class="fill" *ngIf="!data.loading; else loading">
-                    <app-spending-card
-                                       [spendingList]="data.spendingList | spendcardInput : data.spendingTotals"
-                                       [modalObs]="data$"
-                                       (deleteEvent)="onDeleteSpending($event)"
-                                       (addEvent)="onAddSpending($event)"></app-spending-card>
+                <mat-card class="fill" *ngIf="!data.loading; else loading">
+                    <app-spending-card [spendingList]="data.spendingList | spendcardInput : data.spendingTotals"
+                        [modalObs]="data$" (deleteEvent)="onDeleteSpending($event)" (addEvent)="onAddSpending($event)">
+                    </app-spending-card>
                 </mat-card>
             </mat-grid-tile>
             <mat-grid-tile rowspan="2">
                 <mat-card class="fill" *ngIf="!data.loading; else loading">
-                    <app-pie-chart [data]="data.spendingTotals | pieInput"
-                                   [spendingList]="data.spendingList"></app-pie-chart>
+                    <app-pie-chart [data]="data.spendingTotals | pieInput" [spendingList]="data.spendingList">
+                    </app-pie-chart>
                 </mat-card>
             </mat-grid-tile>
         </mat-grid-list>
@@ -40,3 +36,7 @@
 <ng-template #loading>
     <mat-spinner></mat-spinner>
 </ng-template>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>You may click this but it will do nothing</button>
+</mat-menu>
